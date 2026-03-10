@@ -1,0 +1,472 @@
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Bomb, Flag, Smile, Frown, Trophy, Volume2, VolumeX } from 'lucide-react';
+
+// Difficulty settings
+const DIFFICULTIES = {
+  beginner: { rows: 9, cols: 9, mines: 10, name: 'Beginner' },
+  intermediate: { rows: 16, cols: 16, mines: 40, name: 'Intermediate' },
+  expert: { rows: 16, cols: 30, mines: 99, name: 'Expert' }
+};
+
+// Number color mapping
+const NUMBER_COLORS = {
+  1: 'text-blue-500',
+  2: 'text-green-500',
+  3: 'text-red-500',
+  4: 'text-purple-500',
+  5: 'text-yellow-600',
+  6: 'text-teal-500',
+  7: 'text-black',
+  8: 'text-gray-600'
+};
+
+// Sound effect generator using Web Audio API
+const playSound = (type, enabled) => {
+  if (!enabled) return;
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!window.audioCtx) {
+      window.audioCtx = new AudioContext();
+    }
+    const ctx = window.audioCtx;
+    if (ctx.state === 'suspended') ctx.resume();
+
+    const osc = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+    osc.connect(gainNode);
+    gainNode.connect(ctx.destination);
+
+    const now = ctx.currentTime;
+
+    if (type === 'reveal') {
+      // Clear and short click sound
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(600, now);
+      osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+      gainNode.gain.setValueAtTime(0.05, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } else if (type === 'flag') {
+      // Dull flag sound
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(300, now);
+      osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
+      gainNode.gain.setValueAtTime(0.08, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } else if (type === 'mine') {
+      // Low and long explosion sound
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(100, now);
+      osc.frequency.exponentialRampToValueAtTime(20, now + 0.5);
+      gainNode.gain.setValueAtTime(0.1, now);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+      osc.start(now);
+      osc.stop(now + 0.5);
+    } else if (type === 'win') {
+      // Victory arpeggio (C-E-G-C)
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+        const oscWin = ctx.createOscillator();
+        const gainWin = ctx.createGain();
+        oscWin.type = 'sine';
+        oscWin.frequency.value = freq;
+        oscWin.connect(gainWin);
+        gainWin.connect(ctx.destination);
+        gainWin.gain.setValueAtTime(0, now + i * 0.1);
+        gainWin.gain.linearRampToValueAtTime(0.1, now + i * 0.1 + 0.05);
+        gainWin.gain.linearRampToValueAtTime(0, now + i * 0.1 + 0.15);
+        oscWin.start(now + i * 0.1);
+        oscWin.stop(now + i * 0.1 + 0.2);
+      });
+    }
+  } catch (e) {
+    console.error("Audio playback failed", e);
+  }
+};
+
+export default function App() {
+  const [difficulty, setDifficulty] = useState(DIFFICULTIES.beginner);
+  const [board, setBoard] = useState([]);
+  const [gameStatus, setGameStatus] = useState('idle'); // idle, playing, won, lost
+  const [minesLeft, setMinesLeft] = useState(0);
+  const [time, setTime] = useState(0);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+
+  // Create empty board
+  const createEmptyBoard = useCallback((rows, cols) => {
+    return Array.from({ length: rows }, (_, r) =>
+      Array.from({ length: cols }, (_, c) => ({
+        r,
+        c,
+        isMine: false,
+        isRevealed: false,
+        isFlagged: false,
+        neighborMines: 0,
+        exploded: false,
+      }))
+    );
+  }, []);
+
+  // Initialize game
+  const initGame = useCallback(() => {
+    setBoard(createEmptyBoard(difficulty.rows, difficulty.cols));
+    setGameStatus('idle');
+    setMinesLeft(difficulty.mines);
+    setTime(0);
+  }, [difficulty, createEmptyBoard]);
+
+  useEffect(() => {
+    initGame();
+  }, [initGame]);
+
+  // Timer
+  useEffect(() => {
+    let timer;
+    if (gameStatus === 'playing') {
+      timer = setInterval(() => setTime((prev) => prev + 1), 1000);
+    }
+    return () => clearInterval(timer);
+  }, [gameStatus]);
+
+  // Get neighbor tile coordinates
+  const getNeighbors = (r, c, rows, cols) => {
+    const neighbors = [];
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        if (i === 0 && j === 0) continue;
+        const nr = r + i;
+        const nc = c + j;
+        if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+          neighbors.push([nr, nc]);
+        }
+      }
+    }
+    return neighbors;
+  };
+
+  // Place mines on first click (ensure first click is safe)
+  const placeMinesAndCalculate = (currentBoard, firstR, firstC) => {
+    let minesPlaced = 0;
+    const rows = difficulty.rows;
+    const cols = difficulty.cols;
+
+    while (minesPlaced < difficulty.mines) {
+      const r = Math.floor(Math.random() * rows);
+      const c = Math.floor(Math.random() * cols);
+
+      // Do not place mines on the first clicked cell and its 8 neighbors (perfect safe start)
+      const isSafeZone = Math.abs(r - firstR) <= 1 && Math.abs(c - firstC) <= 1;
+
+      if (!currentBoard[r][c].isMine && !isSafeZone) {
+        currentBoard[r][c].isMine = true;
+        minesPlaced++;
+      }
+    }
+
+    // Calculate neighboring mines
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (!currentBoard[r][c].isMine) {
+          let count = 0;
+          const neighbors = getNeighbors(r, c, rows, cols);
+          neighbors.forEach(([nr, nc]) => {
+            if (currentBoard[nr][nc].isMine) count++;
+          });
+          currentBoard[r][c].neighborMines = count;
+        }
+      }
+    }
+    return currentBoard;
+  };
+
+  // Flood fill for 0-mine areas
+  const floodFill = (currentBoard, startR, startC) => {
+    const rows = difficulty.rows;
+    const cols = difficulty.cols;
+    const queue = [[startR, startC]];
+    currentBoard[startR][startC].isRevealed = true;
+
+    while (queue.length > 0) {
+      const [r, c] = queue.shift();
+      const neighbors = getNeighbors(r, c, rows, cols);
+
+      neighbors.forEach(([nr, nc]) => {
+        const neighbor = currentBoard[nr][nc];
+        if (!neighbor.isRevealed && !neighbor.isFlagged) {
+          neighbor.isRevealed = true;
+          if (neighbor.neighborMines === 0) {
+            queue.push([nr, nc]);
+          }
+        }
+      });
+    }
+  };
+
+  // Check win condition
+  const checkWin = (currentBoard) => {
+    let revealedCount = 0;
+    const totalSafeCells = difficulty.rows * difficulty.cols - difficulty.mines;
+
+    for (let r = 0; r < difficulty.rows; r++) {
+      for (let c = 0; c < difficulty.cols; c++) {
+        if (currentBoard[r][c].isRevealed && !currentBoard[r][c].isMine) {
+          revealedCount++;
+        }
+      }
+    }
+
+    if (revealedCount === totalSafeCells) {
+      setGameStatus('won');
+      playSound('win', soundEnabled);
+      // Flag all remaining mines
+      const newBoard = [...currentBoard];
+      for (let r = 0; r < difficulty.rows; r++) {
+        for (let c = 0; c < difficulty.cols; c++) {
+          if (newBoard[r][c].isMine) {
+            newBoard[r][c].isFlagged = true;
+          }
+        }
+      }
+      setMinesLeft(0);
+      return true;
+    }
+    return false;
+  };
+
+  // Reveal all mines (on game over)
+  const revealAllMines = (currentBoard) => {
+    for (let r = 0; r < difficulty.rows; r++) {
+      for (let c = 0; c < difficulty.cols; c++) {
+        if (currentBoard[r][c].isMine) {
+          currentBoard[r][c].isRevealed = true;
+        }
+      }
+    }
+  };
+
+  // Left click handler
+  const handleLeftClick = (r, c) => {
+    if (gameStatus === 'won' || gameStatus === 'lost') return;
+    if (board[r][c].isRevealed || board[r][c].isFlagged) return;
+
+    // Browser AudioContext requires user gesture on first start
+    if (soundEnabled && (!window.audioCtx || window.audioCtx.state === 'suspended')) {
+      playSound('reveal', false); // Dummy call for context initialization
+    }
+
+    let newBoard = board.map(row => row.map(cell => ({ ...cell })));
+
+    if (gameStatus === 'idle') {
+      newBoard = placeMinesAndCalculate(newBoard, r, c);
+      setGameStatus('playing');
+    }
+
+    if (newBoard[r][c].isMine) {
+      revealAllMines(newBoard);
+      newBoard[r][c].exploded = true;
+      setBoard(newBoard);
+      setGameStatus('lost');
+      playSound('mine', soundEnabled);
+      return;
+    }
+
+    if (newBoard[r][c].neighborMines === 0) {
+      floodFill(newBoard, r, c);
+    } else {
+      newBoard[r][c].isRevealed = true;
+    }
+
+    setBoard(newBoard);
+    
+    if (!checkWin(newBoard)) {
+      playSound('reveal', soundEnabled);
+    }
+  };
+
+  // Right click handler (Flag)
+  const handleRightClick = (e, r, c) => {
+    e.preventDefault();
+    if (gameStatus === 'won' || gameStatus === 'lost' || board[r][c].isRevealed) return;
+
+    const newBoard = board.map(row => row.map(cell => ({ ...cell })));
+    const cell = newBoard[r][c];
+
+    if (!cell.isFlagged && minesLeft > 0) {
+      cell.isFlagged = true;
+      setMinesLeft(prev => prev - 1);
+      playSound('flag', soundEnabled);
+    } else if (cell.isFlagged) {
+      cell.isFlagged = false;
+      setMinesLeft(prev => prev + 1);
+      playSound('flag', soundEnabled);
+    }
+
+    setBoard(newBoard);
+  };
+
+  // Double click handler (Fast reveal - Chord)
+  const handleDoubleClick = (e, r, c) => {
+    e.preventDefault();
+    if (gameStatus !== 'playing' || !board[r][c].isRevealed) return;
+    
+    const cell = board[r][c];
+    if (cell.neighborMines === 0) return;
+
+    const neighbors = getNeighbors(r, c, difficulty.rows, difficulty.cols);
+    let flaggedCount = 0;
+    
+    neighbors.forEach(([nr, nc]) => {
+      if (board[nr][nc].isFlagged) flaggedCount++;
+    });
+
+    // If flag count matches neighbor mines, open remaining tiles
+    if (flaggedCount === cell.neighborMines) {
+      let newBoard = board.map(row => row.map(cell => ({ ...cell })));
+      let hitMine = false;
+      let openedCount = 0;
+
+      neighbors.forEach(([nr, nc]) => {
+        const neighbor = newBoard[nr][nc];
+        if (!neighbor.isRevealed && !neighbor.isFlagged) {
+          if (neighbor.isMine) {
+            hitMine = true;
+            neighbor.exploded = true;
+          } else {
+            openedCount++;
+            if (neighbor.neighborMines === 0) {
+              floodFill(newBoard, nr, nc);
+            } else {
+              neighbor.isRevealed = true;
+            }
+          }
+        }
+      });
+
+      if (hitMine) {
+        revealAllMines(newBoard);
+        setGameStatus('lost');
+        playSound('mine', soundEnabled);
+      } else {
+        if (!checkWin(newBoard) && openedCount > 0) {
+          playSound('reveal', soundEnabled);
+        }
+      }
+      setBoard(newBoard);
+    }
+  };
+
+  // UI formatting
+  const formatNumber = (num) => {
+    return num.toString().padStart(3, '0');
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-100 flex flex-col items-center py-8 font-sans selection:bg-transparent relative">
+      
+      {/* Title and controls */}
+      <div className="mb-6 text-center relative w-full max-w-2xl px-4">
+        
+        {/* Sound toggle button */}
+        <button 
+          onClick={() => setSoundEnabled(!soundEnabled)}
+          className="absolute right-4 top-0 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm"
+          title={soundEnabled ? "Mute Sound" : "Enable Sound"}
+        >
+          {soundEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
+        </button>
+
+        <h1 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-2">
+          <Bomb className="text-slate-700" size={32} />
+          Minesweeper
+        </h1>
+        <div className="flex gap-2 justify-center">
+          {Object.entries(DIFFICULTIES).map(([key, diff]) => (
+            <button
+              key={key}
+              onClick={() => setDifficulty(diff)}
+              className={`px-4 py-2 rounded shadow-sm transition-colors text-sm font-semibold
+                ${difficulty.name === diff.name 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-white text-slate-700 hover:bg-slate-50'}`}
+            >
+              {diff.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Game board container */}
+      <div className="bg-slate-300 p-4 rounded-lg shadow-xl border-4 border-t-slate-200 border-l-slate-200 border-b-slate-400 border-r-slate-400 max-w-full overflow-auto">
+        
+        {/* Status bar (Header) */}
+        <div className="flex justify-between items-center bg-slate-800 p-3 rounded mb-4 border-4 border-t-slate-600 border-l-slate-600 border-b-slate-900 border-r-slate-900">
+          <div className="text-red-500 font-mono text-3xl font-bold tracking-wider w-20 text-center bg-black px-1 rounded shadow-inner">
+            {formatNumber(minesLeft)}
+          </div>
+          
+          <button 
+            onClick={initGame}
+            className="bg-slate-300 p-2 rounded shadow border-4 border-t-white border-l-white border-b-slate-500 border-r-slate-500 active:border-t-slate-500 active:border-l-slate-500 active:border-b-white active:border-r-white transition-all transform active:scale-95"
+          >
+            {gameStatus === 'idle' || gameStatus === 'playing' ? <Smile size={28} className="text-yellow-600" /> : null}
+            {gameStatus === 'lost' ? <Frown size={28} className="text-red-600" /> : null}
+            {gameStatus === 'won' ? <Trophy size={28} className="text-yellow-500" /> : null}
+          </button>
+
+          <div className="text-red-500 font-mono text-3xl font-bold tracking-wider w-20 text-center bg-black px-1 rounded shadow-inner">
+            {formatNumber(time > 999 ? 999 : time)}
+          </div>
+        </div>
+
+        {/* Grid area */}
+        <div 
+          className="bg-slate-400 border-4 border-t-slate-500 border-l-slate-500 border-b-slate-200 border-r-slate-200"
+          style={{ 
+            display: 'grid', 
+            gridTemplateColumns: `repeat(${difficulty.cols}, minmax(32px, 32px))`,
+            gap: '1px'
+          }}
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          {board.map((row, r) => 
+            row.map((cell, c) => (
+              <div
+                key={`${r}-${c}`}
+                onClick={() => handleLeftClick(r, c)}
+                onContextMenu={(e) => handleRightClick(e, r, c)}
+                onDoubleClick={(e) => handleDoubleClick(e, r, c)}
+                className={`w-8 h-8 flex items-center justify-center font-bold text-lg select-none transition-colors duration-100
+                  ${!cell.isRevealed ? 'bg-slate-300 border-4 border-t-slate-100 border-l-slate-100 border-b-slate-500 border-r-slate-500 hover:bg-slate-200 cursor-pointer' : ''}
+                  ${cell.isRevealed ? 'bg-slate-200 border border-slate-300/50' : ''}
+                  ${cell.exploded ? '!bg-red-500' : ''}
+                `}
+              >
+                {!cell.isRevealed && cell.isFlagged && (
+                  <Flag size={18} className="text-red-500 drop-shadow-sm" fill="currentColor" />
+                )}
+                
+                {cell.isRevealed && cell.isMine && (
+                  <Bomb size={20} className={cell.exploded ? "text-white" : "text-slate-800"} />
+                )}
+                
+                {cell.isRevealed && !cell.isMine && cell.neighborMines > 0 && (
+                  <span className={`${NUMBER_COLORS[cell.neighborMines]} drop-shadow-sm`}>
+                    {cell.neighborMines}
+                  </span>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+      
+      <p className="mt-8 text-sm text-slate-500 text-center max-w-md">
+        💡 <strong>Tip:</strong> <br/>
+        Left click to reveal, right click to flag.<br/>
+        <strong>Double click</strong> a revealed number to quickly open surrounding cells if flags match the number.
+      </p>
+    </div>
+  );
+}
