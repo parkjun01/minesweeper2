@@ -4,20 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 실전 모의고사 생성기 V2</title>
+    <title>AI 실전 모의고사 생성기 V2 (All-in-One)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f1f5f9; }
         
-        /* A4 규격 레이아웃 */
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; }
+
+        /* 인쇄 및 PDF용 A4 레이아웃 */
         .exam-page {
             background-color: white;
             width: 210mm;
             min-height: 297mm;
             padding: 15mm;
-            margin: 20px auto;
+            margin: 30px auto;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             position: relative;
             box-sizing: border-box;
@@ -41,18 +43,14 @@
             transform: translateX(-50%);
         }
 
-        .question-item { margin-bottom: 24px; font-size: 13px; line-height: 1.6; }
+        .header-box { border-bottom: 3px solid black; padding-bottom: 12px; margin-bottom: 20px; }
+        .student-info { border: 2px solid black; padding: 5px 15px; display: inline-flex; gap: 20px; font-size: 13px; font-weight: bold; }
+
+        .question-item { margin-bottom: 22px; font-size: 13px; line-height: 1.6; page-break-inside: avoid; }
         .question-num { font-weight: bold; margin-right: 5px; }
         
-        /* 선택지 무조건 줄바꿈 */
-        .option-item { 
-            display: block; 
-            margin-top: 4px; 
-            padding-left: 5px; 
-        }
-
-        .header-box { border-bottom: 3px solid black; padding-bottom: 15px; margin-bottom: 25px; }
-        .student-info { border: 2px solid black; padding: 8px 20px; display: inline-flex; gap: 30px; font-size: 14px; font-weight: bold; }
+        /* 선택지 세로 나열 (줄바꿈 강제) */
+        .option-item { display: block; margin-top: 3px; padding-left: 5px; }
 
         .page-footer {
             position: absolute;
@@ -64,13 +62,13 @@
             color: #64748b;
         }
 
-        /* 로딩 바 */
+        /* 로딩 애니메이션 */
         .loader {
             border: 3px solid #f3f3f3;
             border-top: 3px solid #2563eb;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -80,47 +78,104 @@
             .exam-page { margin: 0; box-shadow: none; width: 210mm; height: 297mm; }
             .no-print { display: none !important; }
         }
+
+        .sticky-panel { position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     </style>
 </head>
 <body>
 
-    <!-- 상단 설정 바 -->
-    <div class="no-print bg-slate-900 text-white p-6 sticky top-0 z-50 shadow-xl">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-6">
+    <!-- 컨트롤 패널 -->
+    <div class="no-print bg-slate-900 text-white p-6 sticky-panel">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-6">
             <div class="flex-1 w-full">
-                <label class="block text-sm font-bold mb-2 text-slate-300">1. 학습 자료 입력 (PDF 텍스트 복사/붙여넣기)</label>
-                <textarea id="sourceText" placeholder="PDF에서 복사한 내용을 여기에 붙여넣으세요. 이 내용을 바탕으로 문제가 생성됩니다." class="w-full h-24 p-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-200 outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-            </div>
-            <div class="w-full md:w-80 space-y-4">
-                <div class="flex items-center justify-between">
-                    <label class="text-sm font-bold text-slate-300">2. 문항 수 (최대 70)</label>
-                    <input type="number" id="qCount" value="20" min="1" max="70" class="w-20 p-2 bg-slate-800 border border-slate-700 rounded text-center font-bold">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-sm font-bold text-slate-300">1. 학습 자료 제공 (PDF 첨부 또는 직접 입력)</label>
+                    <label class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1.5 px-3 rounded transition flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                        </svg>
+                        PDF 파일 업로드
+                        <input type="file" id="pdfInput" accept=".pdf" class="hidden" onchange="handlePdfUpload(event)">
+                    </label>
                 </div>
-                <button onclick="generateExam()" id="genBtn" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-bold transition flex items-center justify-center gap-2">
-                    <span id="btnText">AI 시험지 생성하기</span>
-                    <div id="loader" class="loader hidden"></div>
-                </button>
-                <div class="flex gap-2">
-                    <button onclick="downloadPDF()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-lg text-sm font-bold transition">PDF 저장</button>
+                <textarea id="sourceText" placeholder="PDF 파일에서 추출된 텍스트가 여기에 표시됩니다. 혹은 직접 내용을 붙여넣으셔도 됩니다." class="w-full h-28 p-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-200 outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <div id="pdfStatus" class="text-xs text-blue-400 mt-1 font-bold hidden">PDF 분석 중...</div>
+            </div>
+            
+            <div class="w-full md:w-80 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <label class="text-sm font-bold text-slate-300">2. 문항 수 (1~70)</label>
+                        <input type="number" id="qCount" value="20" min="1" max="70" class="w-20 p-2 bg-slate-800 border border-slate-700 rounded text-center font-bold">
+                    </div>
+                    <button onclick="generateExam()" id="genBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 py-3 rounded-lg font-bold transition flex items-center justify-center gap-2">
+                        <span id="btnText">AI 시험지 생성하기</span>
+                        <div id="loader" class="loader hidden"></div>
+                    </button>
+                </div>
+                <div class="flex gap-2 mt-4">
+                    <button onclick="downloadPDF()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-lg text-sm font-bold transition">PDF 다운로드</button>
                     <button onclick="window.print()" class="flex-1 bg-slate-700 hover:bg-slate-600 py-2.5 rounded-lg text-sm font-bold transition">인쇄</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 시험지 렌더링 영역 -->
+    <!-- 시험지 렌더링 공간 -->
     <div id="exam-render-area">
         <div class="exam-page no-print flex flex-col items-center justify-center text-slate-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mb-4 opacity-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            <p class="text-lg font-bold">자료를 입력하고 문항 수를 설정한 뒤</p>
-            <p>'AI 시험지 생성하기'를 눌러주세요.</p>
+            <p class="text-xl font-bold">학습 자료를 입력하거나 PDF를 업로드해 주세요.</p>
+            <p class="text-sm mt-2">AI가 내용을 분석하여 기말고사 스타일의 5지선다 문제를 출제합니다.</p>
         </div>
     </div>
 
     <script>
-        const apiKey = ""; // 런타임 환경에서 제공됨
+        const apiKey = "";
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+        // PDF 텍스트 추출 함수
+        async function handlePdfUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const status = document.getElementById('pdfStatus');
+            const textarea = document.getElementById('sourceText');
+            
+            status.classList.remove('hidden');
+            status.innerText = "PDF 파일을 읽는 중...";
+            textarea.disabled = true;
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                let fullText = "";
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const content = await page.getTextContent();
+                    const pageText = content.items.map(item => item.str).join(' ');
+                    fullText += pageText + "\n\n";
+                    status.innerText = `텍스트 분석 중... (${i} / ${pdf.numPages} 페이지)`;
+                }
+
+                textarea.value = fullText;
+                status.innerText = "분석 완료! 텍스트가 입력창에 로드되었습니다.";
+                status.className = "text-xs text-green-400 mt-1 font-bold";
+                setTimeout(() => {
+                    status.classList.add('hidden');
+                    status.className = "text-xs text-blue-400 mt-1 font-bold";
+                }, 3000);
+            } catch (err) {
+                console.error(err);
+                status.innerText = "PDF 분석에 실패했습니다. 직접 내용을 복사해 넣어주세요.";
+                status.className = "text-xs text-red-400 mt-1 font-bold";
+            } finally {
+                textarea.disabled = false;
+            }
+        }
 
         async function generateExam() {
             const source = document.getElementById('sourceText').value.trim();
@@ -130,39 +185,33 @@
             const loader = document.getElementById('loader');
 
             if (!source) {
-                alert("분석할 자료를 먼저 입력해주세요.");
+                alert("학습 자료를 먼저 입력하거나 PDF 파일을 업로드해 주세요.");
                 return;
             }
 
-            if (count > 70) {
-                alert("최대 70문항까지만 가능합니다.");
-                return;
-            }
-
-            // UI 상태 변경
             genBtn.disabled = true;
-            btnText.innerText = "AI 분석 및 문제 생성 중...";
+            btnText.innerText = "AI 문항 생성 중...";
             loader.classList.remove('hidden');
 
-            const systemPrompt = `당신은 증권시장론 전공 교수입니다. 제공된 텍스트를 분석하여 학습 목표에 부합하는 객관식 문제를 생성하세요.
-            반드시 다음 JSON 형식을 따르세요:
+            const systemPrompt = `당신은 대학 전공 교수이자 전문 출제 위원입니다. 제공된 자료를 바탕으로 고품질 객관식 문제를 생성하세요.
+            반드시 다음 JSON 형식을 엄수하세요:
             {
                 "questions": [
                     {
-                        "question": "문제 내용",
+                        "question": "문제 지문",
                         "options": ["보기1", "보기2", "보기3", "보기4", "보기5"],
                         "answerIndex": 0,
-                        "rationale": "정답에 대한 상세한 해설과 오답 방지 팁"
+                        "rationale": "이 정답이 도출되는 상세한 이유와 관련 개념 설명"
                     }
                 ]
             }
             - 문항 수: ${count}개
-            - 모든 문제는 5지 선다형입니다.
-            - 선택지 구성은 정답이 편중되지 않도록 무작위로 배치하세요.
-            - 해설(rationale)은 반드시 포함해야 하며, 학습자가 개념을 완벽히 이해할 수 있도록 상세히 작성하세요.`;
+            - 형식: 5지 선다형 (객관식)
+            - 해설(rationale): 모든 문제에 상세한 해설을 포함하세요.
+            - 난이도: 실제 대학 기말고사 수준으로 출제하세요.`;
 
             try {
-                // 지수 백오프를 적용한 API 호출 (실제 환경에서는 간단한 fetch 사용)
+                // Exponential Backoff Fetch
                 const fetchWithRetry = async (url, options, retries = 5, backoff = 1000) => {
                     try {
                         const res = await fetch(url, options);
@@ -191,7 +240,7 @@
                 renderExamPages(result.questions);
             } catch (error) {
                 console.error(error);
-                alert("문제 생성에 실패했습니다. 텍스트가 너무 짧거나 서버 오류일 수 있습니다. 다시 시도해 주세요.");
+                alert("문제 생성 중 오류가 발생했습니다. 자료 양을 조절하거나 잠시 후 다시 시도해 주세요.");
             } finally {
                 genBtn.disabled = false;
                 btnText.innerText = "AI 시험지 생성하기";
@@ -203,46 +252,40 @@
             const container = document.getElementById('exam-render-area');
             container.innerHTML = "";
 
-            const qPerPage = 20; // 20문제마다 페이지 넘김
+            const qPerPage = 20; 
             const totalQ = questions.length;
             const totalPages = Math.ceil(totalQ / qPerPage);
 
-            // 문제 페이지 생성
+            // 1. 문제 페이지들 생성
             for (let i = 0; i < totalPages; i++) {
                 const page = document.createElement('div');
                 page.className = "exam-page";
                 
-                // 첫 페이지만 큰 헤더, 나머지는 심플 헤더
-                let headerHtml = "";
-                if (i === 0) {
-                    headerHtml = `
-                        <div class="header-box text-center">
-                            <div class="text-sm font-bold text-slate-500 tracking-tighter">2026학년도 제1학기 기말고사 대비</div>
-                            <div class="text-4xl font-black my-4 tracking-tight">증권시장론 실전 모의평가</div>
-                            <div class="flex justify-between items-end mt-6">
-                                <div class="text-xl font-bold border-b-2 border-black pb-1 px-2 ml-1">제2장 금융투자상품의 이해</div>
-                                <div class="student-info mr-1">
-                                    <span>성명: ________________</span>
-                                    <span>번호: ________________</span>
-                                </div>
+                let header = (i === 0) ? `
+                    <div class="header-box text-center">
+                        <div class="text-xs font-bold text-gray-500 tracking-tighter">2026학년도 제1학기 기말고사 대비</div>
+                        <div class="text-4xl font-black my-4 tracking-tighter">AI 실전 모의평가</div>
+                        <div class="flex justify-between items-end mt-6">
+                            <div class="text-xl font-bold border-b-2 border-black pb-1 px-1">맞춤형 문제 은행</div>
+                            <div class="student-info">
+                                <span>성명: ________________</span>
+                                <span>번호: ________________</span>
                             </div>
-                        </div>`;
-                } else {
-                    headerHtml = `
-                        <div class="border-b border-slate-300 pb-2 mb-6 flex justify-between items-center">
-                            <div class="text-sm font-bold">증권시장론 실전 모의평가 (계속)</div>
-                            <div class="text-xs text-slate-400 font-bold">제2장 금융투자상품의 이해</div>
-                        </div>`;
-                }
+                        </div>
+                    </div>` : `
+                    <div class="border-b border-gray-300 pb-2 mb-6 flex justify-between items-center">
+                        <div class="text-sm font-bold text-gray-700">AI 실전 모의평가 (계속)</div>
+                        <div class="text-xs text-gray-400 font-bold">PAGE ${i + 1}</div>
+                    </div>`;
                 
-                page.innerHTML = headerHtml;
+                page.innerHTML = header;
 
-                const columnContainer = document.createElement('div');
-                columnContainer.className = "two-column";
-                columnContainer.innerHTML = '<div class="column-divider"></div>';
+                const columnGrid = document.createElement('div');
+                columnGrid.className = "two-column";
+                columnGrid.innerHTML = '<div class="column-divider"></div>';
 
-                const leftCol = document.createElement('div');
-                const rightCol = document.createElement('div');
+                const left = document.createElement('div');
+                const right = document.createElement('div');
 
                 const pageQs = questions.slice(i * qPerPage, (i + 1) * qPerPage);
                 const half = Math.ceil(pageQs.length / 2);
@@ -253,37 +296,36 @@
                         <div class="question-item">
                             <span class="question-num">${globalIdx}.</span> ${q.question}
                             <div class="options">
-                                ${q.options.map((opt, oIdx) => `<div class="option-item">${String.fromCharCode(9312 + oIdx)} ${opt}</div>`).join('')}
+                                ${q.options.map((opt, oIdx) => `<span class="option-item">${String.fromCharCode(9312 + oIdx)} ${opt}</span>`).join('')}
                             </div>
                         </div>`;
-                    
-                    if (idx < half) leftCol.innerHTML += qHtml;
-                    else rightCol.innerHTML += qHtml;
+                    if (idx < half) left.innerHTML += qHtml;
+                    else right.innerHTML += qHtml;
                 });
 
-                columnContainer.appendChild(leftCol);
-                columnContainer.appendChild(rightCol);
-                page.appendChild(columnContainer);
+                columnGrid.appendChild(left);
+                columnGrid.appendChild(right);
+                page.appendChild(columnGrid);
                 page.innerHTML += `<div class="page-footer">${i + 1} / ${totalPages + 1}</div>`;
                 container.appendChild(page);
             }
 
-            // 마지막 페이지: 정답 및 해설 (단독 페이지)
+            // 2. 정답 및 해설 페이지 (마지막 페이지에 단독 배치)
             const answerPage = document.createElement('div');
             answerPage.className = "exam-page";
             answerPage.innerHTML = `
                 <div class="header-box text-center">
-                    <div class="text-2xl font-black my-4">정답 및 상세 해설</div>
-                    <div class="text-sm text-slate-500 font-bold underline">학습 후 반드시 해설을 통해 개념을 보완하십시오.</div>
+                    <div class="text-3xl font-black my-5">정답 및 상세 해설</div>
+                    <div class="text-sm text-gray-500 font-bold underline">학습을 마친 후 정답과 개념을 대조하며 복습하세요.</div>
                 </div>
-                <div class="mt-8 space-y-5 text-[11px] leading-relaxed">
+                <div class="mt-8 space-y-6 text-[11px] leading-relaxed">
                     ${questions.map((q, idx) => `
-                        <div class="border-b border-slate-100 pb-2">
-                            <div class="flex items-center gap-4 mb-1">
-                                <span class="bg-blue-600 text-white px-2 py-0.5 rounded font-bold">문항 ${idx + 1}</span>
-                                <span class="font-black text-blue-800 text-sm">정답: ${String.fromCharCode(9312 + q.answerIndex)}</span>
+                        <div class="border-b border-gray-100 pb-3">
+                            <div class="flex items-center gap-4 mb-2">
+                                <span class="bg-indigo-600 text-white px-2.5 py-0.5 rounded-full font-bold">문항 ${idx + 1}</span>
+                                <span class="font-black text-indigo-900 text-sm">정답: ${String.fromCharCode(9312 + q.answerIndex)}</span>
                             </div>
-                            <div class="text-slate-700"><span class="font-bold text-black">[해설]</span> ${q.rationale}</div>
+                            <div class="text-gray-700 pl-1"><span class="font-bold text-black">[해설]</span> ${q.rationale}</div>
                         </div>
                     `).join('')}
                 </div>
@@ -294,30 +336,25 @@
 
         function downloadPDF() {
             const element = document.getElementById('exam-render-area');
-            if (element.innerText.includes("자료를 입력하고")) {
-                alert("먼저 시험지를 생성해주세요.");
+            if (element.innerText.includes("학습 자료를 입력하거나")) {
+                alert("시험지를 먼저 생성해 주세요.");
                 return;
             }
-
             const btn = event.currentTarget;
-            btn.innerText = "PDF 파일 생성 중...";
+            btn.innerText = "PDF 인코딩 중...";
             btn.disabled = true;
 
             const opt = {
                 margin: 0,
-                filename: '금융투자상품_이해_70문항_모의고사.pdf',
+                filename: 'AI_Exam_Mock_Test.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak: { mode: 'css' }
             };
 
             html2pdf().set(opt).from(element).save().then(() => {
-                btn.innerText = "PDF 저장";
-                btn.disabled = false;
-            }).catch(err => {
-                console.error(err);
-                btn.innerText = "PDF 저장";
+                btn.innerText = "PDF 다운로드";
                 btn.disabled = false;
             });
         }
