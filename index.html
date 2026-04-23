@@ -1,0 +1,580 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>금융투자상품의 이해 실전 모의고사 (50문항)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .control-bar {
+            background-color: #1f2937;
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* 각 페이지 설정 */
+        .exam-page {
+            background-color: white;
+            width: 210mm;
+            height: 297mm;
+            margin: 30px auto;
+            padding: 15mm;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            height: 100%;
+            position: relative;
+        }
+
+        .column-divider {
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 50%;
+            width: 1px;
+            background-color: #ccc;
+            transform: translateX(-50%);
+        }
+
+        .question-item {
+            margin-bottom: 25px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .question-num {
+            font-weight: bold;
+            margin-right: 4px;
+        }
+
+        /* 선택지 줄바꿈 스타일 */
+        .options div {
+            margin-left: 5px;
+            padding-left: 5px;
+        }
+
+        .header-box {
+            border-bottom: 3px solid black;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .student-info {
+            border: 2px solid black;
+            padding: 8px 20px;
+            display: inline-flex;
+            gap: 30px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 10mm;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media print {
+            body { background: none; }
+            .exam-page { 
+                margin: 0; 
+                box-shadow: none; 
+                width: 210mm; 
+                height: 297mm;
+            }
+            .no-print { display: none !important; }
+            .control-bar { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="control-bar no-print flex justify-center gap-6">
+        <button onclick="downloadPDF()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-8 rounded-full shadow-lg flex items-center gap-2 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            PDF 다운로드 (전체 6페이지)
+        </button>
+        <button onclick="window.print()" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2.5 px-8 rounded-full shadow-lg flex items-center gap-2 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            인쇄하기
+        </button>
+    </div>
+
+    <div id="exam-wrapper">
+        <!-- 페이지 1: 1~10번 -->
+        <div class="exam-page">
+            <div class="header-box text-center">
+                <div class="text-sm font-bold text-gray-600 tracking-widest">2026학년도 제1학기 기말고사 대비</div>
+                <div class="text-4xl font-black my-4">증권시장론 모의평가</div>
+                <div class="flex justify-between items-end">
+                    <div class="text-xl font-bold border-b-2 border-black pb-1 ml-2">제2장 금융투자상품의 이해 (1)</div>
+                    <div class="student-info mr-2">
+                        <span>성명: ________________</span>
+                        <span>번호: ________________</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">1.</span> 자본시장법상 '금융투자상품'의 정의 중 옳은 것은?
+                        <div class="options">
+                            <div>① 이익 취득만을 목적으로 한다.</div>
+                            <div>② 장래 특정 시점의 지급 약정은 제외된다.</div>
+                            <div>③ 투자원본이 회수금액을 초과할 위험이 있어야 한다.</div>
+                            <div>④ 판매수수료는 투자원본에 포함된다.</div>
+                            <div>⑤ 발행인의 신용위험은 권리의 내적 요소이다.</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">2.</span> 투자성 판단 시 '투자원본'에서 명시적으로 제외되는 항목은?
+                        <div class="options">
+                            <div>① 해지수수료</div><div>② 판매수수료</div><div>③ 운용수익</div><div>④ 원금</div><div>⑤ 배당금</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">3.</span> '증권'과 '파생상품'을 나누는 가장 핵심적인 기준은?
+                        <div class="options">
+                            <div>① 기초자산 유무</div><div>② 거래소 상장 여부</div><div>③ 원금초과손실 가능성</div><div>④ 수익률</div><div>⑤ 발행인</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">4.</span> 다음 중 자본시장법상 증권의 6가지 유형이 아닌 것은?
+                        <div class="options">
+                            <div>① 채무증권</div><div>② 지분증권</div><div>③ 수익증권</div><div>④ 투자계약증권</div><div>⑤ 선물계약</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">5.</span> 다음 중 '비금융투자상품'에 해당하는 것을 고르시오.
+                        <div class="p-1 border border-gray-400 my-1 bg-gray-50 text-center text-xs italic">ㄱ. 국채 &nbsp; ㄴ. 보통주 &nbsp; ㄷ. 정기예금 &nbsp; ㄹ. 보험상품</div>
+                        <div class="options">
+                            <div>① ㄱ, ㄴ</div><div>② ㄴ, ㄷ</div><div>③ ㄷ, ㄹ</div><div>④ ㄱ, ㄹ</div><div>⑤ ㄱ, ㄷ</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">6.</span> 소유지분청구권을 나타내며 자기자본 조달수단으로 쓰이는 증권은?
+                        <div class="options">
+                            <div>① 채무증권</div><div>② 지분증권</div><div>③ 수익증권</div><div>④ 파생결합증권</div><div>⑤ 예탁증권</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">7.</span> 투자신탁의 수익권을 나타내는 증권의 명칭은?
+                        <div class="options">
+                            <div>① 지분증권</div><div>② 채무증권</div><div>③ 수익증권</div><div>④ 투자계약증권</div><div>⑤ 증권예탁증권</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">8.</span> 파생상품 중 '어느 한쪽의 의사표시에 의해 거래를 성립시킬 권리'는?
+                        <div class="options">
+                            <div>① 선물</div><div>② 옵션</div><div>③ 스왑</div><div>④ 선도</div><div>⑤ 현물</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">9.</span> 주식의 본질적 의미에 대한 설명 중 틀린 것은?
+                        <div class="options">
+                            <div>① 자본의 구성 단위이다.</div><div>② 주주의 지위를 의미한다.</div><div>③ 자기자본을 구성한다.</div><div>④ 원금 상환 의무가 있는 부채이다.</div><div>⑤ 유한책임이 적용된다.</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">10.</span> 주주가 경영에 참여하기 위해 행사하는 '의결권'은 어디에 속하나?
+                        <div class="options">
+                            <div>① 자익권</div><div>② 공익권</div><div>③ 배당권</div><div>④ 청구권</div><div>⑤ 양도권</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">1 / 6</div>
+        </div>
+
+        <!-- 페이지 2: 11~20번 -->
+        <div class="exam-page">
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">11.</span> 배당 순위는 우선하나 일반적으로 의결권이 제한되는 주식은?
+                        <div class="options">
+                            <div>① 후배주</div><div>② 혼합주</div><div>③ 우선주</div><div>④ 상환주</div><div>⑤ 보통주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">12.</span> 배당 부족분을 차후에 누적하여 받을 권리가 있는 주식은?
+                        <div class="options">
+                            <div>① 누적적 우선주</div><div>② 비누적적 우선주</div><div>③ 참가적 우선주</div><div>④ 전환 우선주</div><div>⑤ 보통주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">13.</span> 상장법인의 무의결권 주식 발행 한도는 발행주식 총수의 얼마인가?
+                        <div class="options">
+                            <div>① 1/4</div><div>② 1/3</div><div>③ 1/2</div><div>④ 2/3</div><div>⑤ 제한 없음</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">14.</span> 주권에 액면가가 적혀있지 않고 지분율만 표시된 주식은?
+                        <div class="options">
+                            <div>① 액면주</div><div>② 무액면주</div><div>③ 기명주</div><div>④ 무기명주</div><div>⑤ 상환주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">15.</span> 우리나라에서 주주 확정의 곤란함으로 인해 2014년에 폐지된 것은?
+                        <div class="options">
+                            <div>① 기명주</div><div>② 무기명주</div><div>③ 우선주</div><div>④ 액면주</div><div>⑤ 전환주</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">16.</span> 이익으로써 일정 기간 후 상환하여 소각하기로 예정된 주식은?
+                        <div class="options">
+                            <div>① 상환주</div><div>② 전환주</div><div>③ 보증주</div><div>④ 무상주</div><div>⑤ 유상주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">17.</span> 대금 납입 없이 발행되어 실질적 자금 유입이 없는 주식은?
+                        <div class="options">
+                            <div>① 유상주</div><div>② 무상주</div><div>③ 액면주</div><div>④ 기명주</div><div>⑤ 보통주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">18.</span> 2019년부터 시행된 종이 증권 없는 증권 사무 처리 제도는?
+                        <div class="options">
+                            <div>① 증권예탁제도</div><div>② 전자증권제도</div><div>③ 보호예수제도</div><div>④ 명의개서제도</div><div>⑤ 신탁제도</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">19.</span> 채권(Bond)에 대한 설명 중 틀린 것은?
+                        <div class="options">
+                            <div>① 장기 자금 조달 수단이다.</div><div>② 유통시장에서 매매 가능하다.</div><div>③ 이익 발생 여부와 상관없이 이자를 준다.</div><div>④ 만기가 없는 영구증권이다.</div><div>⑤ 확정이자부 증권이다.</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">20.</span> 채권의 특성 중 '현금화 가능성'을 의미하는 용어는?
+                        <div class="options">
+                            <div>① 수익성</div><div>② 안정성</div><div>③ 유동성</div><div>④ 확실성</div><div>⑤ 기한성</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">2 / 6</div>
+        </div>
+
+        <!-- 페이지 3: 21~30번 -->
+        <div class="exam-page">
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">21.</span> 중앙 정부가 발행하는 채권의 명칭은?
+                        <div class="options">
+                            <div>① 지방채</div><div>② 특수채</div><div>③ 국채</div><div>④ 금융채</div><div>⑤ 회사채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">22.</span> 서울시나 경기도 등 지자체가 발행하는 채권은?
+                        <div class="options">
+                            <div>① 국채</div><div>② 지방채</div><div>③ 특수채</div><div>④ 금융채</div><div>⑤ 회사채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">23.</span> 채권 권면에 붙은 이표로 정기적 이자를 받는 채권은?
+                        <div class="options">
+                            <div>① 할인채</div><div>② 복리채</div><div>③ 이표채</div><div>④ 단리채</div><div>⑤ 무이표채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">24.</span> 액면가에서 만기까지의 이자를 미리 떼고 싸게 파는 채권은?
+                        <div class="options">
+                            <div>① 이표채</div><div>② 복리채</div><div>③ 할인채</div><div>④ 변동금리채</div><div>⑤ 영구채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">25.</span> 채권자가 발행회사의 주식으로 바꿀 수 있는 권리가 부여된 사채는?
+                        <div class="options">
+                            <div>① BW</div><div>② EB</div><div>③ CB</div><div>④ PB</div><div>⑤ BO</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">26.</span> 신주를 살 권리만 있고 채권은 그대로 남는 사채는?
+                        <div class="options">
+                            <div>① CB</div><div>② BW</div><div>③ EB</div><div>④ PB</div><div>⑤ BO</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">27.</span> 발행사가 보유한 타사 유가증권으로 교환 가능한 채권은?
+                        <div class="options">
+                            <div>① CB</div><div>② BW</div><div>③ EB</div><div>④ PB</div><div>⑤ BO</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">28.</span> 채권자가 회사에 상환을 청구할 수 있는 권리는?
+                        <div class="options">
+                            <div>① 콜옵션</div><div>② 풋옵션</div><div>③ 전환권</div><div>④ 인수권</div><div>⑤ 교환권</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">29.</span> 가격 변동 위험을 줄이기 위해 선물 포지션을 잡는 행위는?
+                        <div class="options">
+                            <div>① 투기</div><div>② 헤지(Hedge)</div><div>③ 차익거래</div><div>④ 공매도</div><div>⑤ 레버리지</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">30.</span> 선물거래와 선도거래의 결정적 차이점으로 옳은 것은?
+                        <div class="options">
+                            <div>① 선도는 표준화됨</div><div>② 선물은 일일정산함</div><div>③ 선도는 거래소 거래</div><div>④ 선물은 보증 없음</div><div>⑤ 선도는 신용위험 없음</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">3 / 6</div>
+        </div>
+
+        <!-- 페이지 4: 31~40번 -->
+        <div class="exam-page">
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">31.</span> 자산을 미리 정한 가격으로 '살 수 있는 권리'는?
+                        <div class="options">
+                            <div>① 풋옵션</div><div>② 콜옵션</div><div>③ 스왑</div><div>④ 선도</div><div>⑤ 선물</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">32.</span> 옵션 행사 시점이 만기일로만 제한되는 유형은?
+                        <div class="options">
+                            <div>① 미국형</div><div>② 유럽형</div><div>③ 아시아형</div><div>④ 한국형</div><div>⑤ 일본형</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">33.</span> 다수 자금을 전문가가 운용하고 수익을 배분하는 기구는?
+                        <div class="options">
+                            <div>① 직접투자기구</div><div>② 집합투자기구(펀드)</div><div>③ 일임투자</div><div>④ 자문투자</div><div>⑤ 사적조합</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">34.</span> 투자신탁 형태의 펀드가 발행하는 증권 명칭은?
+                        <div class="options">
+                            <div>① 지분증권</div><div>② 수익증권</div><div>③ 채무증권</div><div>④ 옵션</div><div>⑤ 선물</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">35.</span> 주식발행가액 중 액면가를 초과하는 금액은 어디에 적립하나?
+                        <div class="options">
+                            <div>① 자본금</div><div>② 이익잉여금</div><div>③ 주식발행초과금</div><div>④ 당기순이익</div><div>⑤ 배당금</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">36.</span> 선물거래에서 결제 이행을 보증하는 주체는?
+                        <div class="options">
+                            <div>① 은행</div><div>② 투자자</div><div>③ 청산소(거래소)</div><div>④ 증권사</div><div>⑤ 금융감독원</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">37.</span> 보통주보다 권리가 열위에 있는 주식은?
+                        <div class="options">
+                            <div>① 우선주</div><div>② 후배주</div><div>③ 상환주</div><div>④ 보통주</div><div>⑤ 전환주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">38.</span> 파생상품 기초자산으로 적절하지 않은 것은?
+                        <div class="options">
+                            <div>① 주가지수</div><div>② 원유</div><div>③ 돼지고기</div><div>④ 신용도</div><div>⑤ 경영권</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">39.</span> 금리 상승 시 채권 가격의 일반적인 움직임은?
+                        <div class="options">
+                            <div>① 상승</div><div>② 하락</div><div>③ 불변</div><div>④ 액면 유지</div><div>⑤ 금리와 무관</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">40.</span> 회사 형태의 집합투자기구가 발행하는 증권은?
+                        <div class="options">
+                            <div>① 수익증권</div><div>② 주식(지분증권)</div><div>③ 채무증권</div><div>④ 옵션</div><div>⑤ 선물</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">4 / 6</div>
+        </div>
+
+        <!-- 페이지 5: 41~50번 -->
+        <div class="exam-page">
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">41.</span> 미국달러를 기초자산으로 하는 파생상품 분류는?
+                        <div class="options">
+                            <div>① 주가지수상품</div><div>② 채권금리상품</div><div>③ 통화상품</div><div>④ 상품파생</div><div>⑤ ETF상품</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">42.</span> 주주가 자신의 납입 자본 내에서만 책임지는 원칙은?
+                        <div class="options">
+                            <div>① 무한책임</div><div>② 유한책임</div><div>③ 연대책임</div><div>④ 간접책임</div><div>⑤ 배상책임</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">43.</span> 이자가 재투자되어 만기에 원리금을 한꺼번에 주는 채권은?
+                        <div class="options">
+                            <div>① 이표채</div><div>② 복리채</div><div>③ 할인채</div><div>④ 단리채</div><div>⑤ 변동채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">44.</span> 권리 행사 시 신주를 발행하여 교환하는 채권은?
+                        <div class="options">
+                            <div>① CB</div><div>② EB</div><div>③ BW</div><div>④ PB</div><div>⑤ BO</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">45.</span> 주식 액면가 최소 금액은 얼마 이상인가?
+                        <div class="options">
+                            <div>① 10원</div><div>② 100원</div><div>③ 500원</div><div>④ 1,000원</div><div>⑤ 5,000원</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">46.</span> 채권의 3대 요건에 포함되지 않는 것은?
+                        <div class="options">
+                            <div>① 수익성</div><div>② 안정성</div><div>③ 유동성</div><div>④ 경영권</div><div>⑤ 기한성</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">47.</span> 기초자산으로부터 파생된 가치를 갖는 교환이나 약정은?
+                        <div class="options">
+                            <div>① 증권</div><div>② 예금</div><div>③ 파생상품</div><div>④ 수익증권</div><div>⑤ 보험</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">48.</span> 우리나라 국고채는 어느 기관이 발행하나?
+                        <div class="options">
+                            <div>① 한국은행</div><div>② 기획재정부(정부)</div><div>③ 산업은행</div><div>④ 증권거래소</div><div>⑤ 시중은행</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">49.</span> 주식과 채권의 공통점으로 옳은 것은?
+                        <div class="options">
+                            <div>① 만기가 있다.</div><div>② 이자를 준다.</div><div>③ 경영권이 있다.</div><div>④ 유통시장이 존재한다.</div><div>⑤ 원금이 보장된다.</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">50.</span> 펀드 투자 결과가 투자자에게 배분되는 원칙은?
+                        <div class="options">
+                            <div>① 원금보장 원칙</div><div>② 예금자보호 원칙</div><div>③ 실적배당 원칙</div><div>④ 확정수익 원칙</div><div>⑤ 책임면제 원칙</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">5 / 6</div>
+        </div>
+
+        <!-- 페이지 6: 정답지 -->
+        <div class="exam-page">
+            <div class="header-box text-center">
+                <div class="text-2xl font-black my-4">정 답 표</div>
+                <div class="text-sm text-gray-500">증권시장론 제2장 금융투자상품의 이해</div>
+            </div>
+            
+            <div class="mt-10 p-10 border-2 border-black rounded-xl">
+                <h3 class="text-center font-bold text-xl mb-8">문항별 정답</h3>
+                <div class="grid grid-cols-5 gap-y-6 gap-x-4 text-center">
+                    <div class="border-b pb-1">1번: ③</div><div class="border-b pb-1">2번: ②</div><div class="border-b pb-1">3번: ③</div><div class="border-b pb-1">4번: ⑤</div><div class="border-b pb-1">5번: ③</div>
+                    <div class="border-b pb-1">6번: ②</div><div class="border-b pb-1">7번: ②</div><div class="border-b pb-1">8번: ②</div><div class="border-b pb-1">9번: ④</div><div class="border-b pb-1">10번: ②</div>
+                    <div class="border-b pb-1">11번: ③</div><div class="border-b pb-1">12번: ①</div><div class="border-b pb-1">13번: ③</div><div class="border-b pb-1">14번: ②</div><div class="border-b pb-1">15번: ②</div>
+                    <div class="border-b pb-1">16번: ①</div><div class="border-b pb-1">17번: ②</div><div class="border-b pb-1">18번: ②</div><div class="border-b pb-1">19번: ④</div><div class="border-b pb-1">20번: ③</div>
+                    <div class="border-b pb-1">21번: ③</div><div class="border-b pb-1">22번: ②</div><div class="border-b pb-1">23번: ③</div><div class="border-b pb-1">24번: ③</div><div class="border-b pb-1">25번: ③</div>
+                    <div class="border-b pb-1">26번: ②</div><div class="border-b pb-1">27번: ③</div><div class="border-b pb-1">28번: ②</div><div class="border-b pb-1">29번: ②</div><div class="border-b pb-1">30번: ②</div>
+                    <div class="border-b pb-1">31번: ②</div><div class="border-b pb-1">32번: ②</div><div class="border-b pb-1">33번: ②</div><div class="border-b pb-1">34번: ②</div><div class="border-b pb-1">35번: ③</div>
+                    <div class="border-b pb-1">36번: ③</div><div class="border-b pb-1">37번: ②</div><div class="border-b pb-1">38번: ⑤</div><div class="border-b pb-1">39번: ②</div><div class="border-b pb-1">40번: ②</div>
+                    <div class="border-b pb-1">41번: ③</div><div class="border-b pb-1">42번: ②</div><div class="border-b pb-1">43번: ②</div><div class="border-b pb-1">44번: ①</div><div class="border-b pb-1">45번: ②</div>
+                    <div class="border-b pb-1">46번: ④</div><div class="border-b pb-1">47번: ③</div><div class="border-b pb-1">48번: ②</div><div class="border-b pb-1">49번: ④</div><div class="border-b pb-1">50번: ③</div>
+                </div>
+            </div>
+            
+            <div class="mt-20 text-center text-gray-400">
+                <p>본 모의평가는 학습 목적으로 제작되었습니다.</p>
+                <p>© 2026 증권시장론 학습 지원 시스템</p>
+            </div>
+            <div class="page-number">6 / 6</div>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('exam-wrapper');
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "PDF 생성 중 (잠시만 기다려주세요)...";
+            btn.disabled = true;
+
+            const opt = {
+                margin: 0,
+                filename: '금융투자상품의_이해_모의고사.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: 'css' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>
+
+```
