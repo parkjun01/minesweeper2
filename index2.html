@@ -1,472 +1,580 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Bomb, Flag, Smile, Frown, Trophy, Volume2, VolumeX } from 'lucide-react';
-
-// Difficulty settings
-const DIFFICULTIES = {
-  beginner: { rows: 9, cols: 9, mines: 10, name: 'Beginner' },
-  intermediate: { rows: 16, cols: 16, mines: 40, name: 'Intermediate' },
-  expert: { rows: 16, cols: 30, mines: 99, name: 'Expert' }
-};
-
-// Number color mapping
-const NUMBER_COLORS = {
-  1: 'text-blue-500',
-  2: 'text-green-500',
-  3: 'text-red-500',
-  4: 'text-purple-500',
-  5: 'text-yellow-600',
-  6: 'text-teal-500',
-  7: 'text-black',
-  8: 'text-gray-600'
-};
-
-// Sound effect generator using Web Audio API
-const playSound = (type, enabled) => {
-  if (!enabled) return;
-  try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!window.audioCtx) {
-      window.audioCtx = new AudioContext();
-    }
-    const ctx = window.audioCtx;
-    if (ctx.state === 'suspended') ctx.resume();
-
-    const osc = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-    osc.connect(gainNode);
-    gainNode.connect(ctx.destination);
-
-    const now = ctx.currentTime;
-
-    if (type === 'reveal') {
-      // Clear and short click sound
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, now);
-      osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
-      gainNode.gain.setValueAtTime(0.05, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-      osc.start(now);
-      osc.stop(now + 0.05);
-    } else if (type === 'flag') {
-      // Dull flag sound
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(300, now);
-      osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
-      gainNode.gain.setValueAtTime(0.08, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-      osc.start(now);
-      osc.stop(now + 0.05);
-    } else if (type === 'mine') {
-      // Low and long explosion sound
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(100, now);
-      osc.frequency.exponentialRampToValueAtTime(20, now + 0.5);
-      gainNode.gain.setValueAtTime(0.1, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-      osc.start(now);
-      osc.stop(now + 0.5);
-    } else if (type === 'win') {
-      // Victory arpeggio (C-E-G-C)
-      [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
-        const oscWin = ctx.createOscillator();
-        const gainWin = ctx.createGain();
-        oscWin.type = 'sine';
-        oscWin.frequency.value = freq;
-        oscWin.connect(gainWin);
-        gainWin.connect(ctx.destination);
-        gainWin.gain.setValueAtTime(0, now + i * 0.1);
-        gainWin.gain.linearRampToValueAtTime(0.1, now + i * 0.1 + 0.05);
-        gainWin.gain.linearRampToValueAtTime(0, now + i * 0.1 + 0.15);
-        oscWin.start(now + i * 0.1);
-        oscWin.stop(now + i * 0.1 + 0.2);
-      });
-    }
-  } catch (e) {
-    console.error("Audio playback failed", e);
-  }
-};
-
-export default function App() {
-  const [difficulty, setDifficulty] = useState(DIFFICULTIES.beginner);
-  const [board, setBoard] = useState([]);
-  const [gameStatus, setGameStatus] = useState('idle'); // idle, playing, won, lost
-  const [minesLeft, setMinesLeft] = useState(0);
-  const [time, setTime] = useState(0);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-
-  // Create empty board
-  const createEmptyBoard = useCallback((rows, cols) => {
-    return Array.from({ length: rows }, (_, r) =>
-      Array.from({ length: cols }, (_, c) => ({
-        r,
-        c,
-        isMine: false,
-        isRevealed: false,
-        isFlagged: false,
-        neighborMines: 0,
-        exploded: false,
-      }))
-    );
-  }, []);
-
-  // Initialize game
-  const initGame = useCallback(() => {
-    setBoard(createEmptyBoard(difficulty.rows, difficulty.cols));
-    setGameStatus('idle');
-    setMinesLeft(difficulty.mines);
-    setTime(0);
-  }, [difficulty, createEmptyBoard]);
-
-  useEffect(() => {
-    initGame();
-  }, [initGame]);
-
-  // Timer
-  useEffect(() => {
-    let timer;
-    if (gameStatus === 'playing') {
-      timer = setInterval(() => setTime((prev) => prev + 1), 1000);
-    }
-    return () => clearInterval(timer);
-  }, [gameStatus]);
-
-  // Get neighbor tile coordinates
-  const getNeighbors = (r, c, rows, cols) => {
-    const neighbors = [];
-    for (let i = -1; i <= 1; i++) {
-      for (let j = -1; j <= 1; j++) {
-        if (i === 0 && j === 0) continue;
-        const nr = r + i;
-        const nc = c + j;
-        if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
-          neighbors.push([nr, nc]);
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>금융투자상품의 이해 실전 모의고사 (50문항)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
         }
-      }
-    }
-    return neighbors;
-  };
 
-  // Place mines on first click (ensure first click is safe)
-  const placeMinesAndCalculate = (currentBoard, firstR, firstC) => {
-    let minesPlaced = 0;
-    const rows = difficulty.rows;
-    const cols = difficulty.cols;
-
-    while (minesPlaced < difficulty.mines) {
-      const r = Math.floor(Math.random() * rows);
-      const c = Math.floor(Math.random() * cols);
-
-      // Do not place mines on the first clicked cell and its 8 neighbors (perfect safe start)
-      const isSafeZone = Math.abs(r - firstR) <= 1 && Math.abs(c - firstC) <= 1;
-
-      if (!currentBoard[r][c].isMine && !isSafeZone) {
-        currentBoard[r][c].isMine = true;
-        minesPlaced++;
-      }
-    }
-
-    // Calculate neighboring mines
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        if (!currentBoard[r][c].isMine) {
-          let count = 0;
-          const neighbors = getNeighbors(r, c, rows, cols);
-          neighbors.forEach(([nr, nc]) => {
-            if (currentBoard[nr][nc].isMine) count++;
-          });
-          currentBoard[r][c].neighborMines = count;
+        .control-bar {
+            background-color: #1f2937;
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-      }
-    }
-    return currentBoard;
-  };
 
-  // Flood fill for 0-mine areas
-  const floodFill = (currentBoard, startR, startC) => {
-    const rows = difficulty.rows;
-    const cols = difficulty.cols;
-    const queue = [[startR, startC]];
-    currentBoard[startR][startC].isRevealed = true;
-
-    while (queue.length > 0) {
-      const [r, c] = queue.shift();
-      const neighbors = getNeighbors(r, c, rows, cols);
-
-      neighbors.forEach(([nr, nc]) => {
-        const neighbor = currentBoard[nr][nc];
-        if (!neighbor.isRevealed && !neighbor.isFlagged) {
-          neighbor.isRevealed = true;
-          if (neighbor.neighborMines === 0) {
-            queue.push([nr, nc]);
-          }
+        /* 각 페이지 설정 */
+        .exam-page {
+            background-color: white;
+            width: 210mm;
+            height: 297mm;
+            margin: 30px auto;
+            padding: 15mm;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
         }
-      });
-    }
-  };
 
-  // Check win condition
-  const checkWin = (currentBoard) => {
-    let revealedCount = 0;
-    const totalSafeCells = difficulty.rows * difficulty.cols - difficulty.mines;
-
-    for (let r = 0; r < difficulty.rows; r++) {
-      for (let c = 0; c < difficulty.cols; c++) {
-        if (currentBoard[r][c].isRevealed && !currentBoard[r][c].isMine) {
-          revealedCount++;
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            height: 100%;
+            position: relative;
         }
-      }
-    }
 
-    if (revealedCount === totalSafeCells) {
-      setGameStatus('won');
-      playSound('win', soundEnabled);
-      // Flag all remaining mines
-      const newBoard = [...currentBoard];
-      for (let r = 0; r < difficulty.rows; r++) {
-        for (let c = 0; c < difficulty.cols; c++) {
-          if (newBoard[r][c].isMine) {
-            newBoard[r][c].isFlagged = true;
-          }
+        .column-divider {
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 50%;
+            width: 1px;
+            background-color: #ccc;
+            transform: translateX(-50%);
         }
-      }
-      setMinesLeft(0);
-      return true;
-    }
-    return false;
-  };
 
-  // Reveal all mines (on game over)
-  const revealAllMines = (currentBoard) => {
-    for (let r = 0; r < difficulty.rows; r++) {
-      for (let c = 0; c < difficulty.cols; c++) {
-        if (currentBoard[r][c].isMine) {
-          currentBoard[r][c].isRevealed = true;
+        .question-item {
+            margin-bottom: 25px;
+            font-size: 13px;
+            line-height: 1.6;
         }
-      }
-    }
-  };
 
-  // Left click handler
-  const handleLeftClick = (r, c) => {
-    if (gameStatus === 'won' || gameStatus === 'lost') return;
-    if (board[r][c].isRevealed || board[r][c].isFlagged) return;
+        .question-num {
+            font-weight: bold;
+            margin-right: 4px;
+        }
 
-    // Browser AudioContext requires user gesture on first start
-    if (soundEnabled && (!window.audioCtx || window.audioCtx.state === 'suspended')) {
-      playSound('reveal', false); // Dummy call for context initialization
-    }
+        /* 선택지 줄바꿈 스타일 */
+        .options div {
+            margin-left: 5px;
+            padding-left: 5px;
+        }
 
-    let newBoard = board.map(row => row.map(cell => ({ ...cell })));
+        .header-box {
+            border-bottom: 3px solid black;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
 
-    if (gameStatus === 'idle') {
-      newBoard = placeMinesAndCalculate(newBoard, r, c);
-      setGameStatus('playing');
-    }
+        .student-info {
+            border: 2px solid black;
+            padding: 8px 20px;
+            display: inline-flex;
+            gap: 30px;
+            font-size: 14px;
+            font-weight: bold;
+        }
 
-    if (newBoard[r][c].isMine) {
-      revealAllMines(newBoard);
-      newBoard[r][c].exploded = true;
-      setBoard(newBoard);
-      setGameStatus('lost');
-      playSound('mine', soundEnabled);
-      return;
-    }
+        .page-number {
+            position: absolute;
+            bottom: 10mm;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #666;
+        }
 
-    if (newBoard[r][c].neighborMines === 0) {
-      floodFill(newBoard, r, c);
-    } else {
-      newBoard[r][c].isRevealed = true;
-    }
-
-    setBoard(newBoard);
-    
-    if (!checkWin(newBoard)) {
-      playSound('reveal', soundEnabled);
-    }
-  };
-
-  // Right click handler (Flag)
-  const handleRightClick = (e, r, c) => {
-    e.preventDefault();
-    if (gameStatus === 'won' || gameStatus === 'lost' || board[r][c].isRevealed) return;
-
-    const newBoard = board.map(row => row.map(cell => ({ ...cell })));
-    const cell = newBoard[r][c];
-
-    if (!cell.isFlagged && minesLeft > 0) {
-      cell.isFlagged = true;
-      setMinesLeft(prev => prev - 1);
-      playSound('flag', soundEnabled);
-    } else if (cell.isFlagged) {
-      cell.isFlagged = false;
-      setMinesLeft(prev => prev + 1);
-      playSound('flag', soundEnabled);
-    }
-
-    setBoard(newBoard);
-  };
-
-  // Double click handler (Fast reveal - Chord)
-  const handleDoubleClick = (e, r, c) => {
-    e.preventDefault();
-    if (gameStatus !== 'playing' || !board[r][c].isRevealed) return;
-    
-    const cell = board[r][c];
-    if (cell.neighborMines === 0) return;
-
-    const neighbors = getNeighbors(r, c, difficulty.rows, difficulty.cols);
-    let flaggedCount = 0;
-    
-    neighbors.forEach(([nr, nc]) => {
-      if (board[nr][nc].isFlagged) flaggedCount++;
-    });
-
-    // If flag count matches neighbor mines, open remaining tiles
-    if (flaggedCount === cell.neighborMines) {
-      let newBoard = board.map(row => row.map(cell => ({ ...cell })));
-      let hitMine = false;
-      let openedCount = 0;
-
-      neighbors.forEach(([nr, nc]) => {
-        const neighbor = newBoard[nr][nc];
-        if (!neighbor.isRevealed && !neighbor.isFlagged) {
-          if (neighbor.isMine) {
-            hitMine = true;
-            neighbor.exploded = true;
-          } else {
-            openedCount++;
-            if (neighbor.neighborMines === 0) {
-              floodFill(newBoard, nr, nc);
-            } else {
-              neighbor.isRevealed = true;
+        @media print {
+            body { background: none; }
+            .exam-page { 
+                margin: 0; 
+                box-shadow: none; 
+                width: 210mm; 
+                height: 297mm;
             }
-          }
+            .no-print { display: none !important; }
+            .control-bar { display: none !important; }
         }
-      });
+    </style>
+</head>
+<body>
 
-      if (hitMine) {
-        revealAllMines(newBoard);
-        setGameStatus('lost');
-        playSound('mine', soundEnabled);
-      } else {
-        if (!checkWin(newBoard) && openedCount > 0) {
-          playSound('reveal', soundEnabled);
-        }
-      }
-      setBoard(newBoard);
-    }
-  };
-
-  // UI formatting
-  const formatNumber = (num) => {
-    return num.toString().padStart(3, '0');
-  };
-
-  return (
-    <div className="min-h-screen bg-slate-100 flex flex-col items-center py-8 font-sans selection:bg-transparent relative">
-      
-      {/* Title and controls */}
-      <div className="mb-6 text-center relative w-full max-w-2xl px-4">
-        
-        {/* Sound toggle button */}
-        <button 
-          onClick={() => setSoundEnabled(!soundEnabled)}
-          className="absolute right-4 top-0 p-2 text-slate-500 hover:text-slate-800 transition-colors bg-white rounded-full shadow-sm"
-          title={soundEnabled ? "Mute Sound" : "Enable Sound"}
-        >
-          {soundEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
+    <div class="control-bar no-print flex justify-center gap-6">
+        <button onclick="downloadPDF()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-8 rounded-full shadow-lg flex items-center gap-2 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            PDF 다운로드 (전체 6페이지)
         </button>
-
-        <h1 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center gap-2">
-          <Bomb className="text-slate-700" size={32} />
-          Minesweeper
-        </h1>
-        <div className="flex gap-2 justify-center">
-          {Object.entries(DIFFICULTIES).map(([key, diff]) => (
-            <button
-              key={key}
-              onClick={() => setDifficulty(diff)}
-              className={`px-4 py-2 rounded shadow-sm transition-colors text-sm font-semibold
-                ${difficulty.name === diff.name 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-white text-slate-700 hover:bg-slate-50'}`}
-            >
-              {diff.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Game board container */}
-      <div className="bg-slate-300 p-4 rounded-lg shadow-xl border-4 border-t-slate-200 border-l-slate-200 border-b-slate-400 border-r-slate-400 max-w-full overflow-auto">
-        
-        {/* Status bar (Header) */}
-        <div className="flex justify-between items-center bg-slate-800 p-3 rounded mb-4 border-4 border-t-slate-600 border-l-slate-600 border-b-slate-900 border-r-slate-900">
-          <div className="text-red-500 font-mono text-3xl font-bold tracking-wider w-20 text-center bg-black px-1 rounded shadow-inner">
-            {formatNumber(minesLeft)}
-          </div>
-          
-          <button 
-            onClick={initGame}
-            className="bg-slate-300 p-2 rounded shadow border-4 border-t-white border-l-white border-b-slate-500 border-r-slate-500 active:border-t-slate-500 active:border-l-slate-500 active:border-b-white active:border-r-white transition-all transform active:scale-95"
-          >
-            {gameStatus === 'idle' || gameStatus === 'playing' ? <Smile size={28} className="text-yellow-600" /> : null}
-            {gameStatus === 'lost' ? <Frown size={28} className="text-red-600" /> : null}
-            {gameStatus === 'won' ? <Trophy size={28} className="text-yellow-500" /> : null}
-          </button>
-
-          <div className="text-red-500 font-mono text-3xl font-bold tracking-wider w-20 text-center bg-black px-1 rounded shadow-inner">
-            {formatNumber(time > 999 ? 999 : time)}
-          </div>
-        </div>
-
-        {/* Grid area */}
-        <div 
-          className="bg-slate-400 border-4 border-t-slate-500 border-l-slate-500 border-b-slate-200 border-r-slate-200"
-          style={{ 
-            display: 'grid', 
-            gridTemplateColumns: `repeat(${difficulty.cols}, minmax(32px, 32px))`,
-            gap: '1px'
-          }}
-          onContextMenu={(e) => e.preventDefault()}
-        >
-          {board.map((row, r) => 
-            row.map((cell, c) => (
-              <div
-                key={`${r}-${c}`}
-                onClick={() => handleLeftClick(r, c)}
-                onContextMenu={(e) => handleRightClick(e, r, c)}
-                onDoubleClick={(e) => handleDoubleClick(e, r, c)}
-                className={`w-8 h-8 flex items-center justify-center font-bold text-lg select-none transition-colors duration-100
-                  ${!cell.isRevealed ? 'bg-slate-300 border-4 border-t-slate-100 border-l-slate-100 border-b-slate-500 border-r-slate-500 hover:bg-slate-200 cursor-pointer' : ''}
-                  ${cell.isRevealed ? 'bg-slate-200 border border-slate-300/50' : ''}
-                  ${cell.exploded ? '!bg-red-500' : ''}
-                `}
-              >
-                {!cell.isRevealed && cell.isFlagged && (
-                  <Flag size={18} className="text-red-500 drop-shadow-sm" fill="currentColor" />
-                )}
-                
-                {cell.isRevealed && cell.isMine && (
-                  <Bomb size={20} className={cell.exploded ? "text-white" : "text-slate-800"} />
-                )}
-                
-                {cell.isRevealed && !cell.isMine && cell.neighborMines > 0 && (
-                  <span className={`${NUMBER_COLORS[cell.neighborMines]} drop-shadow-sm`}>
-                    {cell.neighborMines}
-                  </span>
-                )}
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-      
-      <p className="mt-8 text-sm text-slate-500 text-center max-w-md">
-        💡 <strong>Tip:</strong> <br/>
-        Left click to reveal, right click to flag.<br/>
-        <strong>Double click</strong> a revealed number to quickly open surrounding cells if flags match the number.
-      </p>
+        <button onclick="window.print()" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2.5 px-8 rounded-full shadow-lg flex items-center gap-2 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            인쇄하기
+        </button>
     </div>
-  );
-}
+
+    <div id="exam-wrapper">
+        <!-- 페이지 1: 1~10번 -->
+        <div class="exam-page">
+            <div class="header-box text-center">
+                <div class="text-sm font-bold text-gray-600 tracking-widest">2026학년도 제1학기 기말고사 대비</div>
+                <div class="text-4xl font-black my-4">증권시장론 모의평가</div>
+                <div class="flex justify-between items-end">
+                    <div class="text-xl font-bold border-b-2 border-black pb-1 ml-2">제2장 금융투자상품의 이해 (1)</div>
+                    <div class="student-info mr-2">
+                        <span>성명: ________________</span>
+                        <span>번호: ________________</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">1.</span> 자본시장법상 '금융투자상품'의 정의 중 옳은 것은?
+                        <div class="options">
+                            <div>① 이익 취득만을 목적으로 한다.</div>
+                            <div>② 장래 특정 시점의 지급 약정은 제외된다.</div>
+                            <div>③ 투자원본이 회수금액을 초과할 위험이 있어야 한다.</div>
+                            <div>④ 판매수수료는 투자원본에 포함된다.</div>
+                            <div>⑤ 발행인의 신용위험은 권리의 내적 요소이다.</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">2.</span> 투자성 판단 시 '투자원본'에서 명시적으로 제외되는 항목은?
+                        <div class="options">
+                            <div>① 해지수수료</div><div>② 판매수수료</div><div>③ 운용수익</div><div>④ 원금</div><div>⑤ 배당금</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">3.</span> '증권'과 '파생상품'을 나누는 가장 핵심적인 기준은?
+                        <div class="options">
+                            <div>① 기초자산 유무</div><div>② 거래소 상장 여부</div><div>③ 원금초과손실 가능성</div><div>④ 수익률</div><div>⑤ 발행인</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">4.</span> 다음 중 자본시장법상 증권의 6가지 유형이 아닌 것은?
+                        <div class="options">
+                            <div>① 채무증권</div><div>② 지분증권</div><div>③ 수익증권</div><div>④ 투자계약증권</div><div>⑤ 선물계약</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">5.</span> 다음 중 '비금융투자상품'에 해당하는 것을 고르시오.
+                        <div class="p-1 border border-gray-400 my-1 bg-gray-50 text-center text-xs italic">ㄱ. 국채 &nbsp; ㄴ. 보통주 &nbsp; ㄷ. 정기예금 &nbsp; ㄹ. 보험상품</div>
+                        <div class="options">
+                            <div>① ㄱ, ㄴ</div><div>② ㄴ, ㄷ</div><div>③ ㄷ, ㄹ</div><div>④ ㄱ, ㄹ</div><div>⑤ ㄱ, ㄷ</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">6.</span> 소유지분청구권을 나타내며 자기자본 조달수단으로 쓰이는 증권은?
+                        <div class="options">
+                            <div>① 채무증권</div><div>② 지분증권</div><div>③ 수익증권</div><div>④ 파생결합증권</div><div>⑤ 예탁증권</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">7.</span> 투자신탁의 수익권을 나타내는 증권의 명칭은?
+                        <div class="options">
+                            <div>① 지분증권</div><div>② 채무증권</div><div>③ 수익증권</div><div>④ 투자계약증권</div><div>⑤ 증권예탁증권</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">8.</span> 파생상품 중 '어느 한쪽의 의사표시에 의해 거래를 성립시킬 권리'는?
+                        <div class="options">
+                            <div>① 선물</div><div>② 옵션</div><div>③ 스왑</div><div>④ 선도</div><div>⑤ 현물</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">9.</span> 주식의 본질적 의미에 대한 설명 중 틀린 것은?
+                        <div class="options">
+                            <div>① 자본의 구성 단위이다.</div><div>② 주주의 지위를 의미한다.</div><div>③ 자기자본을 구성한다.</div><div>④ 원금 상환 의무가 있는 부채이다.</div><div>⑤ 유한책임이 적용된다.</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">10.</span> 주주가 경영에 참여하기 위해 행사하는 '의결권'은 어디에 속하나?
+                        <div class="options">
+                            <div>① 자익권</div><div>② 공익권</div><div>③ 배당권</div><div>④ 청구권</div><div>⑤ 양도권</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">1 / 6</div>
+        </div>
+
+        <!-- 페이지 2: 11~20번 -->
+        <div class="exam-page">
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">11.</span> 배당 순위는 우선하나 일반적으로 의결권이 제한되는 주식은?
+                        <div class="options">
+                            <div>① 후배주</div><div>② 혼합주</div><div>③ 우선주</div><div>④ 상환주</div><div>⑤ 보통주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">12.</span> 배당 부족분을 차후에 누적하여 받을 권리가 있는 주식은?
+                        <div class="options">
+                            <div>① 누적적 우선주</div><div>② 비누적적 우선주</div><div>③ 참가적 우선주</div><div>④ 전환 우선주</div><div>⑤ 보통주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">13.</span> 상장법인의 무의결권 주식 발행 한도는 발행주식 총수의 얼마인가?
+                        <div class="options">
+                            <div>① 1/4</div><div>② 1/3</div><div>③ 1/2</div><div>④ 2/3</div><div>⑤ 제한 없음</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">14.</span> 주권에 액면가가 적혀있지 않고 지분율만 표시된 주식은?
+                        <div class="options">
+                            <div>① 액면주</div><div>② 무액면주</div><div>③ 기명주</div><div>④ 무기명주</div><div>⑤ 상환주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">15.</span> 우리나라에서 주주 확정의 곤란함으로 인해 2014년에 폐지된 것은?
+                        <div class="options">
+                            <div>① 기명주</div><div>② 무기명주</div><div>③ 우선주</div><div>④ 액면주</div><div>⑤ 전환주</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">16.</span> 이익으로써 일정 기간 후 상환하여 소각하기로 예정된 주식은?
+                        <div class="options">
+                            <div>① 상환주</div><div>② 전환주</div><div>③ 보증주</div><div>④ 무상주</div><div>⑤ 유상주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">17.</span> 대금 납입 없이 발행되어 실질적 자금 유입이 없는 주식은?
+                        <div class="options">
+                            <div>① 유상주</div><div>② 무상주</div><div>③ 액면주</div><div>④ 기명주</div><div>⑤ 보통주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">18.</span> 2019년부터 시행된 종이 증권 없는 증권 사무 처리 제도는?
+                        <div class="options">
+                            <div>① 증권예탁제도</div><div>② 전자증권제도</div><div>③ 보호예수제도</div><div>④ 명의개서제도</div><div>⑤ 신탁제도</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">19.</span> 채권(Bond)에 대한 설명 중 틀린 것은?
+                        <div class="options">
+                            <div>① 장기 자금 조달 수단이다.</div><div>② 유통시장에서 매매 가능하다.</div><div>③ 이익 발생 여부와 상관없이 이자를 준다.</div><div>④ 만기가 없는 영구증권이다.</div><div>⑤ 확정이자부 증권이다.</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">20.</span> 채권의 특성 중 '현금화 가능성'을 의미하는 용어는?
+                        <div class="options">
+                            <div>① 수익성</div><div>② 안정성</div><div>③ 유동성</div><div>④ 확실성</div><div>⑤ 기한성</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">2 / 6</div>
+        </div>
+
+        <!-- 페이지 3: 21~30번 -->
+        <div class="exam-page">
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">21.</span> 중앙 정부가 발행하는 채권의 명칭은?
+                        <div class="options">
+                            <div>① 지방채</div><div>② 특수채</div><div>③ 국채</div><div>④ 금융채</div><div>⑤ 회사채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">22.</span> 서울시나 경기도 등 지자체가 발행하는 채권은?
+                        <div class="options">
+                            <div>① 국채</div><div>② 지방채</div><div>③ 특수채</div><div>④ 금융채</div><div>⑤ 회사채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">23.</span> 채권 권면에 붙은 이표로 정기적 이자를 받는 채권은?
+                        <div class="options">
+                            <div>① 할인채</div><div>② 복리채</div><div>③ 이표채</div><div>④ 단리채</div><div>⑤ 무이표채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">24.</span> 액면가에서 만기까지의 이자를 미리 떼고 싸게 파는 채권은?
+                        <div class="options">
+                            <div>① 이표채</div><div>② 복리채</div><div>③ 할인채</div><div>④ 변동금리채</div><div>⑤ 영구채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">25.</span> 채권자가 발행회사의 주식으로 바꿀 수 있는 권리가 부여된 사채는?
+                        <div class="options">
+                            <div>① BW</div><div>② EB</div><div>③ CB</div><div>④ PB</div><div>⑤ BO</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">26.</span> 신주를 살 권리만 있고 채권은 그대로 남는 사채는?
+                        <div class="options">
+                            <div>① CB</div><div>② BW</div><div>③ EB</div><div>④ PB</div><div>⑤ BO</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">27.</span> 발행사가 보유한 타사 유가증권으로 교환 가능한 채권은?
+                        <div class="options">
+                            <div>① CB</div><div>② BW</div><div>③ EB</div><div>④ PB</div><div>⑤ BO</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">28.</span> 채권자가 회사에 상환을 청구할 수 있는 권리는?
+                        <div class="options">
+                            <div>① 콜옵션</div><div>② 풋옵션</div><div>③ 전환권</div><div>④ 인수권</div><div>⑤ 교환권</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">29.</span> 가격 변동 위험을 줄이기 위해 선물 포지션을 잡는 행위는?
+                        <div class="options">
+                            <div>① 투기</div><div>② 헤지(Hedge)</div><div>③ 차익거래</div><div>④ 공매도</div><div>⑤ 레버리지</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">30.</span> 선물거래와 선도거래의 결정적 차이점으로 옳은 것은?
+                        <div class="options">
+                            <div>① 선도는 표준화됨</div><div>② 선물은 일일정산함</div><div>③ 선도는 거래소 거래</div><div>④ 선물은 보증 없음</div><div>⑤ 선도는 신용위험 없음</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">3 / 6</div>
+        </div>
+
+        <!-- 페이지 4: 31~40번 -->
+        <div class="exam-page">
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">31.</span> 자산을 미리 정한 가격으로 '살 수 있는 권리'는?
+                        <div class="options">
+                            <div>① 풋옵션</div><div>② 콜옵션</div><div>③ 스왑</div><div>④ 선도</div><div>⑤ 선물</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">32.</span> 옵션 행사 시점이 만기일로만 제한되는 유형은?
+                        <div class="options">
+                            <div>① 미국형</div><div>② 유럽형</div><div>③ 아시아형</div><div>④ 한국형</div><div>⑤ 일본형</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">33.</span> 다수 자금을 전문가가 운용하고 수익을 배분하는 기구는?
+                        <div class="options">
+                            <div>① 직접투자기구</div><div>② 집합투자기구(펀드)</div><div>③ 일임투자</div><div>④ 자문투자</div><div>⑤ 사적조합</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">34.</span> 투자신탁 형태의 펀드가 발행하는 증권 명칭은?
+                        <div class="options">
+                            <div>① 지분증권</div><div>② 수익증권</div><div>③ 채무증권</div><div>④ 옵션</div><div>⑤ 선물</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">35.</span> 주식발행가액 중 액면가를 초과하는 금액은 어디에 적립하나?
+                        <div class="options">
+                            <div>① 자본금</div><div>② 이익잉여금</div><div>③ 주식발행초과금</div><div>④ 당기순이익</div><div>⑤ 배당금</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">36.</span> 선물거래에서 결제 이행을 보증하는 주체는?
+                        <div class="options">
+                            <div>① 은행</div><div>② 투자자</div><div>③ 청산소(거래소)</div><div>④ 증권사</div><div>⑤ 금융감독원</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">37.</span> 보통주보다 권리가 열위에 있는 주식은?
+                        <div class="options">
+                            <div>① 우선주</div><div>② 후배주</div><div>③ 상환주</div><div>④ 보통주</div><div>⑤ 전환주</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">38.</span> 파생상품 기초자산으로 적절하지 않은 것은?
+                        <div class="options">
+                            <div>① 주가지수</div><div>② 원유</div><div>③ 돼지고기</div><div>④ 신용도</div><div>⑤ 경영권</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">39.</span> 금리 상승 시 채권 가격의 일반적인 움직임은?
+                        <div class="options">
+                            <div>① 상승</div><div>② 하락</div><div>③ 불변</div><div>④ 액면 유지</div><div>⑤ 금리와 무관</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">40.</span> 회사 형태의 집합투자기구가 발행하는 증권은?
+                        <div class="options">
+                            <div>① 수익증권</div><div>② 주식(지분증권)</div><div>③ 채무증권</div><div>④ 옵션</div><div>⑤ 선물</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">4 / 6</div>
+        </div>
+
+        <!-- 페이지 5: 41~50번 -->
+        <div class="exam-page">
+            <div class="two-column">
+                <div class="column-divider"></div>
+                <!-- 왼쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">41.</span> 미국달러를 기초자산으로 하는 파생상품 분류는?
+                        <div class="options">
+                            <div>① 주가지수상품</div><div>② 채권금리상품</div><div>③ 통화상품</div><div>④ 상품파생</div><div>⑤ ETF상품</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">42.</span> 주주가 자신의 납입 자본 내에서만 책임지는 원칙은?
+                        <div class="options">
+                            <div>① 무한책임</div><div>② 유한책임</div><div>③ 연대책임</div><div>④ 간접책임</div><div>⑤ 배상책임</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">43.</span> 이자가 재투자되어 만기에 원리금을 한꺼번에 주는 채권은?
+                        <div class="options">
+                            <div>① 이표채</div><div>② 복리채</div><div>③ 할인채</div><div>④ 단리채</div><div>⑤ 변동채</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">44.</span> 권리 행사 시 신주를 발행하여 교환하는 채권은?
+                        <div class="options">
+                            <div>① CB</div><div>② EB</div><div>③ BW</div><div>④ PB</div><div>⑤ BO</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">45.</span> 주식 액면가 최소 금액은 얼마 이상인가?
+                        <div class="options">
+                            <div>① 10원</div><div>② 100원</div><div>③ 500원</div><div>④ 1,000원</div><div>⑤ 5,000원</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 오른쪽 -->
+                <div>
+                    <div class="question-item">
+                        <span class="question-num">46.</span> 채권의 3대 요건에 포함되지 않는 것은?
+                        <div class="options">
+                            <div>① 수익성</div><div>② 안정성</div><div>③ 유동성</div><div>④ 경영권</div><div>⑤ 기한성</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">47.</span> 기초자산으로부터 파생된 가치를 갖는 교환이나 약정은?
+                        <div class="options">
+                            <div>① 증권</div><div>② 예금</div><div>③ 파생상품</div><div>④ 수익증권</div><div>⑤ 보험</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">48.</span> 우리나라 국고채는 어느 기관이 발행하나?
+                        <div class="options">
+                            <div>① 한국은행</div><div>② 기획재정부(정부)</div><div>③ 산업은행</div><div>④ 증권거래소</div><div>⑤ 시중은행</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">49.</span> 주식과 채권의 공통점으로 옳은 것은?
+                        <div class="options">
+                            <div>① 만기가 있다.</div><div>② 이자를 준다.</div><div>③ 경영권이 있다.</div><div>④ 유통시장이 존재한다.</div><div>⑤ 원금이 보장된다.</div>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <span class="question-num">50.</span> 펀드 투자 결과가 투자자에게 배분되는 원칙은?
+                        <div class="options">
+                            <div>① 원금보장 원칙</div><div>② 예금자보호 원칙</div><div>③ 실적배당 원칙</div><div>④ 확정수익 원칙</div><div>⑤ 책임면제 원칙</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">5 / 6</div>
+        </div>
+
+        <!-- 페이지 6: 정답지 -->
+        <div class="exam-page">
+            <div class="header-box text-center">
+                <div class="text-2xl font-black my-4">정 답 표</div>
+                <div class="text-sm text-gray-500">증권시장론 제2장 금융투자상품의 이해</div>
+            </div>
+            
+            <div class="mt-10 p-10 border-2 border-black rounded-xl">
+                <h3 class="text-center font-bold text-xl mb-8">문항별 정답</h3>
+                <div class="grid grid-cols-5 gap-y-6 gap-x-4 text-center">
+                    <div class="border-b pb-1">1번: ③</div><div class="border-b pb-1">2번: ②</div><div class="border-b pb-1">3번: ③</div><div class="border-b pb-1">4번: ⑤</div><div class="border-b pb-1">5번: ③</div>
+                    <div class="border-b pb-1">6번: ②</div><div class="border-b pb-1">7번: ②</div><div class="border-b pb-1">8번: ②</div><div class="border-b pb-1">9번: ④</div><div class="border-b pb-1">10번: ②</div>
+                    <div class="border-b pb-1">11번: ③</div><div class="border-b pb-1">12번: ①</div><div class="border-b pb-1">13번: ③</div><div class="border-b pb-1">14번: ②</div><div class="border-b pb-1">15번: ②</div>
+                    <div class="border-b pb-1">16번: ①</div><div class="border-b pb-1">17번: ②</div><div class="border-b pb-1">18번: ②</div><div class="border-b pb-1">19번: ④</div><div class="border-b pb-1">20번: ③</div>
+                    <div class="border-b pb-1">21번: ③</div><div class="border-b pb-1">22번: ②</div><div class="border-b pb-1">23번: ③</div><div class="border-b pb-1">24번: ③</div><div class="border-b pb-1">25번: ③</div>
+                    <div class="border-b pb-1">26번: ②</div><div class="border-b pb-1">27번: ③</div><div class="border-b pb-1">28번: ②</div><div class="border-b pb-1">29번: ②</div><div class="border-b pb-1">30번: ②</div>
+                    <div class="border-b pb-1">31번: ②</div><div class="border-b pb-1">32번: ②</div><div class="border-b pb-1">33번: ②</div><div class="border-b pb-1">34번: ②</div><div class="border-b pb-1">35번: ③</div>
+                    <div class="border-b pb-1">36번: ③</div><div class="border-b pb-1">37번: ②</div><div class="border-b pb-1">38번: ⑤</div><div class="border-b pb-1">39번: ②</div><div class="border-b pb-1">40번: ②</div>
+                    <div class="border-b pb-1">41번: ③</div><div class="border-b pb-1">42번: ②</div><div class="border-b pb-1">43번: ②</div><div class="border-b pb-1">44번: ①</div><div class="border-b pb-1">45번: ②</div>
+                    <div class="border-b pb-1">46번: ④</div><div class="border-b pb-1">47번: ③</div><div class="border-b pb-1">48번: ②</div><div class="border-b pb-1">49번: ④</div><div class="border-b pb-1">50번: ③</div>
+                </div>
+            </div>
+            
+            <div class="mt-20 text-center text-gray-400">
+                <p>본 모의평가는 학습 목적으로 제작되었습니다.</p>
+                <p>© 2026 증권시장론 학습 지원 시스템</p>
+            </div>
+            <div class="page-number">6 / 6</div>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('exam-wrapper');
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "PDF 생성 중 (잠시만 기다려주세요)...";
+            btn.disabled = true;
+
+            const opt = {
+                margin: 0,
+                filename: '금융투자상품의_이해_모의고사.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: 'css' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>
+
+```
