@@ -4,22 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 실전 모의고사 생성기 V2 (All-in-One)</title>
+    <title>실전 대비 AI 모의고사 생성기 (Pro)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
         
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f1f5f9; margin: 0; }
 
-        /* 인쇄 및 PDF용 A4 레이아웃 */
+        /* A4 규격 레이아웃 */
         .exam-page {
             background-color: white;
             width: 210mm;
             min-height: 297mm;
             padding: 15mm;
-            margin: 30px auto;
+            margin: 20px auto;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             position: relative;
             box-sizing: border-box;
@@ -35,8 +35,8 @@
 
         .column-divider {
             position: absolute;
-            top: 0;
-            bottom: 0;
+            top: 10px;
+            bottom: 10px;
             left: 50%;
             width: 1px;
             background-color: #cbd5e1;
@@ -46,10 +46,10 @@
         .header-box { border-bottom: 3px solid black; padding-bottom: 12px; margin-bottom: 20px; }
         .student-info { border: 2px solid black; padding: 5px 15px; display: inline-flex; gap: 20px; font-size: 13px; font-weight: bold; }
 
-        .question-item { margin-bottom: 22px; font-size: 13px; line-height: 1.6; page-break-inside: avoid; }
+        .question-item { margin-bottom: 22px; font-size: 13.5px; line-height: 1.6; page-break-inside: avoid; }
         .question-num { font-weight: bold; margin-right: 5px; }
         
-        /* 선택지 세로 나열 (줄바꿈 강제) */
+        /* 선택지 무조건 줄바꿈 (세로 나열) */
         .option-item { display: block; margin-top: 3px; padding-left: 5px; }
 
         .page-footer {
@@ -62,13 +62,13 @@
             color: #64748b;
         }
 
-        /* 로딩 애니메이션 */
+        /* 로딩 애니메이션 및 상태바 */
         .loader {
             border: 3px solid #f3f3f3;
             border-top: 3px solid #2563eb;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -78,275 +78,282 @@
             .exam-page { margin: 0; box-shadow: none; width: 210mm; height: 297mm; }
             .no-print { display: none !important; }
         }
-
-        .sticky-panel { position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     </style>
 </head>
 <body>
 
     <!-- 컨트롤 패널 -->
-    <div class="no-print bg-slate-900 text-white p-6 sticky-panel">
+    <div class="no-print bg-slate-900 text-white p-6 sticky top-0 z-50 shadow-xl">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-6">
             <div class="flex-1 w-full">
                 <div class="flex justify-between items-center mb-2">
-                    <label class="text-sm font-bold text-slate-300">1. 학습 자료 제공 (PDF 첨부 또는 직접 입력)</label>
-                    <label class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1.5 px-3 rounded transition flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                        </svg>
-                        PDF 파일 업로드
-                        <input type="file" id="pdfInput" accept=".pdf" class="hidden" onchange="handlePdfUpload(event)">
-                    </label>
+                    <label class="text-sm font-bold text-slate-300">1. 출제 근거 자료 (PDF 첨부 또는 텍스트 직접 입력)</label>
+                    <div class="flex gap-2">
+                        <label class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1.5 px-3 rounded transition flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                            PDF 파일 선택
+                            <input type="file" id="pdfInput" accept=".pdf" class="hidden" onchange="handlePdfUpload(event)">
+                        </label>
+                        <button onclick="clearText()" class="text-xs text-slate-400 hover:text-white">초기화</button>
+                    </div>
                 </div>
-                <textarea id="sourceText" placeholder="PDF 파일에서 추출된 텍스트가 여기에 표시됩니다. 혹은 직접 내용을 붙여넣으셔도 됩니다." class="w-full h-28 p-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-200 outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                <div id="pdfStatus" class="text-xs text-blue-400 mt-1 font-bold hidden">PDF 분석 중...</div>
+                <textarea id="sourceText" placeholder="PDF를 선택하거나 내용을 직접 입력하세요. 대용량 자료의 경우 텍스트가 모두 추출된 후 '시험지 생성'을 눌러주세요." class="w-full h-32 p-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-200 outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <div id="statusMsg" class="text-xs text-blue-400 mt-1 font-bold hidden">상태 메시지 표시 영역</div>
             </div>
             
             <div class="w-full md:w-80 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <label class="text-sm font-bold text-slate-300">2. 문항 수 (1~70)</label>
-                        <input type="number" id="qCount" value="20" min="1" max="70" class="w-20 p-2 bg-slate-800 border border-slate-700 rounded text-center font-bold">
+                        <label class="text-sm font-bold text-slate-300">2. 문항 수 (최대 70)</label>
+                        <input type="number" id="qCount" value="30" min="1" max="70" class="w-20 p-2 bg-slate-800 border border-slate-700 rounded text-center font-bold">
                     </div>
-                    <button onclick="generateExam()" id="genBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 py-3 rounded-lg font-bold transition flex items-center justify-center gap-2">
-                        <span id="btnText">AI 시험지 생성하기</span>
+                    <button onclick="startGeneration()" id="genBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 py-3 rounded-lg font-bold transition flex items-center justify-center gap-2">
+                        <span id="btnText">모의고사 시험지 생성</span>
                         <div id="loader" class="loader hidden"></div>
                     </button>
+                    <!-- 진행률 표시 -->
+                    <div id="progressBarContainer" class="mt-2 w-full bg-slate-700 h-1.5 rounded-full hidden">
+                        <div id="progressBar" class="bg-blue-500 h-1.5 rounded-full" style="width: 0%"></div>
+                    </div>
                 </div>
                 <div class="flex gap-2 mt-4">
                     <button onclick="downloadPDF()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-lg text-sm font-bold transition">PDF 다운로드</button>
-                    <button onclick="window.print()" class="flex-1 bg-slate-700 hover:bg-slate-600 py-2.5 rounded-lg text-sm font-bold transition">인쇄</button>
+                    <button onclick="window.print()" class="flex-1 bg-slate-700 hover:bg-slate-600 py-2.5 rounded-lg text-sm font-bold transition">인쇄하기</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 시험지 렌더링 공간 -->
+    <!-- 시험지 출력 영역 -->
     <div id="exam-render-area">
         <div class="exam-page no-print flex flex-col items-center justify-center text-slate-400">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mb-4 opacity-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            <p class="text-xl font-bold">학습 자료를 입력하거나 PDF를 업로드해 주세요.</p>
-            <p class="text-sm mt-2">AI가 내용을 분석하여 기말고사 스타일의 5지선다 문제를 출제합니다.</p>
+            <p class="text-xl font-bold">PDF 파일을 첨부하거나 자료를 입력해 주세요.</p>
+            <p class="text-sm mt-2 text-center">오류 방지를 위해 10문항씩 나누어 안전하게 생성합니다.<br>최대 70문항까지 가능하며, 정답지는 마지막 장에 별도 생성됩니다.</p>
         </div>
     </div>
 
     <script>
-        const apiKey = "";
+        const apiKey = ""; // API Key는 환경에서 자동 제공
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
-        // PDF 텍스트 추출 함수
+        const statusMsg = document.getElementById('statusMsg');
+        const textarea = document.getElementById('sourceText');
+        const progressBarContainer = document.getElementById('progressBarContainer');
+        const progressBar = document.getElementById('progressBar');
+
+        function clearText() {
+            textarea.value = "";
+            document.getElementById('exam-render-area').innerHTML = '<div class="exam-page no-print flex flex-col items-center justify-center text-slate-400"><p class="text-xl font-bold">자료를 입력해 주세요.</p></div>';
+        }
+
         async function handlePdfUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
 
-            const status = document.getElementById('pdfStatus');
-            const textarea = document.getElementById('sourceText');
-            
-            status.classList.remove('hidden');
-            status.innerText = "PDF 파일을 읽는 중...";
+            statusMsg.innerText = "PDF 파일을 읽는 중...";
+            statusMsg.classList.remove('hidden', 'text-red-400');
+            statusMsg.classList.add('text-blue-400');
             textarea.disabled = true;
 
             try {
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
                 let fullText = "";
-
                 for (let i = 1; i <= pdf.numPages; i++) {
                     const page = await pdf.getPage(i);
                     const content = await page.getTextContent();
                     const pageText = content.items.map(item => item.str).join(' ');
                     fullText += pageText + "\n\n";
-                    status.innerText = `텍스트 분석 중... (${i} / ${pdf.numPages} 페이지)`;
+                    statusMsg.innerText = `분석 중... (${i} / ${pdf.numPages} 페이지)`;
                 }
-
                 textarea.value = fullText;
-                status.innerText = "분석 완료! 텍스트가 입력창에 로드되었습니다.";
-                status.className = "text-xs text-green-400 mt-1 font-bold";
-                setTimeout(() => {
-                    status.classList.add('hidden');
-                    status.className = "text-xs text-blue-400 mt-1 font-bold";
-                }, 3000);
+                statusMsg.innerText = "PDF 분석 완료! 내용을 확인하고 생성 버튼을 누르세요.";
             } catch (err) {
-                console.error(err);
-                status.innerText = "PDF 분석에 실패했습니다. 직접 내용을 복사해 넣어주세요.";
-                status.className = "text-xs text-red-400 mt-1 font-bold";
+                statusMsg.innerText = "PDF 읽기 실패. 텍스트를 직접 복사해 넣어주세요.";
+                statusMsg.classList.replace('text-blue-400', 'text-red-400');
             } finally {
                 textarea.disabled = false;
             }
         }
 
-        async function generateExam() {
-            const source = document.getElementById('sourceText').value.trim();
-            const count = parseInt(document.getElementById('qCount').value);
+        async function callGemini(prompt, source) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: `[자료]\n${source}\n\n[지시사항]\n${prompt}` }] }],
+                generationConfig: { responseMimeType: "application/json" }
+            };
+
+            const retryFetch = async (retries = 5, delay = 1000) => {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(response.statusText);
+                    return await response.json();
+                } catch (error) {
+                    if (retries > 0) {
+                        await new Promise(r => setTimeout(r, delay));
+                        return retryFetch(retries - 1, delay * 2);
+                    }
+                    throw error;
+                }
+            };
+
+            return await retryFetch();
+        }
+
+        async function startGeneration() {
+            const source = textarea.value.trim();
+            const totalRequested = parseInt(document.getElementById('qCount').value);
             const genBtn = document.getElementById('genBtn');
             const btnText = document.getElementById('btnText');
             const loader = document.getElementById('loader');
 
-            if (!source) {
-                alert("학습 자료를 먼저 입력하거나 PDF 파일을 업로드해 주세요.");
-                return;
-            }
+            if (!source) { alert("출제 근거 자료를 먼저 입력하거나 PDF를 올려주세요."); return; }
+            if (totalRequested > 70) { alert("최대 70문항까지 가능합니다."); return; }
 
             genBtn.disabled = true;
-            btnText.innerText = "AI 문항 생성 중...";
             loader.classList.remove('hidden');
+            progressBarContainer.classList.remove('hidden');
+            progressBar.style.width = "0%";
 
-            const systemPrompt = `당신은 대학 전공 교수이자 전문 출제 위원입니다. 제공된 자료를 바탕으로 고품질 객관식 문제를 생성하세요.
-            반드시 다음 JSON 형식을 엄수하세요:
-            {
-                "questions": [
-                    {
-                        "question": "문제 지문",
-                        "options": ["보기1", "보기2", "보기3", "보기4", "보기5"],
-                        "answerIndex": 0,
-                        "rationale": "이 정답이 도출되는 상세한 이유와 관련 개념 설명"
-                    }
-                ]
-            }
-            - 문항 수: ${count}개
-            - 형식: 5지 선다형 (객관식)
-            - 해설(rationale): 모든 문제에 상세한 해설을 포함하세요.
-            - 난이도: 실제 대학 기말고사 수준으로 출제하세요.`;
+            let allQuestions = [];
+            const batchSize = 10;
+            const totalBatches = Math.ceil(totalRequested / batchSize);
 
             try {
-                // Exponential Backoff Fetch
-                const fetchWithRetry = async (url, options, retries = 5, backoff = 1000) => {
-                    try {
-                        const res = await fetch(url, options);
-                        if (!res.ok) throw new Error(res.statusText);
-                        return res;
-                    } catch (err) {
-                        if (retries <= 0) throw err;
-                        await new Promise(r => setTimeout(r, backoff));
-                        return fetchWithRetry(url, options, retries - 1, backoff * 2);
-                    }
-                };
+                for (let i = 0; i < totalBatches; i++) {
+                    const currentBatchCount = Math.min(batchSize, totalRequested - (i * batchSize));
+                    btnText.innerText = `문제 생성 중... (${i * batchSize + currentBatchCount}/${totalRequested})`;
+                    
+                    const batchPrompt = `당신은 대학 전공 교수입니다. 제공된 자료를 바탕으로 "새로운" 고품질 객관식(5지선다) 문제를 무작위 생성하세요. 
+                    - 이전에 생성한 문제와 중복되지 않도록 하세요.
+                    - 문항 수: ${currentBatchCount}개
+                    - 형식: JSON (반드시 아래 구조 준수)
+                    {
+                        "questions": [
+                            {
+                                "question": "질문",
+                                "options": ["① 보기1", "② 보기2", "③ 보기3", "④ 보기4", "⑤ 보기5"],
+                                "answerIndex": 0,
+                                "rationale": "상세한 해설"
+                            }
+                        ]
+                    }`;
 
-                const response = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: source }] }],
-                        systemInstruction: { parts: [{ text: systemPrompt }] },
-                        generationConfig: { responseMimeType: "application/json" }
-                    })
-                });
+                    const data = await callGemini(batchPrompt, source);
+                    const result = JSON.parse(data.candidates[0].content.parts[0].text);
+                    allQuestions = allQuestions.concat(result.questions);
+                    
+                    progressBar.style.width = `${((i + 1) / totalBatches) * 100}%`;
+                }
 
-                const data = await response.json();
-                const result = JSON.parse(data.candidates[0].content.parts[0].text);
-                
-                renderExamPages(result.questions);
+                renderFinalExam(allQuestions);
+                btnText.innerText = "생성 완료";
             } catch (error) {
                 console.error(error);
-                alert("문제 생성 중 오류가 발생했습니다. 자료 양을 조절하거나 잠시 후 다시 시도해 주세요.");
+                alert("문제 생성 중 오류가 발생했습니다. 자료 양이 너무 많으면 일부를 나누어 시도해 보세요.");
+                btnText.innerText = "다시 시도";
             } finally {
                 genBtn.disabled = false;
-                btnText.innerText = "AI 시험지 생성하기";
                 loader.classList.add('hidden');
+                setTimeout(() => {
+                    progressBarContainer.classList.add('hidden');
+                    btnText.innerText = "모의고사 시험지 생성";
+                }, 3000);
             }
         }
 
-        function renderExamPages(questions) {
+        function renderFinalExam(questions) {
             const container = document.getElementById('exam-render-area');
             container.innerHTML = "";
+            const qPerPage = 20; // 20문항마다 페이지 분할
+            const totalPages = Math.ceil(questions.length / qPerPage);
 
-            const qPerPage = 20; 
-            const totalQ = questions.length;
-            const totalPages = Math.ceil(totalQ / qPerPage);
-
-            // 1. 문제 페이지들 생성
             for (let i = 0; i < totalPages; i++) {
                 const page = document.createElement('div');
                 page.className = "exam-page";
                 
-                let header = (i === 0) ? `
+                const headerHtml = (i === 0) ? `
                     <div class="header-box text-center">
-                        <div class="text-xs font-bold text-gray-500 tracking-tighter">2026학년도 제1학기 기말고사 대비</div>
-                        <div class="text-4xl font-black my-4 tracking-tighter">AI 실전 모의평가</div>
+                        <div class="text-xs font-bold text-gray-500 tracking-widest">2026학년도 제1학기 기말고사 대비</div>
+                        <div class="text-4xl font-black my-4">실전 모의평가</div>
                         <div class="flex justify-between items-end mt-6">
                             <div class="text-xl font-bold border-b-2 border-black pb-1 px-1">맞춤형 문제 은행</div>
-                            <div class="student-info">
-                                <span>성명: ________________</span>
-                                <span>번호: ________________</span>
-                            </div>
+                            <div class="student-info"><span>성명: ________</span><span>번호: ________</span></div>
                         </div>
-                    </div>` : `
-                    <div class="border-b border-gray-300 pb-2 mb-6 flex justify-between items-center">
-                        <div class="text-sm font-bold text-gray-700">AI 실전 모의평가 (계속)</div>
-                        <div class="text-xs text-gray-400 font-bold">PAGE ${i + 1}</div>
-                    </div>`;
-                
-                page.innerHTML = header;
+                    </div>` : `<div class="border-b-2 border-black pb-2 mb-6 font-bold text-gray-800 flex justify-between"><span>모의평가 (계속)</span><span>PAGE ${i+1}</span></div>`;
 
-                const columnGrid = document.createElement('div');
-                columnGrid.className = "two-column";
-                columnGrid.innerHTML = '<div class="column-divider"></div>';
+                page.innerHTML = headerHtml;
+
+                const grid = document.createElement('div');
+                grid.className = "two-column";
+                grid.innerHTML = '<div class="column-divider"></div>';
 
                 const left = document.createElement('div');
                 const right = document.createElement('div');
+                const currentQs = questions.slice(i * qPerPage, (i + 1) * qPerPage);
+                const half = Math.ceil(currentQs.length / 2);
 
-                const pageQs = questions.slice(i * qPerPage, (i + 1) * qPerPage);
-                const half = Math.ceil(pageQs.length / 2);
-
-                pageQs.forEach((q, idx) => {
-                    const globalIdx = (i * qPerPage) + idx + 1;
+                currentQs.forEach((q, idx) => {
+                    const qNum = (i * qPerPage) + idx + 1;
                     const qHtml = `
                         <div class="question-item">
-                            <span class="question-num">${globalIdx}.</span> ${q.question}
-                            <div class="options">
-                                ${q.options.map((opt, oIdx) => `<span class="option-item">${String.fromCharCode(9312 + oIdx)} ${opt}</span>`).join('')}
+                            <span class="question-num">${qNum}.</span> ${q.question}
+                            <div class="mt-2 space-y-1">
+                                ${q.options.map(opt => `<span class="option-item">${opt}</span>`).join('')}
                             </div>
                         </div>`;
-                    if (idx < half) left.innerHTML += qHtml;
-                    else right.innerHTML += qHtml;
+                    if (idx < half) left.innerHTML += qHtml; else right.innerHTML += qHtml;
                 });
 
-                columnGrid.appendChild(left);
-                columnGrid.appendChild(right);
-                page.appendChild(columnGrid);
+                grid.appendChild(left); grid.appendChild(right);
+                page.appendChild(grid);
                 page.innerHTML += `<div class="page-footer">${i + 1} / ${totalPages + 1}</div>`;
                 container.appendChild(page);
             }
 
-            // 2. 정답 및 해설 페이지 (마지막 페이지에 단독 배치)
-            const answerPage = document.createElement('div');
-            answerPage.className = "exam-page";
-            answerPage.innerHTML = `
+            // 마지막 장: 정답 및 해설
+            const ansPage = document.createElement('div');
+            ansPage.className = "exam-page";
+            ansPage.innerHTML = `
                 <div class="header-box text-center">
-                    <div class="text-3xl font-black my-5">정답 및 상세 해설</div>
-                    <div class="text-sm text-gray-500 font-bold underline">학습을 마친 후 정답과 개념을 대조하며 복습하세요.</div>
+                    <div class="text-3xl font-black my-6">정답 및 상세 해설</div>
+                    <div class="text-sm text-slate-500 font-bold underline mb-4">해설을 통해 부족한 개념을 완벽하게 보완하세요.</div>
                 </div>
-                <div class="mt-8 space-y-6 text-[11px] leading-relaxed">
+                <div class="mt-8 space-y-5 text-[11px] leading-relaxed">
                     ${questions.map((q, idx) => `
-                        <div class="border-b border-gray-100 pb-3">
-                            <div class="flex items-center gap-4 mb-2">
+                        <div class="border-b border-slate-100 pb-3">
+                            <div class="flex items-center gap-4 mb-1">
                                 <span class="bg-indigo-600 text-white px-2.5 py-0.5 rounded-full font-bold">문항 ${idx + 1}</span>
-                                <span class="font-black text-indigo-900 text-sm">정답: ${String.fromCharCode(9312 + q.answerIndex)}</span>
+                                <span class="font-black text-indigo-900 text-sm">정답: ${q.options[q.answerIndex].split(' ')[0]}</span>
                             </div>
-                            <div class="text-gray-700 pl-1"><span class="font-bold text-black">[해설]</span> ${q.rationale}</div>
+                            <div class="text-slate-700 pl-1"><span class="font-bold text-black">[해설]</span> ${q.rationale}</div>
                         </div>
                     `).join('')}
                 </div>
                 <div class="page-footer">${totalPages + 1} / ${totalPages + 1}</div>
             `;
-            container.appendChild(answerPage);
+            container.appendChild(ansPage);
         }
 
         function downloadPDF() {
             const element = document.getElementById('exam-render-area');
-            if (element.innerText.includes("학습 자료를 입력하거나")) {
-                alert("시험지를 먼저 생성해 주세요.");
-                return;
-            }
+            if (element.innerText.includes("첨부하거나 자료를")) { alert("시험지를 먼저 생성해 주세요."); return; }
             const btn = event.currentTarget;
-            btn.innerText = "PDF 인코딩 중...";
+            btn.innerText = "PDF 변환 중...";
             btn.disabled = true;
 
             const opt = {
                 margin: 0,
-                filename: 'AI_Exam_Mock_Test.pdf',
+                filename: 'AI_Exam_MockTest.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, letterRendering: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
