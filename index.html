@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>증권시장론 제2장 실전 모의고사 (50문항 완결)</title>
+    <title>증권시장론 제3장 실전 모의고사 (70문항)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
@@ -16,18 +16,12 @@
             padding: 0;
         }
 
-        /* A4 규격 레이아웃 */
-        .container-wrapper {
-            background-color: #f3f4f6;
-            padding: 20px 0;
-        }
-
         .exam-sheet {
             background-color: white;
             width: 210mm;
             min-height: 297mm;
-            padding: 20mm 15mm;
-            margin: 0 auto;
+            padding: 15mm 15mm 20mm 15mm;
+            margin: 20px auto;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
             position: relative;
             box-sizing: border-box;
@@ -54,16 +48,14 @@
         }
 
         .question-item {
-            margin-bottom: 24px;
-            font-size: 13px;
+            margin-bottom: 22px;
+            font-size: 12.5px;
             line-height: 1.6;
-            break-inside: avoid; /* 문항 중간에 페이지가 잘리지 않게 설정 */
+            break-inside: avoid;
         }
 
         .question-num { font-weight: bold; margin-right: 5px; }
-
-        /* 선택지 세로 나열 */
-        .option-item { display: block; margin-top: 3px; padding-left: 10px; }
+        .option-item { display: block; margin-top: 2px; padding-left: 10px; }
 
         .explanation-section {
             page-break-before: always;
@@ -72,665 +64,663 @@
             margin-top: 40px;
         }
 
-        /* 인쇄 컨트롤 버튼 */
-        .save-pdf-btn {
-            position: fixed; top: 20px; right: 20px;
-            background: #2563eb; color: white;
-            padding: 12px 24px; border-radius: 8px;
-            font-weight: bold; cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            z-index: 1000; transition: all 0.2s;
+        .page-footer {
+            position: absolute; bottom: 10mm; left: 0; right: 0;
+            text-align: center; font-size: 11px; color: #777;
         }
-        .save-pdf-btn:hover { background: #1d4ed8; transform: translateY(-2px); }
 
         @media print {
             body { background: none; padding: 0; margin: 0; }
-            .container-wrapper { padding: 0; }
             .exam-sheet { margin: 0; box-shadow: none; width: 210mm; padding: 15mm; }
-            .no-print { display: none !important; }
-            @page {
-                size: A4;
-                margin: 0;
-            }
+            @page { size: A4; margin: 0; }
         }
     </style>
 </head>
 <body>
 
-    <button onclick="window.print()" class="save-pdf-btn no-print">📄 PDF로 저장하기 / 인쇄</button>
+    <div class="exam-sheet">
+        <div class="header-box">
+            <div class="text-xs font-bold text-gray-500 uppercase tracking-widest">2026 Academic Year Securities Market Final Mastery</div>
+            <div class="text-4xl font-black my-4">증권시장론 실전 모의평가 (70문항)</div>
+            <div class="flex justify-between items-end">
+                <div class="text-xl font-bold border-b-2 border-black pb-1 ml-2">제3장 증권시장의 이해 (Full Package)</div>
+                <div class="student-info">
+                    <span>성명: ________________</span>
+                    <span>번호: ________________</span>
+                </div>
+            </div>
+        </div>
 
-    <div class="container-wrapper">
-        <div class="exam-sheet">
-            <!-- 시험지 헤더 -->
-            <div class="header-box">
-                <div class="text-xs font-bold text-gray-600 uppercase tracking-tighter">2026 Academic Year 1st Semester Final Exam</div>
-                <div class="text-4xl font-black my-4">증권시장론 실전 모의평가</div>
-                <div class="flex justify-between items-end">
-                    <div class="text-xl font-bold border-b-2 border-black pb-1 ml-2">제2장 금융투자상품의 이해 (전범위)</div>
-                    <div class="student-info">
-                        <span>성명: ________________</span>
-                        <span>번호: ________________</span>
-                    </div>
+        <div class="two-column-layout">
+            
+            <!-- 제1절: 발행시장 -->
+            <div class="question-item">
+                <span class="question-num">1.</span> '발행시장(Primary Market)'의 정의로 가장 적절한 것은?
+                <div class="mt-1">
+                    <span class="option-item">① 이미 발행된 증권이 투자자들 사이에서 매매되는 시장</span>
+                    <span class="option-item">② 자금 수요자가 발행기관을 통해 신규 증권을 매각하여 자금을 조달하는 시장</span>
+                    <span class="option-item">③ 한국거래소와 같은 구체적이고 상설적인 장소를 의미하는 시장</span>
+                    <span class="option-item">④ 투자자가 보유 증권을 담보로 대출을 받는 시장</span>
+                    <span class="option-item">⑤ 상장 폐지된 주식만을 전문적으로 거래하는 시장</span>
                 </div>
             </div>
 
-            <!-- 문제 영역 (2단) -->
-            <div class="two-column-layout">
-                <!-- 1 ~ 50번 문항 -->
-                <div class="question-item">
-                    <span class="question-num">1.</span> 「자본시장법」상 '금융투자상품'의 정의에 대한 설명 중 가장 옳지 않은 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 이익을 얻거나 손실을 회피할 목적으로 취득하는 권리이다.</span>
-                        <span class="option-item">② 현재 또는 장래의 특정 시점에 금전 등을 지급하기로 약정한다.</span>
-                        <span class="option-item">③ 회수금액이 투자원본보다 적게 될 위험(투자성)이 있어야 한다.</span>
-                        <span class="option-item">④ 판매수수료는 투자원본 산정 시 포함하는 것이 원칙이다.</span>
-                        <span class="option-item">⑤ 해지수수료는 회수금액 산정 시 포함한다.</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">2.</span> 금융투자상품을 '증권'과 '파생상품'으로 분류하는 핵심 기준은 무엇인가?
-                    <div class="mt-1">
-                        <span class="option-item">① 기초자산의 존재 여부</span>
-                        <span class="option-item">② 원본초과손실(추가지급의무) 가능성 유무</span>
-                        <span class="option-item">③ 발행 주체의 신용등급</span>
-                        <span class="option-item">④ 거래 장소가 거래소인지의 여부</span>
-                        <span class="option-item">⑤ 수익률의 확정성 여부</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">3.</span> 다음 중 자본시장법상 정의된 6가지 '증권'에 해당하지 않는 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 채무증권</span>
-                        <span class="option-item">② 지분증권</span>
-                        <span class="option-item">③ 수익증권</span>
-                        <span class="option-item">④ 통화스왑계약</span>
-                        <span class="option-item">⑤ 투자계약증권</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">4.</span> '파생결합증권'의 법적 정의에 대한 설명으로 옳은 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 원본을 초과하는 손실이 발생할 수 있는 계약이다.</span>
-                        <span class="option-item">② 기초자산의 가격 변동에 연동되어 지급금액이 결정되는 증권이다.</span>
-                        <span class="option-item">③ 자본시장법상 '파생상품'의 범주로 분류된다.</span>
-                        <span class="option-item">④ 발행인의 신용위험과는 전혀 무관하게 가치가 결정된다.</span>
-                        <span class="option-item">⑤ 투자원본 전액이 보장되는 상품에 한정된다.</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">5.</span> 주식(Stock)의 본질적 의미에 대한 설명 중 틀린 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 주식회사의 자본을 구성하는 최소 단위이다.</span>
-                        <span class="option-item">② 주주는 회사의 부채에 대해 무한 책임을 진다.</span>
-                        <span class="option-item">③ 만기가 없는 영구자본의 성격을 갖는다.</span>
-                        <span class="option-item">④ 주주의 지위를 나타내는 유가증권이다.</span>
-                        <span class="option-item">⑤ 소유지분청구권이 표시된 증권이다.</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">6.</span> 주주의 권리 중 '의결권'이나 '장부열람권' 등 경영 참여를 위한 권리는?
-                    <div class="mt-1">
-                        <span class="option-item">① 자익권</span>
-                        <span class="option-item">② 공익권</span>
-                        <span class="option-item">③ 배당권</span>
-                        <span class="option-item">④ 상환권</span>
-                        <span class="option-item">⑤ 환매권</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">7.</span> 보통주보다 배당 순위는 앞서지만, 경영 참여권인 의결권은 제한되는 주식은?
-                    <div class="mt-1">
-                        <span class="option-item">① 후배주</span>
-                        <span class="option-item">② 혼합주</span>
-                        <span class="option-item">③ 우선주</span>
-                        <span class="option-item">④ 보통주</span>
-                        <span class="option-item">⑤ 전환주</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">8.</span> 당해 연도 배당을 못 받은 경우 다음 연도에 합산하여 소급 지급받는 우선주는?
-                    <div class="mt-1">
-                        <span class="option-item">① 참가적 우선주</span>
-                        <span class="option-item">② 누적적 우선주</span>
-                        <span class="option-item">③ 비누적적 우선주</span>
-                        <span class="option-item">④ 비참가적 우선주</span>
-                        <span class="option-item">⑤ 열위 우선주</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">9.</span> 상장법인은 발행주식 총수의 얼마까지 무의결권 주식을 발행할 수 있는가?
-                    <div class="mt-1">
-                        <span class="option-item">① 1/4</span>
-                        <span class="option-item">② 1/3</span>
-                        <span class="option-item">③ 1/2</span>
-                        <span class="option-item">④ 2/3</span>
-                        <span class="option-item">⑤ 제한 없음</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">10.</span> 주권에 액면가가 기재되지 않고 발행주식수와 지분율만 표시되는 주식은?
-                    <div class="mt-1">
-                        <span class="option-item">① 액면주</span>
-                        <span class="option-item">② 무액면주</span>
-                        <span class="option-item">③ 기명주</span>
-                        <span class="option-item">④ 무기명주</span>
-                        <span class="option-item">⑤ 보통주</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">11.</span> 우리나라 상법상 주식 발행 제도로 옳은 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 액면주만 발행이 가능하다.</span>
-                        <span class="option-item">② 액면주와 무액면주 중 선택하여 발행할 수 있다.</span>
-                        <span class="option-item">③ 액면주와 무액면주를 병행하여 발행할 수 있다.</span>
-                        <span class="option-item">④ 무액면주는 현재 발행이 금지되어 있다.</span>
-                        <span class="option-item">⑤ 액면금액은 5,000원 단일 금액으로 해야 한다.</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">12.</span> 투명성 제고를 위해 우리나라에서 2014년에 폐지된 주식 형태는?
-                    <div class="mt-1">
-                        <span class="option-item">① 기명주</span>
-                        <span class="option-item">② 무기명주</span>
-                        <span class="option-item">③ 상환주</span>
-                        <span class="option-item">④ 전환주</span>
-                        <span class="option-item">⑤ 우선주</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">13.</span> 이익으로써 일정 기간 후 주식을 상환하여 소각하기로 약정된 주식은?
-                    <div class="mt-1">
-                        <span class="option-item">① 상환주</span>
-                        <span class="option-item">② 전환주</span>
-                        <span class="option-item">③ 보증주</span>
-                        <span class="option-item">④ 유상주</span>
-                        <span class="option-item">⑤ 무상주</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">14.</span> 자본준비금 전입 등을 통해 대금 납입 없이 발행되는 주식은?
-                    <div class="mt-1">
-                        <span class="option-item">① 유상증자</span>
-                        <span class="option-item">② 무상증자</span>
-                        <span class="option-item">③ 액면분할</span>
-                        <span class="option-item">④ 주식병합</span>
-                        <span class="option-item">⑤ 구주매출</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">15.</span> 2019년부터 시행된 실물 증서 없는 전자 장부 방식의 거래 제도는?
-                    <div class="mt-1">
-                        <span class="option-item">① 증권예탁제도</span>
-                        <span class="option-item">② 전자증권제도</span>
-                        <span class="option-item">③ 명의개서제도</span>
-                        <span class="option-item">④ 보호예수제도</span>
-                        <span class="option-item">⑤ 실물보관제도</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">16.</span> 채권(Bond)의 일반적 특성 중 옳지 않은 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 정부, 금융기관 등이 발행하는 채무 증서이다.</span>
-                        <span class="option-item">② 주식과 마찬가지로 원금 상환 의무가 없는 영구자본이다.</span>
-                        <span class="option-item">③ 확정이자부 증권이자 기한부 증권이다.</span>
-                        <span class="option-item">④ 유통시장에서의 매매를 통한 중도 현금화가 가능하다.</span>
-                        <span class="option-item">⑤ 채권 소유자는 발행사에 대해 채권자의 지위를 갖는다.</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">17.</span> 채권의 가격과 시장 금리의 관계에 대한 설명으로 옳은 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 정비례 관계이다.</span>
-                        <span class="option-item">② 금리가 오르면 채권 가격도 오른다.</span>
-                        <span class="option-item">③ 역의 관계(반비례)이다.</span>
-                        <span class="option-item">④ 금리가 내려도 채권 가격은 변하지 않는다.</span>
-                        <span class="option-item">⑤ 금리와 가격은 서로 무관하다.</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">18.</span> 지방자치단체가 지역 건설 등을 위해 발행하는 채권의 사례는?
-                    <div class="mt-1">
-                        <span class="option-item">① 국고채</span>
-                        <span class="option-item">② 통화안정증권</span>
-                        <span class="option-item">③ 도시철도채권</span>
-                        <span class="option-item">④ 금융채</span>
-                        <span class="option-item">⑤ 산업금융채권</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">19.</span> 채권 권면에 붙은 이표(Coupon)를 통해 정기적으로 이자를 받는 형태는?
-                    <div class="mt-1">
-                        <span class="option-item">① 할인채</span>
-                        <span class="option-item">② 복리채</span>
-                        <span class="option-item">③ 이표채</span>
-                        <span class="option-item">④ 단리채</span>
-                        <span class="option-item">⑤ 무이자채</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">20.</span> 액면가에서 이자를 미리 선공제(할인)한 금액으로 매출하는 채권은?
-                    <div class="mt-1">
-                        <span class="option-item">① 이표채</span>
-                        <span class="option-item">② 복리채</span>
-                        <span class="option-item">③ 할인채</span>
-                        <span class="option-item">④ 변동금리채</span>
-                        <span class="option-item">⑤ 영구채</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">21.</span> 채권자가 원할 때 발행회사의 주식으로 전환할 수 있는 사채는?
-                    <div class="mt-1">
-                        <span class="option-item">① BW</span>
-                        <span class="option-item">② EB</span>
-                        <span class="option-item">③ CB</span>
-                        <span class="option-item">④ PB</span>
-                        <span class="option-item">⑤ BO</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">22.</span> 신주를 살 수 있는 권리(Warrant)만 부여되고 채권은 존속하는 사채는?
-                    <div class="mt-1">
-                        <span class="option-item">① CB</span>
-                        <span class="option-item">② BW</span>
-                        <span class="option-item">③ EB</span>
-                        <span class="option-item">④ PB</span>
-                        <span class="option-item">⑤ BO</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">23.</span> 발행사가 보유한 다른 상장 기업의 주식으로 교환해주는 채권은?
-                    <div class="mt-1">
-                        <span class="option-item">① CB</span>
-                        <span class="option-item">② BW</span>
-                        <span class="option-item">③ EB</span>
-                        <span class="option-item">④ PB</span>
-                        <span class="option-item">⑤ BO</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">24.</span> 투자자가 발행회사에게 원금 상환을 일찍 요구할 수 있는 권리는?
-                    <div class="mt-1">
-                        <span class="option-item">① 콜옵션</span>
-                        <span class="option-item">② 풋옵션</span>
-                        <span class="option-item">③ 전환권</span>
-                        <span class="option-item">④ 인수권</span>
-                        <span class="option-item">⑤ 교환권</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">25.</span> 미래 특정 시점에 기초자산을 인수도하기로 약정하는 파생상품은?
-                    <div class="mt-1">
-                        <span class="option-item">① 선물(Futures)</span>
-                        <span class="option-item">② 옵션(Options)</span>
-                        <span class="option-item">③ 스왑(Swaps)</span>
-                        <span class="option-item">④ 현물</span>
-                        <span class="option-item">⑤ 증권</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">26.</span> 선물거래와 선도거래의 차이점으로 옳은 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 선도는 거래소 내에서 거래된다.</span>
-                        <span class="option-item">② 선물은 장외에서 직접 거래된다.</span>
-                        <span class="option-item">③ 선물은 매일 일일정산을 수행한다.</span>
-                        <span class="option-item">④ 선도는 결제 이행이 100% 보증된다.</span>
-                        <span class="option-item">⑤ 선물은 신용위험이 선도보다 크다.</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">27.</span> 옵션 중 '미리 정한 가격으로 자산을 살 수 있는 권리'는?
-                    <div class="mt-1">
-                        <span class="option-item">① 풋옵션</span>
-                        <span class="option-item">② 콜옵션</span>
-                        <span class="option-item">③ 선물</span>
-                        <span class="option-item">④ 스왑</span>
-                        <span class="option-item">⑤ 선도</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">28.</span> 옵션 행사 시점이 '만기일 당일'로만 제한되는 유형은?
-                    <div class="mt-1">
-                        <span class="option-item">① 미국형 옵션</span>
-                        <span class="option-item">② 유럽형 옵션</span>
-                        <span class="option-item">③ 아시아형 옵션</span>
-                        <span class="option-item">④ 한국형 옵션</span>
-                        <span class="option-item">⑤ 복합형 옵션</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">29.</span> 일정 기간 금리나 통화 등 현금흐름을 맞교환하는 파생상품은?
-                    <div class="mt-1">
-                        <span class="option-item">① 선물</span>
-                        <span class="option-item">② 옵션</span>
-                        <span class="option-item">③ 스왑(Swap)</span>
-                        <span class="option-item">④ 선도</span>
-                        <span class="option-item">⑤ 캡</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">30.</span> 장내파생상품 시장의 특징이 아닌 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 표준화된 상품 거래</span>
-                        <span class="option-item">② 청산소를 통한 결제 보증</span>
-                        <span class="option-item">③ 일일정산 제도 운영</span>
-                        <span class="option-item">④ 신용위험의 거래 상대방 직접 노출</span>
-                        <span class="option-item">⑤ 거래소라는 물리적 장소</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">31.</span> 다수의 자금을 모아 전문가가 독립 운용하고 배분하는 기구는?
-                    <div class="mt-1">
-                        <span class="option-item">① 집합투자기구(펀드)</span>
-                        <span class="option-item">② 직접투자기구</span>
-                        <span class="option-item">③ 일임계약</span>
-                        <span class="option-item">④ 신탁관리소</span>
-                        <span class="option-item">⑤ 예탁결제원</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">32.</span> 투자신탁 형태의 펀드가 투자자에게 발행하는 증권 명칭은?
-                    <div class="mt-1">
-                        <span class="option-item">① 지분증권</span>
-                        <span class="option-item">② 수익증권</span>
-                        <span class="option-item">③ 채무증권</span>
-                        <span class="option-item">④ 파생증권</span>
-                        <span class="option-item">⑤ 약정증권</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">33.</span> 뮤추얼 펀드(투자회사)가 투자자에게 발행하는 증권은?
-                    <div class="mt-1">
-                        <span class="option-item">① 수익증권</span>
-                        <span class="option-item">② 주식(지분증권)</span>
-                        <span class="option-item">③ 사채</span>
-                        <span class="option-item">④ CP</span>
-                        <span class="option-item">⑤ 보험증권</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">34.</span> 펀드 투자자가 결과에 따른 손익을 직접 책임지는 원칙은?
-                    <div class="mt-1">
-                        <span class="option-item">① 원금보장 원칙</span>
-                        <span class="option-item">② 실적배당 원칙</span>
-                        <span class="option-item">③ 확정수익 원칙</span>
-                        <span class="option-item">④ 예금보호 원칙</span>
-                        <span class="option-item">⑤ 책임면제 원칙</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">35.</span> 주식 발행 시 액면가를 초과하여 받은 금액을 적립하는 항목은?
-                    <div class="mt-1">
-                        <span class="option-item">① 자본금</span>
-                        <span class="option-item">② 이익잉여금</span>
-                        <span class="option-item">③ 주식발행초과금(자본준비금)</span>
-                        <span class="option-item">④ 당기순이익</span>
-                        <span class="option-item">⑤ 법정적립금</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">36.</span> 펀드 운용 기간 동안 지속적으로 자산에서 차감되는 비용은?
-                    <div class="mt-1">
-                        <span class="option-item">① 판매수수료</span>
-                        <span class="option-item">② 판매보수</span>
-                        <span class="option-item">③ 가입비</span>
-                        <span class="option-item">④ 거래세</span>
-                        <span class="option-item">⑤ 인지세</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">37.</span> 우리나라 국고채 발행의 주체는 누구인가?
-                    <div class="mt-1">
-                        <span class="option-item">① 한국은행</span>
-                        <span class="option-item">② 정부(기획재정부)</span>
-                        <span class="option-item">③ 산업은행</span>
-                        <span class="option-item">④ 증권거래소</span>
-                        <span class="option-item">⑤ 시중은행</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">38.</span> 주주가 자신의 납입 자본 내에서만 책임을 지는 원칙은?
-                    <div class="mt-1">
-                        <span class="option-item">① 무한책임</span>
-                        <span class="option-item">② 유한책임</span>
-                        <span class="option-item">③ 연대책임</span>
-                        <span class="option-item">④ 배상책임</span>
-                        <span class="option-item">⑤ 직접책임</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">39.</span> 채권 수익 원천 중 '매매 차익'을 부르는 용어는?
-                    <div class="mt-1">
-                        <span class="option-item">① 이자소득</span>
-                        <span class="option-item">② 자본이득(Capital Gain)</span>
-                        <span class="option-item">③ 배당소득</span>
-                        <span class="option-item">④ 표면이율</span>
-                        <span class="option-item">⑤ 프리미엄</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">40.</span> 가격 하락에 대비하여 선물을 미리 파는 헤지 기법은?
-                    <div class="mt-1">
-                        <span class="option-item">① 매입헤지</span>
-                        <span class="option-item">② 매도헤지</span>
-                        <span class="option-item">③ 차익거래</span>
-                        <span class="option-item">④ 투기거래</span>
-                        <span class="option-item">⑤ 델타헤지</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">41.</span> 옵션 매수자가 권리 획득 대가로 매도자에게 지불하는 돈은?
-                    <div class="mt-1">
-                        <span class="option-item">① 증거금</span>
-                        <span class="option-item">② 프리미엄</span>
-                        <span class="option-item">③ 배당금</span>
-                        <span class="option-item">④ 이자</span>
-                        <span class="option-item">⑤ 보증금</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">42.</span> 만기가 길어질수록 채권의 가격 변동성은 어떻게 되는가?
-                    <div class="mt-1">
-                        <span class="option-item">① 작아진다.</span>
-                        <span class="option-item">② 커진다.</span>
-                        <span class="option-item">③ 변동 없다.</span>
-                        <span class="option-item">④ 일정하다.</span>
-                        <span class="option-item">⑤ 상쇄된다.</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">43.</span> 우리나라의 '중기채' 분류 기준으로 적절한 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 1년 미만</span>
-                        <span class="option-item">② 1년 이상 ~ 5년 미만</span>
-                        <span class="option-item">③ 5년 이상</span>
-                        <span class="option-item">④ 10년 이상</span>
-                        <span class="option-item">⑤ 무기한</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">44.</span> 주주총회에 참석하나 찬반 투표권이 없는 주식은?
-                    <div class="mt-1">
-                        <span class="option-item">① 보통주</span>
-                        <span class="option-item">② 무의결권 주식</span>
-                        <span class="option-item">③ 기명주</span>
-                        <span class="option-item">④ 유상주</span>
-                        <span class="option-item">⑤ 전환주</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">45.</span> 외화 등을 기초자산으로 하는 파생상품의 분류는?
-                    <div class="mt-1">
-                        <span class="option-item">① 주가지수상품</span>
-                        <span class="option-item">② 채권금리상품</span>
-                        <span class="option-item">③ 통화상품</span>
-                        <span class="option-item">④ 상품파생</span>
-                        <span class="option-item">⑤ 변동성상품</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">46.</span> 채권의 발행 주체 중 공사나 법정 기관이 발행하는 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 지방채</span>
-                        <span class="option-item">② 특수채</span>
-                        <span class="option-item">③ 금융채</span>
-                        <span class="option-item">④ 회사채</span>
-                        <span class="option-item">⑤ 국채</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">47.</span> 주식수만 늘고 실제 자산 유입은 없는 회계상 발행은?
-                    <div class="mt-1">
-                        <span class="option-item">① 유상증자</span>
-                        <span class="option-item">② 무상증자</span>
-                        <span class="option-item">③ 전환청구</span>
-                        <span class="option-item">④ 구주매출</span>
-                        <span class="option-item">⑤ 액면분할</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">48.</span> 자본시장법상 '지분증권'에 속하지 않는 것은?
-                    <div class="mt-1">
-                        <span class="option-item">① 주권</span>
-                        <span class="option-item">② 출자증권</span>
-                        <span class="option-item">③ 신주인수권증서</span>
-                        <span class="option-item">④ 국채증서</span>
-                        <span class="option-item">⑤ 조합 출자지분</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">49.</span> 펀드 가입 시점에 1회 부과되는 수수료의 명칭은?
-                    <div class="mt-1">
-                        <span class="option-item">① 판매보수</span>
-                        <span class="option-item">② 운용보수</span>
-                        <span class="option-item">③ 선취 판매수수료</span>
-                        <span class="option-item">④ 신탁보수</span>
-                        <span class="option-item">⑤ 후취 수수료</span>
-                    </div>
-                </div>
-
-                <div class="question-item">
-                    <span class="question-num">50.</span> 채권 요건 중 '원금이 안전하게 보전될 신뢰도'는?
-                    <div class="mt-1">
-                        <span class="option-item">① 수익성</span>
-                        <span class="option-item">② 유동성</span>
-                        <span class="option-item">③ 안정성</span>
-                        <span class="option-item">④ 확실성</span>
-                        <span class="option-item">⑤ 기한성</span>
-                    </div>
+            <div class="question-item">
+                <span class="question-num">2.</span> 발행시장의 기능 중 '최초의 소유분산(Initial Distribution)' 기능의 의미는?
+                <div class="mt-1">
+                    <span class="option-item">① 기업의 경영권을 대주주에게 집중시키는 것</span>
+                    <span class="option-item">② 가계의 자금을 은행 예금으로 유도하는 것</span>
+                    <span class="option-item">③ 특정인에게 집중된 주식을 다수의 일반 투자자에게 분산시키는 것</span>
+                    <span class="option-item">④ 증권의 시장성과 유통성을 높여 담보력을 강화하는 것</span>
+                    <span class="option-item">⑤ 발행된 증권의 가격을 공정하게 형성하는 것</span>
                 </div>
             </div>
 
-            <!-- 상세 정답 및 해설 (마지막 페이지) -->
-            <div class="explanation-section">
-                <div class="text-center">
-                    <div class="text-3xl font-black mb-4 underline">정답 및 상세 해설</div>
-                    <div class="text-sm text-gray-600 mb-6">모든 문항은 제02장 교안 내용을 근거로 작성되었습니다.</div>
+            <div class="question-item">
+                <span class="question-num">3.</span> 발행시장의 구조에서 발행사무의 대행과 인수 기능을 수행하는 '발행기관'을 뜻하는 영어 용어는?
+                <div class="mt-1">
+                    <span class="option-item">① Issuer \quad ② Underwriter \quad ③ Investor \\ ④ Broker \quad ⑤ Dealer</span>
                 </div>
-                
-                <div class="grid grid-cols-1 gap-2 text-[11px] leading-relaxed">
-                    <div><strong>1. ④</strong> 판매수수료는 자본시장법 제3조에 따라 투자원본 산정 시 명시적으로 제외됩니다.</div>
-                    <div><strong>2. ②</strong> 원본초과손실(추가지급의무) 가능성 유무가 증권과 파생상품을 가르는 가장 결정적인 법적 잣대입니다.</div>
-                    <div><strong>3. ④</strong> 통화스왑계약은 파생상품입니다. 증권 6종은 채무, 지분, 수익, 투자계약, 파생결합, 증권예탁증권입니다.</div>
-                    <div><strong>4. ②</strong> ELS/DLS 등 파생결합증권은 기초자산 변동에 연계된 권리가 표시된 '증권'으로 분류됩니다.</div>
-                    <div><strong>5. ②</strong> 주식회사의 주주는 자신이 납입한 자본금 내에서만 책임을 지는 '유한책임' 원칙이 적용됩니다.</div>
-                    <div><strong>6. ②</strong> 의결권은 회사 경영에 참여하여 공익을 도모하는 공익권입니다. 배당청구권 등은 자익권입니다.</div>
-                    <div><strong>7. ③</strong> 우선주는 배당이나 잔여재산 분배에 우선권을 주는 대신 경영권인 의결권이 제한됩니다.</div>
-                    <div><strong>8. ②</strong> 당해 연도 배당 부족분을 차후에 소급하여 누적 지급받는 주식을 누적적 우선주라 합니다.</div>
-                    <div><strong>9. ③</strong> 일반 법인은 1/4이나, 상장법인은 자본시장법 특례로 1/2까지 무의결권주 발행이 가능합니다.</div>
-                    <div><strong>10. ②</strong> 무액면주는 액면가 기재 없이 발행주식수와 그에 따른 지분율만 표시하는 주식입니다.</div>
-                    <div><strong>11. ②</strong> 우리 상법은 액면주와 무액면주 중 선택 발행을 허용합니다(단, 병행 발행은 금지).</div>
-                    <div><strong>12. ②</strong> 무기명주식은 주주 확정이 어려워 투명성을 저해하므로 2014년에 폐지되었습니다.</div>
-                    <div><strong>13. ①</strong> 이익으로써 일정 기간 후 주식을 상환하여 없애기로 약정된 주식을 상환주라 합니다.</div>
-                    <div><strong>14. ②</strong> 무상증자는 자본준비금의 자본전입으로 발행되므로 외부로부터의 실질적 자금 유입이 없습니다.</div>
-                    <div><strong>15. ②</strong> 2019년 9월 도입된 전자증권제도는 실물 없이 전자 등록만으로 권리를 관리하는 제도입니다.</div>
-                    <div><strong>16. ②</strong> 채권은 상환 기일이 정해진 기한부 증권입니다. 주식이 원금 상환 의무가 없는 영구자본입니다.</div>
-                    <div><strong>17. ③</strong> 시중 금리(수익률)가 오르면 기존 채권의 가격은 하락하며, 이는 역의 관계(반비례)입니다.</div>
-                    <div><strong>18. ③</strong> 도시철도채권, 상수도공채 등은 지방자치단체가 발행하는 대표적인 지방채입니다.</div>
-                    <div><strong>19. ③</strong> 이표(Coupon)가 붙어 있어 약정된 이자 지급일에 이자를 떼어 지급받는 형태가 이표채입니다.</div>
-                    <div><strong>20. ③</strong> 이자를 선공제(할인)하여 파는 채권을 할인채(Zero Coupon Bond)라고 합니다.</div>
-                    <div><strong>21. ③</strong> 사채권자가 원할 때 발행회사의 주식으로 '형태를 바꿀' 수 있는 권리가 부여된 사채는 CB입니다.</div>
-                    <div><strong>22. ②</strong> 신주인수권부사채(BW)는 권리 행사 후에도 사채권자 지위(이자 수급권)가 만기까지 유지됩니다.</div>
-                    <div><strong>23. ③</strong> 교환사채(EB)는 발행사가 보유한 '타 상장회사'의 주식으로 교환해주는 것입니다.</div>
-                    <div><strong>24. ②</strong> 투자자가 발행인에게 원금 조기 상환을 요구할 수 있는 권리는 풋옵션(Put Option)입니다.</div>
-                    <div><strong>25. ①</strong> 미래 특정 시점에 기초자산을 사고팔기로 약정하는 표준화된 거래소 거래는 선물입니다.</div>
-                    <div><strong>26. ③</strong> 선물은 거래소 시스템을 통해 매일 손익을 정산하는 '일일정산' 제도가 있는 것이 큰 특징입니다.</div>
-                    <div><strong>27. ②</strong> 특정 가격으로 자산을 '살 수 있는 권리'는 콜옵션입니다. (풋은 '팔 수 있는 권리'임)</div>
-                    <div><strong>28. ②</strong> 만기일에만 권리 행사가 가능한 것은 유럽형, 기간 내내 가능한 것은 미국형입니다.</div>
-                    <div><strong>29. ③</strong> 일정 기간 금리나 통화 등 현금흐름을 맞바꾸는(Swap) 계약은 스왑입니다.</div>
-                    <div><strong>30. ④</strong> 장내 시장은 거래소가 이행을 보증하므로 신용위험이 극히 낮습니다. 장외가 직접 노출됩니다.</div>
-                    <div><strong>31. ①</strong> 2인 이상 모집, 운용 독립성(비지시성), 전문가 운용, 결과 귀속 요건은 집합투자기구(펀드)입니다.</div>
-                    <div><strong>32. ②</strong> 투자신탁은 신탁 계약에 기반하며 수익권을 분할한 '수익증권'을 발행합니다.</div>
-                    <div><strong>33. ②</strong> 뮤추얼 펀드(투자회사)는 회사 형태이므로 투자자에게 주식(지분증권)을 발행합니다.</div>
-                    <div><strong>34. ②</strong> 펀드는 운용 실적에 따라 수익/손실이 투자자에게 그대로 배분되는 실적배당 원칙을 따릅니다.</div>
-                    <div><strong>35. ③</strong> 액면가액을 초과하여 주식을 발행한 금액은 주식발행초과금(자본준비금)으로 적립됩니다.</div>
-                    <div><strong>36. ②</strong> 운용 기간 동안 자산 관리 대가로 지속 차감되는 비용은 보수(Fee), 일회성은 수수료입니다.</div>
-                    <div><strong>37. ②</strong> 국고채는 대한민국 정부(기획재정부)가 발행하며 국가의 공신력으로 원리금을 보증합니다.</div>
-                    <div><strong>38. ②</strong> 주주는 자신이 납입한 자본 내에서만 책임지는 유한책임 원칙을 따릅니다.</div>
-                    <div><strong>39. ②</strong> 매매 시 발생하는 시세 차익(Capital Gain) 이득을 자본이득이라고 부릅니다.</div>
-                    <div><strong>40. ②</strong> 가격 하락 위험 방어를 위해 미래에 팔 가격을 고정하는 것이 매도헤지입니다.</div>
-                    <div><strong>41. ②</strong> 옵션 매수자가 권리를 획득하는 대가로 매도자에게 지불하는 옵션의 가격은 프리미엄입니다.</div>
-                    <div><strong>42. ②</strong> 만기가 길수록 금리 변화에 대한 민감도(듀레이션)가 커져 가격 변동성도 커집니다.</div>
-                    <div><strong>43. ②</strong> 국내 관행상 1년 이상 ~ 5년 미만은 중기채, 5년 이상은 장기채로 분류합니다.</div>
-                    <div><strong>44. ②</strong> 무의결권 주식은 배당에 우선권을 주되 주총 투표권(의결권)은 제한된 주식입니다.</div>
-                    <div><strong>45. ③</strong> 달러, 엔 등 외화를 기초자산으로 하는 파생상품은 통화상품 카테고리에 속합니다.</div>
-                    <div><strong>46. ②</strong> 토지개발채권, 전력채 등 특별법상 공공기관/공사가 발행하는 채권은 특수채입니다.</div>
-                    <div><strong>47. ②</strong> 무상증자는 자본 구조 내에서의 이동일 뿐, 외부에서의 실질적 자산 유입은 없습니다.</div>
-                    <div><strong>48. ④</strong> 국채는 채무증권입니다. 주권, 신주인수권증서, 출자증권 등은 지분증권입니다.</div>
-                    <div><strong>49. ③</strong> 가입 시점에 1회 지불하는 일회성 판매 대가는 선취 판매수수료입니다.</div>
-                    <div><strong>50. ③</strong> 안정성은 채무불이행 위험이 적어 원금이 안전하게 보전될 것이라는 신뢰도를 의미합니다.</div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">4.</span> 증권 발행 시 발행회사와 인수조건을 결정하고 사무처리를 총괄하는 간사단은?
+                <div class="mt-1">
+                    <span class="option-item">① 인수단(Underwriting Syndicate)</span>
+                    <span class="option-item">② 주관회사(Underwriter / Lead Manager)</span>
+                    <span class="option-item">③ 분매기관(Selling Group)</span>
+                    <span class="option-item">④ 수탁은행(Trustee)</span>
+                    <span class="option-item">⑤ 청약단(청약대행회사)</span>
                 </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">5.</span> '인수단(Underwriting Syndicate)'의 가장 핵심적인 기능은?
+                <div class="mt-1">
+                    <span class="option-item">① 단순한 청약 업무 대행</span>
+                    <span class="option-item">② 자기 책임과 계산하에 발행주체로부터 증권을 직접 취득</span>
+                    <span class="option-item">③ 일반 투자자에게 종목 추천 서비스 제공</span>
+                    <span class="option-item">④ 기업의 공시 보고서 작성 대행</span>
+                    <span class="option-item">⑤ 한국거래소 상장 심사 수행</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">6.</span> 주식회사 설립 방식 중 '모집설립(Incorporation by Subscription)'의 특징은?
+                <div class="mt-1">
+                    <span class="option-item">① 발기인만이 주식 전액을 인수한다.</span>
+                    <span class="option-item">② 발기인이 주식 일부를 인수하고 나머지는 일반인을 모집한다.</span>
+                    <span class="option-item">③ 설립 후 2년이 경과해야 가능하다.</span>
+                    <span class="option-item">④ 자본금 증가는 있지만 주식수는 변하지 않는다.</span>
+                    <span class="option-item">⑤ 법원의 허가 없이 정관만으로 완료된다.</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">7.</span> 자본시장법상 '공모(Public Offering)'로 분류되는 청약 권유 대상 인원 기준은?
+                <div class="mt-1">
+                    <span class="option-item">① 10인 이상 \quad ② 30인 이상 \quad ③ 50인 이상 \\ ④ 100인 이상 \quad ⑤ 제한 없음</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">8.</span> 발행주체가 직접 발행업무를 수행하고 '발행위험(모집부족 위험)'을 스스로 부담하는 방식은?
+                <div class="mt-1">
+                    <span class="option-item">① 직접발행(Direct Issuing)</span>
+                    <span class="option-item">② 간접발행(Indirect Issuing)</span>
+                    <span class="option-item">③ 사모발행(Private Placement)</span>
+                    <span class="option-item">④ 총액인수(Firm Commitment)</span>
+                    <span class="option-item">⑤ 위탁모집(Best-efforts)</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">9.</span> 발행기관이 발행주식을 전액 매입한 후 투자자에게 재매각하는 방식이며, 자금조달 완성 시점이 '인수계약 시점'인 방식은?
+                <div class="mt-1">
+                    <span class="option-item">① 위탁모집 \quad ② 잔액인수 \quad ③ 총액인수 \\ ④ 직접모집 \quad ⑤ 사모모집</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">10.</span> '잔액인수(Stand-by Agreement)' 방식에서 발행위험(인수위험)의 부담 주체는?
+                <div class="mt-1">
+                    <span class="option-item">① 발행자 \quad ② 발행기관 \quad ③ 투자자 \\ ④ 금융감독원 \quad ⑤ 한국거래소</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">11.</span> 위탁모집(Best-efforts Basis)에 대한 설명 중 옳은 것은?
+                <div class="mt-1">
+                    <span class="option-item">① 발행기관이 인수위험을 100% 부담한다.</span>
+                    <span class="option-item">② 발행사무만 위탁하며 인수위험은 발행주체가 부담한다.</span>
+                    <span class="option-item">③ 자금조달이 인수계약과 동시에 완성된다.</span>
+                    <span class="option-item">④ 모집 부족 시 발행기관이 남은 주식을 전액 매입한다.</span>
+                    <span class="option-item">⑤ 상장법인이 가장 선호하는 방식이다.</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">12.</span> 직접공모(Direct Public Offering) 방식에 대한 설명으로 틀린 것은?
+                <div class="mt-1">
+                    <span class="option-item">① 발행주체가 자기 지점망이나 공고를 통해 직접 모집한다.</span>
+                    <span class="option-item">② 인수위험과 발행사무를 발행주체가 직접 부담한다.</span>
+                    <span class="option-item">③ 주로 자금력이 약한 비상장법인이 활용한다.</span>
+                    <span class="option-item">④ 발행기관에 대한 수수료를 절감할 수 있다.</span>
+                    <span class="option-item">⑤ 대규모 자금 조달에 가장 효율적인 방식이다.</span>
+                </div>
+            </div>
+
+            <!-- 제2절: 유통시장 -->
+            <div class="question-item">
+                <span class="question-num">13.</span> '유통시장(Secondary Market)'의 본질적인 성격은?
+                <div class="mt-1">
+                    <span class="option-item">① 자본이 기업으로 직접 유입되는 시장</span>
+                    <span class="option-item">② 이미 발행된 증권의 소유권이 이전되는 2차적 시장</span>
+                    <span class="option-item">③ 신규 아이디어를 가진 벤처기업의 창업 시장</span>
+                    <span class="option-item">④ 국가 간의 화폐를 교환하는 시장</span>
+                    <span class="option-item">⑤ 자산의 담보 가치를 평가만 하는 시장</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">14.</span> 유통시장의 특징 중 '표준화된 시장(Standardized Market)'의 의미는?
+                <div class="mt-1">
+                    <span class="option-item">① 누구나 자유롭게 시장 규칙을 정할 수 있다.</span>
+                    <span class="option-item">② 시장의 공정성과 효율성을 위해 거래 제도가 통일되어 있다.</span>
+                    <span class="option-item">③ 상품의 가격이 정부에 의해 고정되어 있다.</span>
+                    <span class="option-item">④ 상장되지 않은 주식만을 거래하는 원칙이 있다.</span>
+                    <span class="option-item">⑤ 24시간 언제 어디서나 당사자 합의로 거래한다.</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">15.</span> 유통시장에서 형성되는 증권의 가격은 발행시장의 무엇에 영향을 미치는가?
+                <div class="mt-1">
+                    <span class="option-item">① 신규 발행 증권의 가격 결정</span>
+                    <span class="option-item">② 발행 회사의 직원 채용 규모</span>
+                    <span class="option-item">③ 한국은행의 기준 금리 결정</span>
+                    <span class="option-item">④ 정부의 법인세율 결정</span>
+                    <span class="option-item">⑤ 투자자의 연령대 분포</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">16.</span> 다음 중 한국거래소(KRX) 내에서 상장주식이 거래되는 시장이 아닌 것은?
+                <div class="mt-1">
+                    <span class="option-item">① 유가증권시장(KOSPI)</span>
+                    <span class="option-item">② 코스닥시장(KOSDAQ)</span>
+                    <span class="option-item">③ 코넥스시장(KONEX)</span>
+                    <span class="option-item">④ K-OTC시장</span>
+                    <span class="option-item">⑤ 채권시장</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">17.</span> '증권상품시장'에서 주로 거래되는 상품 세 가지는?
+                <div class="mt-1">
+                    <span class="option-item">① 주식, 채권, 예금</span>
+                    <span class="option-item">② ETN, ETF, ELW</span>
+                    <span class="option-item">③ 보험, 신탁, 연금</span>
+                    <span class="option-item">④ CP, CD, RP</span>
+                    <span class="option-item">⑤ 선물, 옵션, 스왑</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">18.</span> 거래소시장의 상장요건을 갖추지 못한 기업의 주식을 거래하기 위해 '한국금융투자협회'가 개설한 시장은?
+                <div class="mt-1">
+                    <span class="option-item">① 상장시장 \quad ② 장외시장(OTC) \quad ③ 발행시장 \\ ④ 벤처시장 \quad ⑤ 직접시장</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">19.</span> K-OTC 시장의 분류 중 비상장 법인 중 '전문투자자 전용' 시장의 명칭은?
+                <div class="mt-1">
+                    <span class="option-item">① K-OTC \quad ② K-OTC PRO \quad ③ K-OTCBB \\ ④ KONEX \quad ⑤ KOSPI</span>
+                </div>
+            </div>
+
+            <!-- 제3절: 증자 -->
+            <div class="question-item">
+                <span class="question-num">20.</span> '증자(Increase of Capital)'의 법적 절차에서 신주 발행을 결정하는 주체는?
+                <div class="mt-1">
+                    <span class="option-item">① 주주총회(원칙) \quad ② 이사회(원칙) \quad ③ 대표이사 \\ ④ 금융위원회 \quad ⑤ 한국거래소</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">21.</span> 한국 상법상 채택하고 있는 자본금 제도의 명칭은?
+                <div class="mt-1">
+                    <span class="option-item">① 확정자본주의 \quad ② 수권자본주의 \quad ③ 변동자본주의 \\ ④ 자유자본주의 \quad ⑤ 국유자본주의</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">22.</span> '유상증자'를 통해 기업이 얻을 수 있는 가장 직접적인 효과는?
+                <span class="option-item">① 자기자본의 증가와 실질적 재산 유입</span>
+                <span class="option-item">② 부채 비율의 급격한 상승</span>
+                <span class="option-item">③ 기존 주주의 지분율 무조건적 보존</span>
+                <span class="option-item">④ 이익잉여금의 현금 배당 효과</span>
+                <span class="option-item">⑤ 기업 신용등급의 하락</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">23.</span> 기존 주주가 가진 주식 수에 비례하여 신주를 배정받는 방식은?
+                <span class="option-item">① 제3자 배정 \quad ② 연고자 배정 \quad ③ 구주주 배정 \\ ④ 일반 공모 \quad ⑤ 직접 배정</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">24.</span> '제3자 배정(연고자 배정)'을 실시하기 위해 정관에 정함이 없거나 부족할 때 필요한 절차는?
+                <span class="option-item">① 이사회의 단순 보고</span>
+                <span class="option-item">② 주주총회의 특별결의 및 정관 변경</span>
+                <span class="option-item">③ 한국거래소의 사전 승인</span>
+                <span class="option-item">④ 전체 주주의 전원 동의</span>
+                <span class="option-item">⑤ 금융감독원의 직접 지시</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">25.</span> '일반공모증자' 방식의 단점으로 지적되는 현상은?
+                <span class="option-item">① 자금 조달 속도가 매우 느리다.</span>
+                <span class="option-item">② 기존 주주의 주식가치 희석(Dilution) 위험</span>
+                <span class="option-item">③ 신규 투자자 유치가 불가능하다.</span>
+                <span class="option-item">④ 발행 비용이 전혀 발생하지 않는다.</span>
+                <span class="option-item">⑤ 대주주의 지분율이 항상 높아진다.</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">26.</span> 구주주와 우리사주조합에게 우선 청약권을 준 뒤 미달분을 일반인에게 공모하는 방식은?
+                <span class="option-item">① 일반공모 \quad ② 주주우선공모 \quad ③ 제3자공모 \\ ④ 직접공모 \quad ⑤ 시가배정</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">27.</span> '무상증자(Bonus Issue)'의 재원으로 사용되는 '준비금' 두 가지는?
+                <span class="option-item">① 자본금, 당기순이익</span>
+                <span class="option-item">② 이익준비금, 자본준비금</span>
+                <span class="option-item">③ 임의적립금, 퇴직급여충당금</span>
+                <span class="option-item">④ 감가상각누계액, 미처분이익잉여금</span>
+                <span class="option-item">⑤ 세금공제전이익, 영업외이익</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">28.</span> 자본거래에서 발생한 잉여금인 '자본준비금'에 해당하지 않는 것은?
+                <span class="option-item">① 주식발행초과금 \quad ② 감자차익 \quad ③ 합병차익 \\ ④ 당기순이익 \quad ⑤ 교환차익</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">29.</span> 상법 제458조에 의한 '이익준비금'의 적립 한도는?
+                <span class="option-item">① 자본금의 1/4에 달할 때까지</span>
+                <span class="option-item">② 자본금의 1/2에 달할 때까지</span>
+                <span class="option-item">③ 자본금의 전액에 달할 때까지</span>
+                <span class="option-item">④ 총자산의 10%까지</span>
+                <span class="option-item">⑤ 순이익의 50%까지</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">30.</span> '무상증자'의 결과로 나타나는 재무적 변화로 옳은 것은?
+                <span class="option-item">① 총자산과 자기자본이 모두 증가한다.</span>
+                <span class="option-item">② 실질적 재산 유입이 발생한다.</span>
+                <span class="option-item">③ 잉여금이 자본금으로 대체되며 총자본은 불변이다.</span>
+                <span class="option-item">④ 발행주식수는 감소하고 액면가는 커진다.</span>
+                <span class="option-item">⑤ 부채 비율이 급격히 낮아진다.</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">31.</span> 무상증자의 주된 목적 중 하나인 '주주에 대한 자본이득의 환원'의 의미는?
+                <span class="option-item">① 주주에게 직접 현금을 지급하는 것</span>
+                <span class="option-item">② 공짜로 주식을 나눠주어 주주의 심리적 만족과 유동성을 높이는 것</span>
+                <span class="option-item">③ 주주의 의결권을 제한하는 것</span>
+                <span class="option-item">④ 주주로부터 추가 투자금을 징수하는 것</span>
+                <span class="option-item">⑤ 기업의 영업 비밀을 공유하는 것</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">32.</span> 현금배당 대신 신주를 발행하여 배당하는 제도는?
+                <span class="option-item">① 무상증자 \quad ② 주식배당 \quad ③ 주식분할 \\ ④ 자사주매입 \quad ⑤ 감자</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">33.</span> '주식분할(Stock Split-up)'에 대한 설명으로 틀린 것은?
+                <span class="option-item">① 이미 발행된 주식을 잘게 쪼개는 것이다.</span>
+                <span class="option-item">② 자본금 총액과 재무구조에는 변화가 없다.</span>
+                <span class="option-item">③ 주식수가 늘어나 유동성이 개선된다.</span>
+                <span class="option-item">④ 액면금액이 분할 비율만큼 작아진다.</span>
+                <span class="option-item">⑤ 기업에 새로운 자본이 유입되는 증자 방식이다.</span>
+            </div>
+
+            <!-- 제4절: 시가발행 -->
+            <div class="question-item">
+                <span class="question-num">34.</span> '시가발행(Issue at Market)'의 정의로 옳은 것은?
+                <span class="option-item">① 액면가와 동일한 가격으로 신주 가격을 정한다.</span>
+                <span class="option-item">② 시장에서 형성된 가격에 근접하게 발행가를 결정한다.</span>
+                <span class="option-item">③ 액면가의 50%로 고정하여 발행한다.</span>
+                <span class="option-item">④ 채권 수익률에 맞춰 발행가를 정한다.</span>
+                <span class="option-item">⑤ 정부가 고시하는 가격으로 발행한다.</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">35.</span> 시가발행 시 액면가를 초과하는 금액인 '주식발행초과금'은 어디에 적립되는가?
+                <span class="option-item">① 자본금 \quad ② 자본잉여금 \quad ③ 이익잉여금 \\ ④ 영업외이익 \quad ⑤ 자본조정</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">36.</span> 시가발행제도의 장점 중 '향후 배당 압박 경감'의 이유는?
+                <span class="option-item">① 주주들이 배당을 포기하기 때문</span>
+                <span class="option-item">② 자본금 증가는 적으면서 거액의 자금을 조달할 수 있기 때문</span>
+                <span class="option-item">③ 배당금을 정부가 대신 내주기 때문</span>
+                <span class="option-item">④ 시가발행 시 배당 의무가 면제되기 때문</span>
+                <span class="option-item">⑤ 주식수가 줄어들어 배당 대상이 적어지기 때문</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">37.</span> 일반공모증자 방식에서 '기준주가' 산정의 기산일은?
+                <span class="option-item">① 이사회 결의일 당일</span>
+                <span class="option-item">② 청약일 전 제3거래일</span>
+                <span class="option-item">③ 청약일 전 제5거래일</span>
+                <span class="option-item">④ 청약일 당일</span>
+                <span class="option-item">⑤ 직전 연말 종가일</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">38.</span> 일반공모증자 시 기준주가에 적용할 수 있는 최대 할인율은?
+                <span class="option-item">① 5% 이내 \quad ② 10% 이내 \quad ③ 20% 이내 \\ ④ 30% 이내 \quad ⑤ 제한 없음</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">39.</span> 제3자배정증자(일반)의 경우 최대 할인율은?
+                <span class="option-item">① 10% 이내 \quad ② 20% 이내 \quad ③ 30% 이내 \\ ④ 40% 이내 \quad ⑤ 50% 이내</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">40.</span> 제3자배정증자 시 '보호예수(Protective Deposit)'를 하는 경우 기준주가는 무엇을 기준으로 하는가?
+                <span class="option-item">① 1개월, 1주일, 최근일 평균 가중산술평균주가와 최근일 종가 중 낮은 가액</span>
+                <span class="option-item">② 오직 1개월 평균 주가</span>
+                <span class="option-item">③ 액면가의 10배</span>
+                <span class="option-item">④ 무조건 최근일 종가</span>
+                <span class="option-item">⑤ 이사회 결의일 최고가</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">41.</span> 주주배정 방식에서 '실권주(Unsubscribed Shares)'가 발생하지 않는 경우 발행가액은 어떻게 결정되나?
+                <span class="option-item">① 법률에 의해 고정된다.</span>
+                <span class="option-item">② 발행사가 자율적으로 결정한다.</span>
+                <span class="option-item">③ 한국거래소가 지정한다.</span>
+                <span class="option-item">④ 액면가로 강제된다.</span>
+                <span class="option-item">⑤ 할인 없이 시가로만 해야 한다.</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">42.</span> '액면미달발행(Issue below Par)' 요건 중 '회사 설립 후 경과 기간' 기준은?
+                <span class="option-item">① 6개월 \quad ② 1년 \quad ③ 2년 \quad ④ 3년 \quad ⑤ 5년</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">43.</span> 액면미달발행을 위해 거쳐야 하는 법적 승인 절차는?
+                <span class="option-item">① 대표이사 독단 결정</span>
+                <span class="option-item">② 주주총회의 특별결의 및 법원의 인가</span>
+                <span class="option-item">③ 국세청의 세무 조사</span>
+                <span class="option-item">④ 금융감독원의 권고</span>
+                <span class="option-item">⑤ 외부 회계법인의 자문</span>
+            </div>
+
+            <!-- 제5절: 기업공개(IPO) -->
+            <div class="question-item">
+                <span class="question-num">44.</span> '기업공개(Initial Public Offering)'의 궁극적인 의미는?
+                <span class="option-item">① 소수의 주주가 경영권을 독점하는 것</span>
+                <span class="option-item">② 최초로 일반 투자자에게 주주 모집을 하여 주식을 분산하고 경영 내용을 공개하는 것</span>
+                <span class="option-item">③ 기업의 공장 견학을 허용하는 것</span>
+                <span class="option-item">④ 부채를 갚지 않겠다고 선언하는 것</span>
+                <span class="option-item">⑤ 상장된 기업이 비상장으로 전환하는 것</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">45.</span> IPO와 상장(Listing)의 성격 비교 중 '상장'의 주요 목적은?
+                <span class="option-item">① 발행 기업의 신규 자금 조달</span>
+                <span class="option-item">② 증권의 원활한 유통과 공정한 가격 형성</span>
+                <span class="option-item">③ 소유 주식의 단순 분산</span>
+                <span class="option-item">④ 기업 내부 기밀의 유지</span>
+                <span class="option-item">⑤ 임직원의 복지 향상</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">46.</span> IPO 시 '공시주의(Disclosure System)' 규제란?
+                <span class="option-item">① 상장 적격성을 선별하여 규제하는 것</span>
+                <span class="option-item">② 발행 당사자에 대해 모든 중요 내용을 투자자에게 알리게 하는 것</span>
+                <span class="option-item">③ 정부가 발행 주식수를 직접 정해주는 것</span>
+                <span class="option-item">④ 소수 주주의 주식 매매를 금지하는 것</span>
+                <span class="option-item">⑤ 광고비를 제한하는 것</span>
+            </div>
+
+            <div class="question-item">
+                <span class="option-item">47. IPO 방법 중 '구주매출(Secondary Offering)'이란?</span>
+                <span class="option-item">① 새로운 주식을 찍어 파는 것</span>
+                <span class="option-item">② 대주주 등이 가진 기존 주식을 일반인에게 파는 것</span>
+                <span class="option-item">③ 채권을 주식으로 바꿔주는 것</span>
+                <span class="option-item">④ 직원에게 공짜로 주식을 주는 것</span>
+                <span class="option-item">⑤ 외국인에게만 주식을 배정하는 것</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">48.</span> IPO 시 공모금액 결정 방식 중 재무상태가 양호할 때 액면가보다 높게 발행하는 방식은?
+                <span class="option-item">① 액면발행 \quad ② 할인발행 \quad ③ 할증발행 \\ ④ 균등발행 \quad ⑤ 수권발행</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">49.</span> 기업공개의 요건 중 '형식적 요건'에 해당하는 항목이 아닌 것은?
+                <span class="option-item">① 자기자본 규모 \quad ② 경영성과 \quad ③ 주식분산 정도 \\ ④ 감사의견 \quad ⑤ 기업의 계속성</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">50.</span> 기업공개의 질적 요건 중 '기업의 계속성' 판단 요소로 옳은 것은?
+                <span class="option-item">① 최대주주의 학력</span>
+                <span class="option-item">② 매출처의 편중도 및 차입금 규모</span>
+                <span class="option-item">③ 사외이사의 거주지</span>
+                <span class="option-item">④ 회사의 로고 디자인</span>
+                <span class="option-item">⑤ 사무실의 임대료</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">51.</span> 경영의 투명성 및 안정성(질적 요건) 충족 여부를 위해 확인하는 것은?
+                <span class="option-item">① 최대주주 변경 여부 및 내부회계관리제도</span>
+                <span class="option-item">② 당기순이익의 절댓값</span>
+                <span class="option-item">③ 주당 액면금액</span>
+                <span class="option-item">④ 시장 점유율 순위</span>
+                <span class="option-item">⑤ 설립 연도</span>
+            </div>
+
+            <!-- 세부 및 심화 문항들 -->
+            <div class="question-item">
+                <span class="question-num">52.</span> 증권 발행의 제1차적 시장이며 추상적인 시장은?
+                <span class="option-item">① 유통시장 \quad ② 발행시장 \quad ③ 거래소시장 \\ ④ 장외시장 \quad ⑤ 파생시장</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">53.</span> 발행기관의 '분매기관(Selling Group)'의 주요 역할은?
+                <span class="option-item">① 주식 인수 위험 부담</span>
+                <span class="option-item">② 청약 업무의 대행(분할 판매)</span>
+                <span class="option-item">③ 발행사 신용 평가</span>
+                <span class="option-item">④ 이사회 결정 번복</span>
+                <span class="option-item">⑤ 배당금 직접 지급</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">54.</span> 발행주체와 이해관계(지분 5% 이상)가 있는 회사의 IPO 시 구성해야 하는 주관회사는?
+                <span class="option-item">① 단독주관회사 \quad ② 공동주관회사 \quad ③ 정부주관회사 \\ ④ 임시주관회사 \quad ⑤ 외국인주관회사</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">55.</span> '유통시장'의 특징 중 다수의 매도자와 매수자에 의해 거래되는 성격은?
+                <span class="option-item">① 독과점 거래 \quad ② 경쟁적 거래 \quad ③ 담합 거래 \\ ④ 폐쇄적 거래 \quad ⑤ 비공개 거래</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">56.</span> 유통시장의 유형 중 ETN, ETF, ELW가 거래되는 시장은?
+                <span class="option-item">① 주식시장 \quad ② 채권시장 \quad ③ 증권상품시장 \\ ④ 금리시장 \quad ⑤ 파생상품시장</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">57.</span> 유상증자의 목적 중 '경영권 안정'을 위해 주로 사용되는 배정 방식은?
+                <span class="option-item">① 일반공모 \quad ② 제3자 배정 \quad ③ 직접공모 \\ ④ 시가공모 \quad ⑤ 무작위추첨</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">58.</span> '자기자본의 충실화'를 기할 수 있는 시가발행의 특징은?
+                <span class="option-item">① 자본금 계정만 늘리기 때문</span>
+                <span class="option-item">② 주식발행초과금이 자본준비금으로 계상되기 때문</span>
+                <span class="option-item">③ 부채가 자본으로 자동 변환되기 때문</span>
+                <span class="option-item">④ 세금을 전혀 내지 않기 때문</span>
+                <span class="option-item">⑤ 자본금이 전혀 늘어나지 않기 때문</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">59.</span> 시가발행 할인율 중 '제3자배정증자'에 적용되는 일반적인 한도는?
+                <span class="option-item">① 5% \quad ② 10% \quad ③ 30% \quad ④ 50% \quad ⑤ 70%</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">60.</span> '재평가적립금'을 통한 무상증자가 현재(2020년 이후) 불가능한 이유는?
+                <span class="option-item">① 기업들이 돈이 없어서</span>
+                <span class="option-item">② 자산재평가법이 폐지되었기 때문</span>
+                <span class="option-item">③ 이자율이 너무 높아서</span>
+                <span class="option-item">④ 주주들이 반대해서</span>
+                <span class="option-item">⑤ 상법이 개정되어 배당으로만 써야 하기 때문</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">61.</span> IPO의 요건 중 '주식분산' 항목은 무엇을 평가하는가?
+                <span class="option-item">① 대주주가 주식을 얼마나 많이 가지고 있는가</span>
+                <span class="option-item">② 소액 주주에게 주식이 얼마나 널리 퍼져 있는가</span>
+                <span class="option-item">③ 주식의 색깔이 다양한가</span>
+                <span class="option-item">④ 주식이 종이 형태인가 전자 형태인가</span>
+                <span class="option-item">⑤ 주식이 해외로 수출되는가</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">62.</span> 기업공개 추진 시 질적 요건 중 '경영 안정성'을 위해 확인하는 사항은?
+                <span class="option-item">① 대표이사의 취미 \quad ② 최대주주 변경 여부 \\ ③ 직원의 평균 근속 연수 \quad ④ 사옥의 층수 \quad ⑤ 광고 모델</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">63.</span> 발행주식 총수를 정관에 정하도록 하는 제도는?
+                <span class="option-item">① 수권자본주의 \quad ② 법정자본주의 \quad ③ 실질자본주의 \\ ④ 계약자본주의 \quad ⑤ 상장자본주의</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">64.</span> 직접공모 시 인수위험을 부담하는 주체는?
+                <span class="option-item">① 증권사 \quad ② 발행주체 \quad ③ 투자자 \\ ④ 은행 \quad ⑤ 협회</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">65.</span> 유통시장의 특징 중 '조직적 시장'의 사례는?
+                <span class="option-item">① 재래시장 \quad ② 한국거래소(KRX) \quad ③ 백화점 \\ ④ 해외여행 \quad ⑤ 길거리 상점</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">66.</span> 신주인수권을 부여받는 방식 중 '임원, 거래처' 등이 대상인 것은?
+                <span class="option-item">① 구주주 배정 \quad ② 제3자 배정 \quad ③ 일반 공모 \\ ④ 시가 공모 \quad ⑤ 무작위 배정</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">67.</span> 시가발행 제도가 도입된 한국의 시기는?
+                <span class="option-item">① 1950년대 \quad ② 1987년 이후 \quad ③ 2020년 이후 \\ ④ 1997년 IMF 직후 \quad ⑤ 2008년 금융위기</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">68.</span> IPO 시 '형식적 요건' 중 하나인 감사의견의 필수 조건은?
+                <span class="option-item">① 부적정 \quad ② 의견거절 \quad ③ 적정 \\ ④ 한정 \quad ⑤ 검토중</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">69.</span> 주식발행초과금을 재원으로 하는 증자 방식은?
+                <span class="option-item">① 유상증자 \quad ② 무상증자 \quad ③ 감자 \\ ④ 배당 \quad ⑤ 합병</span>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">70.</span> 발행시장과 유통시장을 통틀어 일컫는 말은?
+                <span class="option-item">① 노동시장 \quad ② 증권시장 \quad ③ 부동산시장 \\ ④ 보험시장 \quad ⑤ 외환시장</span>
+            </div>
+
+        </div>
+
+        <div class="explanation-section">
+            <div class="text-center">
+                <div class="text-3xl font-black mb-4 underline">정답 및 상세 해설 (70문항 완결)</div>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-2 text-[10px] leading-relaxed">
+                <div><strong>1. ②</strong> 발행시장은 자금 조달을 위해 신규 증권을 발행/매출하는 시장입니다.</div>
+                <div><strong>2. ③</strong> 소유분산은 소수에 집중된 주식을 대중에 널리 퍼뜨리는 기능입니다.</div>
+                <div><strong>3. ②</strong> Underwriter는 인수 및 발행 사무를 담당하는 기관입니다.</div>
+                <div><strong>4. ②</strong> 주관회사(Lead Manager)는 발행 사무 전반을 총괄합니다.</div>
+                <div><strong>5. ②</strong> 인수단은 자기 책임하에 직접 증권을 취득(매입)하는 핵심 역할을 합니다.</div>
+                <div><strong>6. ②</strong> 발기설립(전원인수)과 대비되는 모집설립(일부모집)의 특징입니다.</div>
+                <div><strong>7. ③</strong> 자본시장법 제9조에 의해 50인 이상은 공모로 분류됩니다.</div>
+                <div><strong>8. ①</strong> 직접발행(Direct Issuing)은 외부 인수자 없이 발행자가 위험을 독점합니다.</div>
+                <div><strong>9. ③</strong> 총액인수(Firm Commitment)는 인수 시점에 자금 조달이 즉시 완성됩니다.</div>
+                <div><strong>10. ②</strong> 잔액인수는 남은 물량을 기관이 책임지므로 위험 주체는 발행기관입니다.</div>
+                <div><strong>11. ②</strong> 위탁모집은 모집 사무만 대행하며 팔리지 않은 리스크는 발행자가 집니다.</div>
+                <div><strong>12. ⑤</strong> 직접공모는 대규모 모집에는 한계가 있어 주로 비상장사의 소액 모집에 쓰입니다.</div>
+                <div><strong>13. ②</strong> 유통시장은 이미 발행된 증권을 투자자끼리 거래하는 2차 시장입니다.</div>
+                <div><strong>14. ②</strong> 표준화는 제도의 통일성을 통해 거래의 공정성과 효율성을 확보하는 것입니다.</div>
+                <div><strong>15. ①</strong> 유통시장의 시가는 신규 발행 주식의 기준 주가가 되어 가격 결정의 잣대가 됩니다.</div>
+                <div><strong>16. ④</strong> K-OTC는 금융투자협회가 운영하는 '장외시장'입니다.</div>
+                <div><strong>17. ②</strong> ETN, ETF, ELW는 대표적인 거래소 상장 증권상품입니다.</div>
+                <div><strong>18. ②</strong> 장외시장은 상장되지 않았거나 폐지된 주식을 거래하는 협회 개설 시장입니다.</div>
+                <div><strong>19. ②</strong> PRO 시장은 전문투자자 전용으로 개설된 K-OTC의 하위 시장입니다.</div>
+                <div><strong>20. ②</strong> 한국 상법상 미발행 주식 범위 내 신주 발행은 이사회의 결의 사항입니다.</div>
+                <div><strong>21. ②</strong> 정관에 정한 범위 내에서 이사회가 발행을 결정하는 수권자본주의를 택합니다.</div>
+                <div><strong>22. ①</strong> 유상증자는 투자금이 실제 회사 금고로 들어오는 실질적 자본 증가입니다.</div>
+                <div><strong>23. ③</strong> 기존 주주(Old Shareholder)에게 지분 비례로 배정하는 구주주 배정입니다.</div>
+                <div><strong>24. ②</strong> 연고자 배정은 경영권에 영향을 주므로 정관 변경 등 엄격한 주총 절차가 필요합니다.</div>
+                <div><strong>25. ②</strong> 기존 주주를 건너뛰고 새 주인을 찾으므로 기존 주주의 지분 가치가 낮아집니다.</div>
+                <div><strong>26. ②</strong> 주주/사주조합 기회 제공 후 남은 것만 일반 공모하는 절충 방식입니다.</div>
+                <div><strong>27. ②</strong> 상법상 무상증자의 재원은 이익준비금과 자본준비금입니다.</div>
+                <div><strong>28. ④</strong> 당기순이익은 잉여금의 재원이지만 자본거래에서 발생한 준비금은 아닙니다.</div>
+                <div><strong>29. ②</strong> 이익준비금은 상법에 따라 자본금의 절반(1/2)까지 적립 의무가 있습니다.</div>
+                <div><strong>30. ③</strong> 무상증자는 내부 주머니 이동일 뿐 회사의 전체 자산이나 자본 총액은 같습니다.</div>
+                <div><strong>31. ②</strong> 공짜 주식을 통해 주주에게 자산 증가(자본이득) 효과를 환원해주는 것입니다.</div>
+                <div><strong>32. ②</strong> 현금 대신 주식을 주는 배당을 주식배당(Stock Dividend)이라 합니다.</div>
+                <div><strong>33. ⑤</strong> 주식분할은 피자를 더 작게 쪼개는 것일 뿐 새 피자(자본)가 생기는 게 아닙니다.</div>
+                <div><strong>34. ②</strong> 시장에서 형성된 가격(시가)에 기반하여 발행가를 정하는 방식입니다.</div>
+                <div><strong>35. ②</strong> 액면가 초과분은 자본잉여금(Capital Surplus) 항목으로 계상됩니다.</div>
+                <div><strong>36. ②</strong> 적은 주식수로도 많은 자금을 모을 수 있어 배당해야 할 주식수 부담이 적어집니다.</div>
+                <div><strong>37. ②</strong> 규정상 청약일 전 제3~5거래일 가중평균주가를 기준으로 합니다.</div>
+                <div><strong>38. ④</strong> 일반공모 시 최대 할인율은 기준주가의 30% 이내입니다.</div>
+                <div><strong>39. ①</strong> 제3자배정은 특정인 혜택 우려로 인해 할인율이 10% 이내로 엄격합니다.</div>
+                <div><strong>40. ①</strong> 규정에 명시된 1개월, 1주일, 최근일 평균 주가 산출 방식입니다.</div>
+                <div><strong>41. ②</strong> 실권주가 없다면 기존 주주 권익 침해가 적어 발행사가 자율로 정합니다.</div>
+                <div><strong>42. ③</strong> 설립 후 2년이 지나야만 액면가 미만 발행을 고려할 수 있습니다.</div>
+                <div><strong>43. ②</strong> 액면미달발행은 자본금 부실 우려로 주총 특별결의와 법원의 인가가 필수입니다.</div>
+                <div><strong>44. ②</strong> IPO는 최초로 대중에 경영 내용을 공개하고 주인을 모집하는 공개적 행위입니다.</div>
+                <div><strong>45. ②</strong> 상장은 거래소라는 장소에서 증권이 사고 팔릴 수 있게 하는 유통성 확보가 주입니다.</div>
+                <div><strong>46. ②</strong> 투자자가 판단할 수 있게 모든 주요 정보를 밝히게 하는 공시 원칙입니다.</div>
+                <div><strong>47. ②</strong> 대주주가 이미 가졌던 '오래된 주식(구주)'을 시장에 내놓는 것입니다.</div>
+                <div><strong>48. ③</strong> 가치가 액면가보다 높을 때 할증(Premium)하여 발행합니다.</div>
+                <div><strong>49. ⑤</strong> 계속성은 수치로 판단하기 힘든 '질적 요건(Qualitative)'에 해당합니다.</div>
+                <div><strong>50. ②</strong> 물건이 잘 팔리는지(매출), 빚이 너무 많지 않은지(차입금) 등이 계속성 지표입니다.</div>
+                <div><strong>51. ①</strong> 지배구조가 안정적이고 회계가 투명한지를 보는 질적 요건입니다.</div>
+                <div><strong>52. ②</strong> 발행시장은 거래 장소가 고정되지 않은 추상적 시장입니다.</div>
+                <div><strong>53. ②</strong> 분매기관은 청약 대행 및 주식의 분산 판매를 주 업무로 합니다.</div>
+                <div><strong>54. ②</strong> 지분 5/100 이상 보유 시 공정성을 위해 타 증권사와 공동 주관해야 합니다.</div>
+                <div><strong>55. ②</strong> 유통시장은 다수의 경쟁을 통해 가격이 형성되는 경쟁적 시장입니다.</div>
+                <div><strong>56. ③</strong> 상장지수펀드(ETF) 등은 주식과는 별개의 증권상품시장에서 다룹니다.</div>
+                <div><strong>57. ②</strong> 우호적인 특정인에게 주식을 주어 지분을 방어하는 제3자 배정 방식입니다.</div>
+                <div><strong>58. ②</strong> 주식발행초과금이 자본준비금으로 쌓여 회사 자산이 튼실해지는 효과입니다.</div>
+                <div><strong>59. ②</strong> 제3자배정증자의 할인율 상한은 10%입니다.</div>
+                <div><strong>60. ②</strong> 자산재평가법이 폐지되면서 해당 적립금은 더 이상 증자 재원이 아닙니다.</div>
+                <div><strong>61. ②</strong> 주주가 소수에 쏠리지 않고 대중에 분산되어 있는지를 보는 지표입니다.</div>
+                <div><strong>62. ②</strong> 경영권이 자주 흔들리면 안 되므로 최대주주 변동 여부를 체크합니다.</div>
+                <div><strong>63. ①</strong> 신주 발행 권한을 정관으로 이사회에 수여하는 수권자본주의입니다.</div>
+                <div><strong>64. ②</strong> 직접공모는 대행사가 없으므로 모든 위험은 발행주체(회사)가 집니다.</div>
+                <div><strong>65. ②</strong> 거래소는 법과 규칙에 의해 고도로 조직된 유통시장입니다.</div>
+                <div><strong>66. ②</strong> 기존 주주나 불특정 다수가 아닌 연고자에게 주는 제3자 배정입니다.</div>
+                <div><strong>67. ②</strong> 한국은 1987년부터 시가발행제를 본격 도입하여 시행 중입니다.</div>
+                <div><strong>68. ③</strong> 회계의 투명성을 위해 '적정' 의견만이 IPO가 가능합니다.</div>
+                <div><strong>69. ②</strong> 시가발행으로 쌓인 주식발행초과금은 무상증자의 주요 재원입니다.</div>
+                <div><strong>70. ②</strong> 발행과 유통을 아우르는 자본 조달 및 운용의 장은 증권시장입니다.</div>
             </div>
 
             <div class="page-footer text-gray-400 italic">
-                - 본 시험지는 학습 목적으로 제작되었습니다. -
+                - 본 모의고사는 제03장 증권시장의 이해 학습을 위해 최적화되었습니다. -
             </div>
         </div>
     </div>
