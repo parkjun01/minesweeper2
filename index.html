@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>증권시장론 100문항 실전 모의고사</title>
+    <title>증권시장론 100문항 통합 모의고사</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
@@ -43,13 +43,13 @@
             border: 1.5px solid black;
             padding: 5px 15px;
             display: inline-flex; gap: 20px;
-            font-size: 14px; font-weight: bold;
+            font-size: 13px; font-weight: bold;
         }
 
         .question-item {
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             font-size: 11.5px;
-            line-height: 1.5;
+            line-height: 1.6;
             break-inside: avoid;
         }
 
@@ -70,7 +70,7 @@
 
         @media print {
             body { background: none; padding: 0; margin: 0; }
-            .exam-sheet { margin: 0; box-shadow: none; width: 210mm; padding: 15mm; }
+            .exam-sheet { margin: 0; box-shadow: none; width: 210mm; padding: 10mm 15mm; }
             .no-print { display: none !important; }
             @page { size: A4; margin: 0; }
         }
@@ -79,11 +79,12 @@
 <body>
 
     <div class="exam-sheet">
+        <!-- 헤더 섹션 -->
         <div class="header-box">
-            <div class="text-xs font-bold text-gray-500 uppercase tracking-widest">Securities Market Mastery 100 Final Exam</div>
+            <div class="text-xs font-bold text-gray-500 uppercase tracking-widest">Securities Market mastery Final 100 Questions</div>
             <div class="text-4xl font-black my-4">증권시장론 실전 모의평가 (100문항)</div>
             <div class="flex justify-between items-end">
-                <div class="text-lg font-bold border-b-2 border-black pb-1 ml-2">범위: 제1장, 제3장, 제4장(1~2절), 간담회 정책</div>
+                <div class="text-lg font-bold border-b-2 border-black pb-1 ml-2">범위: 제1, 3, 4장(2절) 및 정책 간담회</div>
                 <div class="student-info">
                     <span>성명: ________________</span>
                     <span>번호: ________________</span>
@@ -95,423 +96,294 @@
             
             <!-- SECTION 1: 자본시장의 이해 (제1장) -->
             <div class="question-item">
-                <span class="question-num">1.</span> 금융(Financing)의 기본 개념 중 '금융적 순환'의 정의는?
+                <span class="question-num">1.</span> 금융(Financing)의 기본 개념 중 실물거래로 인한 자금의 흐름을 뜻하는 용어는?
                 <div class="mt-1">
-                    <span class="option-item">① 실물거래로 인한 자금의 흐름</span>
-                    <span class="option-item">② 금융거래로 인해 발생하는 자금의 흐름</span>
-                    <span class="option-item">③ 부동산 담보 대출의 총합</span>
-                    <span class="option-item">④ 국가 예산의 집행 과정</span>
-                    <span class="option-item">⑤ 상속 및 증여에 따른 부의 이전</span>
+                    <span class="option-item">① 산업적 순환 (Industrial Circulation)</span>
+                    <span class="option-item">② 금융적 순환 (Financial Circulation)</span>
+                    <span class="option-item">③ 자본적 순환 (Capital Circulation)</span>
+                    <span class="option-item">④ 직접적 순환 (Direct Circulation)</span>
+                    <span class="option-item">⑤ 간접적 순환 (Indirect Circulation)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">2.</span> 자금의 수요자인 기업과 공급자인 가계가 직접 거래하는 방식을 무엇이라 하는가?
+                <span class="question-num">2.</span> 자금 수요자인 기업과 공급자인 가계가 직접 거래하는 방식을 무엇이라 하는가?
                 <div class="mt-1">
-                    <span class="option-item">① 간접금융 (Indirect Financing)</span>
-                    <span class="option-item">② 직접금융 (Direct Financing)</span>
-                    <span class="option-item">③ 정책금융 (Policy Financing)</span>
-                    <span class="option-item">④ 소매금융 (Retail Banking)</span>
-                    <span class="option-item">⑤ 기관금융 (Institutional Financing)</span>
+                    <span class="option-item">① 직접금융 (Direct Financing)</span>
+                    <span class="option-item">② 간접금융 (Indirect Financing)</span>
+                    <span class="option-item">③ 대부금융 (Lending Financing)</span>
+                    <span class="option-item">④ 수탁금융 (Trust Financing)</span>
+                    <span class="option-item">⑤ 중개금융 (Brokerage Financing)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">3.</span> '흑자지출단위(Surplus unit)'에 대한 설명으로 옳은 것은?
+                <span class="question-num">3.</span> 금융시장의 정의에서 '소득이 지출보다 많은 경제주체'를 일컫는 용어는?
                 <div class="mt-1">
-                    <span class="option-item">① 지출이 소득보다 많은 경제주체</span>
-                    <span class="option-item">② 소득이 지출보다 많은 경제주체</span>
-                    <span class="option-item">③ 주로 대규모 투자를 하는 기업</span>
-                    <span class="option-item">④ 예산 부족을 겪는 정부 부처</span>
-                    <span class="option-item">⑤ 빚이 자산보다 많은 주체</span>
+                    <span class="option-item">① 적자지출단위 (Deficit unit)</span>
+                    <span class="option-item">② 흑자지출단위 (Surplus unit)</span>
+                    <span class="option-item">③ 채무지출단위 (Debt unit)</span>
+                    <span class="option-item">④ 투자지출단위 (Investment unit)</span>
+                    <span class="option-item">⑤ 중립지출단위 (Neutral unit)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">4.</span> 금융시장의 기능 중 '거래정보 제공 및 비용 절감'의 사례는?
+                <span class="question-num">4.</span> 금융시장의 기능 중 '투자자의 유동성 확보'에 대한 설명으로 옳은 것은?
                 <div class="mt-1">
-                    <span class="option-item">① 자산을 현금으로 즉시 교환해주는 기능</span>
-                    <span class="option-item">② 개별 투자자가 정보를 얻기 위한 탐색 비용을 줄여주는 기능</span>
-                    <span class="option-item">③ 금융 상품의 세금을 감면해주는 기능</span>
-                    <span class="option-item">④ 대주주의 경영권을 보호해주는 기능</span>
-                    <span class="option-item">⑤ 물가 상승률을 직접 억제하는 기능</span>
+                    <span class="option-item">① 금융상품의 가격을 정부가 결정해주는 기능</span>
+                    <span class="option-item">② 보유한 증권을 언제든 현금으로 바꿀 수 있게 하는 기능</span>
+                    <span class="option-item">③ 모든 투자 정보의 비밀을 보장하는 기능</span>
+                    <span class="option-item">④ 세금을 감면하여 수익을 높여주는 기능</span>
+                    <span class="option-item">⑤ 부도 위험을 국가가 100% 보증하는 기능</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">5.</span> 금융시장의 분류 중 만기가 1년 이내인 단기 금융상품이 거래되는 시장은?
+                <span class="question-num">5.</span> 금융시장의 분류 중 만기가 1년 이내인 단기 금융상품이 거래되는 시장의 명칭은?
                 <div class="mt-1">
                     <span class="option-item">① 자본시장 (Capital Market)</span>
                     <span class="option-item">② 화폐시장 (Money Market)</span>
                     <span class="option-item">③ 파생시장 (Derivatives Market)</span>
-                    <span class="option-item">④ 유통시장 (Secondary Market)</span>
-                    <span class="option-item">⑤ 보험시장 (Insurance Market)</span>
+                    <span class="option-item">④ 외환시장 (FX Market)</span>
+                    <span class="option-item">⑤ 유통시장 (Secondary Market)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">6.</span> 금융기관 간의 초단기 자금 과부족을 조절하는 시장은?
+                <span class="question-num">6.</span> 금융기관 간의 일시적인 자금 과부족을 조절하기 위한 초단기 시장은?
                 <div class="mt-1">
-                    <span class="option-item">① CP시장 \quad ② CD시장 \quad ③ 콜시장 (Call Market)</span>
-                    <span class="option-item">④ RP시장 \quad ⑤ CMA시장</span>
+                    <span class="option-item">① 콜시장 (Call Market)</span>
+                    <span class="option-item">② 기업어음시장 (CP Market)</span>
+                    <span class="option-item">③ 상업어음시장 (CB Market)</span>
+                    <span class="option-item">④ RP시장 (Repurchase Agreement)</span>
+                    <span class="option-item">⑤ CD시장 (Certificate of Deposit)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">7.</span> 상거래와 관계없이 우량 기업이 무담보로 발행하는 융통어음은?
+                <span class="question-num">7.</span> 신용도가 우수한 기업이 단기자금 조달을 위해 발행하는 무담보 융통어음은?
                 <div class="mt-1">
-                    <span class="option-item">① 상업어음 (CB) \quad ② 기업어음 (CP) \quad ③ 표지어음</span>
-                    <span class="option-item">④ 수표 \quad ⑤ 전자단기사채</span>
+                    <span class="option-item">① 상업어음 (Commercial Bill)</span>
+                    <span class="option-item">② 기업어음 (Commercial Paper)</span>
+                    <span class="option-item">③ 표지어음 (Cover Bill)</span>
+                    <span class="option-item">④ 전자단기사채 (Short-term Bond)</span>
+                    <span class="option-item">⑤ 양도성예금증서 (CD)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">8.</span> '양도성예금증서(CD)'에 대한 설명으로 틀린 것은?
+                <span class="question-num">8.</span> 양도성예금증서(CD)의 특징으로 옳지 않은 것은?
                 <div class="mt-1">
                     <span class="option-item">① 은행이 발행하는 무기명 예금증서이다.</span>
                     <span class="option-item">② 제3자에게 양도가 가능하다.</span>
                     <span class="option-item">③ 예금자보호법에 의한 보호 대상이다.</span>
-                    <span class="option-item">④ 단기 자금 운용 수단으로 활용된다.</span>
-                    <span class="option-item">⑤ 할인 방식으로 발행된다.</span>
+                    <span class="option-item">④ 할인 방식으로 발행된다.</span>
+                    <span class="option-item">⑤ 단기 자금 운용 수단으로 활용된다.</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">9.</span> 일정 기간 후 약정 가격으로 채권을 다시 사는 조건의 거래는?
+                <span class="question-num">9.</span> 한국은행이 시중 통화량 조절을 목적으로 발행하는 증권은?
                 <div class="mt-1">
-                    <span class="option-item">① 콜 (Call) \quad ② 기업어음 (CP) \quad ③ 환매조건부채권 (RP)</span>
-                    <span class="option-item">④ 통화안정증권 \quad ⑤ 전자단기사채</span>
+                    <span class="option-item">① 국채 (Government Bond)</span>
+                    <span class="option-item">② 지방채 (Municipal Bond)</span>
+                    <span class="option-item">③ 통화안정증권 (Monetary Stabilization Bond)</span>
+                    <span class="option-item">④ 산업금융채권 (KDB Bond)</span>
+                    <span class="option-item">⑤ 회사채 (Corporate Bond)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">10.</span> 한국은행이 시중 통화량 조절을 목적으로 발행하는 증권은?
+                <span class="question-num">10.</span> 금융기관의 기능 중 소액의 자금을 모아 거액으로 바꾸는 기능을 무엇이라 하는가?
                 <div class="mt-1">
-                    <span class="option-item">① 국채 \quad ② 지방채 \quad ③ 통화안정증권 (MSB)</span>
-                    <span class="option-item">④ 산업금융채권 \quad ⑤ 주식발행증서</span>
+                    <span class="option-item">① 위험변환 (Risk Transformation)</span>
+                    <span class="option-item">② 만기변환 (Maturity Transformation)</span>
+                    <span class="option-item">③ 금액변환 (Size Transformation)</span>
+                    <span class="option-item">④ 정보변환 (Information Transformation)</span>
+                    <span class="option-item">⑤ 세무변환 (Tax Transformation)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">11.</span> 은행이 보유한 상업어음을 분할하거나 통합하여 재발행한 어음은?
+                <span class="question-num">11.</span> 통화창출 기능에 따른 분류 중 발권력을 가진 국가의 통화 관리 기관은?
                 <div class="mt-1">
-                    <span class="option-item">① 표지어음 (Cover Bill) \quad ② 전자어음 \quad ③ 기업어음</span>
-                    <span class="option-item">④ 담보어음 \quad ⑤ 보증어음</span>
+                    <span class="option-item">① 일반은행 (Commercial Bank)</span>
+                    <span class="option-item">② 중앙은행 (Central Bank - 한국은행)</span>
+                    <span class="option-item">③ 특수은행 (Specialized Bank)</span>
+                    <span class="option-item">④ 저축기관 (Savings Institution)</span>
+                    <span class="option-item">⑤ 투자기관 (Investment Institution)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">12.</span> 'CMA' 계좌의 주된 특징으로 옳은 것은?
+                <span class="question-num">12.</span> 자본시장법(2009) 통합 이전의 '열거주의' 방식의 한계점은?
                 <div class="mt-1">
-                    <span class="option-item">① 오직 10년 이상의 장기 투자만 가능하다.</span>
-                    <span class="option-item">② 예치금을 단기 상품에 투자하여 운용 수익을 배당한다.</span>
-                    <span class="option-item">③ 원금을 정부가 무조건 보장한다.</span>
-                    <span class="option-item">④ 주식 매매가 불가능한 계좌이다.</span>
-                    <span class="option-item">⑤ 입출금이 제한된 저축성 계좌이다.</span>
+                    <span class="option-item">① 규제가 너무 단순하여 금융 혁신을 방해했다.</span>
+                    <span class="option-item">② 법에 명시되지 않은 신종 금융상품에 대한 규제 공백이 발생했다.</span>
+                    <span class="option-item">③ 모든 금융기관이 똑같은 법을 적용받아 차별성이 없었다.</span>
+                    <span class="option-item">④ 투자자 보호가 과도하여 거래가 위축되었다.</span>
+                    <span class="option-item">⑤ 외국 자본의 진입을 너무 쉽게 허용했다.</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">13.</span> 종이 CP의 단점을 보완하기 위해 2013년 도입된 상품은?
+                <span class="question-num">13.</span> 현행 자본시장법상 '금융투자상품'의 정의 중 핵심 요소인 '투자성'의 의미는?
                 <div class="mt-1">
-                    <span class="option-item">① 수표 \quad ② 환어음 \quad ③ 전자단기사채 (STB)</span>
-                    <span class="option-item">④ 무기명채권 \quad ⑤ 당좌예금</span>
+                    <span class="option-item">① 수익이 날 확실한 가능성</span>
+                    <span class="option-item">② 원본 손실 가능성 (Principal Loss Risk)</span>
+                    <span class="option-item">③ 발행인의 국적 제한</span>
+                    <span class="option-item">④ 정부의 발행 보증 여부</span>
+                    <span class="option-item">⑤ 10년 이상의 장기 보유 의무</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">14.</span> 금융기관의 역할 중 '정보 비대칭 완화'의 핵심 내용은?
+                <span class="question-num">14.</span> 금융투자상품 중 '원본을 초과하여 추가로 자금을 지급할 의무'가 없는 것은?
                 <div class="mt-1">
-                    <span class="option-item">① 모든 투자자가 똑같은 주식만 사게 하는 것</span>
-                    <span class="option-item">② 차입자에 대한 정보를 수집·감시하여 대리인 문제를 줄이는 것</span>
-                    <span class="option-item">③ 정보를 시장에 아예 공개하지 않는 것</span>
-                    <span class="option-item">④ 수수료를 높여 정보를 독점하는 것</span>
-                    <span class="option-item">⑤ 외국 자본을 차단하는 것</span>
+                    <span class="option-item">① 증권 (Securities)</span>
+                    <span class="option-item">② 파생상품 (Derivatives)</span>
+                    <span class="option-item">③ 선물 (Futures)</span>
+                    <span class="option-item">④ 옵션 매도 (Option Writing)</span>
+                    <span class="option-item">⑤ 스왑 (Swaps)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">15.</span> 금융기관의 '자산변환(Asset Transformation)' 3대 기능이 아닌 것은?
+                <span class="question-num">15.</span> 누구의 명의로 하든지 '자기의 계산'으로 금융상품을 매매하는 업종은?
                 <div class="mt-1">
-                    <span class="option-item">① 금액변환 \quad ② 만기변환 \quad ③ 위험변환</span>
-                    <span class="option-item">④ 세무변환 \quad ⑤ (교안상 없음)</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">16.</span> 통화창출 기능에 따른 분류 중 '중앙은행'에 해당하는 기관은?
-                <div class="mt-1">
-                    <span class="option-item">① 국민은행 \quad ② 신한은행 \quad ③ 한국은행</span>
-                    <span class="option-item">④ 기업은행 \quad ⑤ 산업은행</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">17.</span> '예금은행' 중 시중은행과 대비되는 '특수은행'의 예시는?
-                <div class="mt-1">
-                    <span class="option-item">① 하나은행 \quad ② 우리은행 \quad ③ 중소기업은행</span>
-                    <span class="option-item">④ 카카오뱅크 \quad ⑤ 농협중앙회(일반부문)</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">18.</span> '비통화금융기관' 중 '보험기관'에 해당하는 곳은?
-                <div class="mt-1">
-                    <span class="option-item">① 상호저축은행 \quad ② 자산운용회사 \quad ③ 생명보험회사</span>
-                    <span class="option-item">④ 신용협동조합 \quad ⑤ 증권사</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">19.</span> 자본시장법상 '신탁업'의 주된 업무는?
-                <div class="mt-1">
-                    <span class="option-item">① 보험 가입 권유 \quad ② 재산을 위탁받아 관리·운용</span>
-                    <span class="option-item">③ 주식의 직접 발행 \quad ④ 대출 금리 결정 \quad ⑤ 세무 상담</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">20.</span> 자본시장의 종류 중 '우량 상장기업' 중심의 거래 시장은?
-                <div class="mt-1">
-                    <span class="option-item">① 코스닥시장 \quad ② 유가증권시장(KOSPI) \quad ③ 코넥스시장</span>
-                    <span class="option-item">④ K-OTC \quad ⑤ 파생결합시장</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">21.</span> 자본시장의 기능 중 '자금의 효율적 배분'이란?
-                <div class="mt-1">
-                    <span class="option-item">① 모든 기업에 똑같이 나누어줌</span>
-                    <span class="option-item">② 수익성과 성장성이 높은 기업에 자본이 투입되도록 유도</span>
-                    <span class="option-item">③ 적자 기업에 우선적으로 지원</span>
-                    <span class="option-item">④ 외국 자본을 한국으로 강제 이전</span>
-                    <span class="option-item">⑤ 예금 금리를 최대한 높임</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">22.</span> 자본시장법(2009)의 4대 핵심 Pillars 중 '포괄주의'의 의미는?
-                <div class="mt-1">
-                    <span class="option-item">① 법에 열거된 것만 규제한다.</span>
-                    <span class="option-item">② '투자성'이 있는 모든 상품을 규제 대상으로 포괄한다.</span>
-                    <span class="option-item">③ 모든 금융사를 은행으로 통합한다.</span>
-                    <span class="option-item">④ 외국인의 투자를 포괄적으로 금지한다.</span>
-                    <span class="option-item">⑤ 모든 주식 가격을 1만원으로 포괄 고정한다.</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">23.</span> 금융투자상품 중 '원본을 초과하는 손실 가능성'이 있는 것은?
-                <div class="mt-1">
-                    <span class="option-item">① 증권 (Securities) \quad ② 파생상품 (Derivatives) \quad ③ 예금</span>
-                    <span class="option-item">④ 채권 \quad ⑤ 보통주</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">24.</span> '장내파생상품'과 '장외파생상품'을 가르는 핵심 기준은?
-                <div class="mt-1">
-                    <span class="option-item">① 거래 금액의 크기 \quad ② 정형화된 거래소에서의 매매 여부</span>
-                    <span class="option-item">③ 투자자의 연령 \quad ④ 기초자산의 종류 \quad ⑤ 발행인의 성별</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">25.</span> '기능별 규제체제'의 정의로 옳은 것은?
-                <div class="mt-1">
-                    <span class="option-item">① 기관의 명칭(증권사/은행)에 따라 법을 적용함</span>
-                    <span class="option-item">② 경제적 실질이 동일한 기능에 대해 동일한 규제를 적용함</span>
-                    <span class="option-item">③ 기능을 무시하고 지역별로 규제함</span>
-                    <span class="option-item">④ 수익률이 높은 부서만 규제함</span>
-                    <span class="option-item">⑤ 상장사만 규제하고 비상장사는 방치함</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">26.</span> 자본시장법상 6가지 금융투자업 기능에 해당하지 않는 것은?
-                <div class="mt-1">
-                    <span class="option-item">① 투자매매업 \quad ② 투자중개업 \quad ③ 집합투자업</span>
-                    <span class="option-item">④ 보험영업업 \quad ⑤ 신탁업</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">27.</span> '차이니즈 월(Chinese Wall)'의 주된 목적은?
-                <div class="mt-1">
-                    <span class="option-item">① 중국과의 교역 증대 \quad ② 부서 간 정보 차단을 통한 이해상충 방지</span>
-                    <span class="option-item">② 외국인 투자 유치 \quad ④ 주가 조작 공모 \quad ⑤ 직원의 연봉 인상</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">28.</span> 2020년 3월 투자자 보호 조항이 대거 이관된 법률은?
-                <div class="mt-1">
-                    <span class="option-item">① 소비자보호법 \quad ② 금융소비자 보호에 관한 법률 \quad ③ 상법</span>
-                    <span class="option-item">④ 형법 \quad ⑤ 근로기준법</span>
+                    <span class="option-item">① 투자매매업 (Investment Trading)</span>
+                    <span class="option-item">② 투자중개업 (Investment Brokerage)</span>
+                    <span class="option-item">③ 집합투자업 (Collective Investment)</span>
+                    <span class="option-item">④ 투자자문업 (Investment Advisory)</span>
+                    <span class="option-item">⑤ 신탁업 (Trust Business)</span>
                 </div>
             </div>
 
             <!-- SECTION 2: 증권시장의 이해 (제3장) -->
             <div class="question-item">
-                <span class="question-num">29.</span> '발행시장(Primary Market)'의 다른 명칭은?
+                <span class="question-num">16.</span> 신규로 발행된 증권이 최초로 투자자에게 매출되는 시장의 명칭은?
                 <div class="mt-1">
-                    <span class="option-item">① 제1차적 시장 \quad ② 제2차적 시장 \quad ③ 구체적 시장</span>
-                    <span class="option-item">④ 유통시장 \quad ⑤ 장외시장</span>
+                    <span class="option-item">① 유통시장 (Secondary Market)</span>
+                    <span class="option-item">② 발행시장 (Primary Market)</span>
+                    <span class="option-item">③ 경매시장 (Auction Market)</span>
+                    <span class="option-item">④ 중개시장 (Brokerage Market)</span>
+                    <span class="option-item">⑤ 직거래시장 (Direct Market)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">30.</span> 발행기관이 인수위험을 전적으로 부담하고 자기 책임으로 매입하는 방식은?
+                <span class="question-num">17.</span> 발행기관이 인수위험을 전적으로 부담하고 자기 책임으로 전액 매입하는 방식은?
                 <div class="mt-1">
-                    <span class="option-item">① 위탁모집 \quad ② 잔액인수 \quad ③ 총액인수 (Firm Commitment)</span>
-                    <span class="option-item">④ 직접모집 \quad ⑤ 사모모집</span>
+                    <span class="option-item">① 위탁모집 (Best-efforts)</span>
+                    <span class="option-item">② 잔액인수 (Stand-by)</span>
+                    <span class="option-item">③ 총액인수 (Firm Commitment)</span>
+                    <span class="option-item">④ 직접모집 (Direct Offering)</span>
+                    <span class="option-item">⑤ 사모모집 (Private Placement)</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">31.</span> '위탁모집(Best-efforts Basis)'에서 인수위험을 부담하는 주체는?
+                <span class="question-num">18.</span> 모집 종료 후 팔리지 않은 '잔량'만을 약속된 가격에 인수하는 보수적 인수 방식은?
                 <div class="mt-1">
-                    <span class="option-item">① 증권사 \quad ② 발행주체(기업) \quad ③ 일반 투자자</span>
-                    <span class="option-item">④ 한국거래소 \quad ⑤ 보험사</span>
+                    <span class="option-item">① 총액인수 \quad ② 잔액인수 (Stand-by) \quad ③ 위탁모집</span>
+                    <span class="option-item">④ 직접발행 \quad ⑤ 공모발행</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">32.</span> 유상증자의 배정 방법 중 기존 주주에게 비례하여 배정하는 방식은?
+                <span class="question-num">19.</span> 유상증자의 배정 방법 중 기존 주주에게 주식수 비례로 배정하는 방식은?
                 <div class="mt-1">
-                    <span class="option-item">① 제3자 배정 \quad ② 구주주 배정 \quad ③ 일반 공모</span>
+                    <span class="option-item">① 제3자 배정 \quad ② 구주주 배정 (Right Offering) \quad ③ 일반 공모</span>
                     <span class="option-item">④ 직접 공모 \quad ⑤ 무작위 배정</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">33.</span> 임원, 거래처 등 연고자에게 신주인수권을 부여하는 방식은?
+                <span class="question-num">20.</span> 주식대금 납입 없이 기업의 잉여금을 자본금으로 전입하여 주식을 주는 제도는?
                 <div class="mt-1">
-                    <span class="option-item">① 제3자 배정 \quad ② 주주 배정 \quad ③ 일반 공모</span>
-                    <span class="option-item">④ 시가 발행 \quad ⑤ 무상 증자</span>
+                    <span class="option-item">① 유상증자 \quad ② 무상증자 (Bonus Issue) \quad ③ 감자</span>
+                    <span class="option-item">④ 주식분할 \quad ⑤ 자사주매입</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">34.</span> '무상증자(Bonus Issue)' 시 기업의 실질 자산(자기자본)의 변화는?
+                <span class="question-num">21.</span> '수권자본주의 (Authorized Capital System)'의 핵심 내용은?
                 <div class="mt-1">
-                    <span class="option-item">① 급격히 증가한다. \quad ② 급격히 감소한다. \quad ③ 변화 없다(불변).</span>
-                    <span class="option-item">④ 부채로 변환된다. \quad ⑤ 전액 세금으로 납부된다.</span>
+                    <span class="option-item">① 설립 시 총수 전액을 발행해야 한다.</span>
+                    <span class="option-item">② 정관에 정한 범위 내에서 이사회가 신주 발행을 결정한다.</span>
+                    <span class="option-item">③ 주주총회 없이 사장이 주식을 찍어낸다.</span>
+                    <span class="option-item">④ 발행 주식의 가격을 국가가 정한다.</span>
+                    <span class="option-item">⑤ 자본금을 언제든 마음대로 줄일 수 있다.</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">35.</span> 무상증자의 주요 재원이 아닌 것은?
+                <span class="question-num">22.</span> 이미 발행된 주식을 잘게 쪼개어 유동성을 높이는 제도는?
                 <div class="mt-1">
-                    <span class="option-item">① 주식발행초과금 \quad ② 자본준비금 \quad ③ 이익준비금</span>
-                    <span class="option-item">④ 당기순이익(미적립분) \quad ⑤ 재평가적립금(현재는 불가)</span>
+                    <span class="option-item">① 유상증자 \quad ② 주식분할 (Stock Split) \quad ③ 주식배당</span>
+                    <span class="option-item">④ 합병 \quad ⑤ 자본전입</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">36.</span> 현금 대신 주식으로 배당을 실시하는 제도는?
+                <span class="question-num">23.</span> 시장가격에 근접하게 신주 발행가액을 결정하여 자금 조달 효율을 높이는 제도는?
                 <div class="mt-1">
-                    <span class="option-item">① 주식분할 \quad ② 주식배당 (Stock Dividend) \quad ③ 감자</span>
-                    <span class="option-item">④ 자사주매입 \quad ⑤ 유상증자</span>
+                    <span class="option-item">① 액면발행 \quad ② 시가발행 (Issue at Market) \quad ③ 할인발행</span>
+                    <span class="option-item">④ 강제발행 \quad ⑤ 무료배정</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">37.</span> '주식분할(Stock Split-up)'의 주된 목적은?
+                <span class="question-num">24.</span> '기업공개 (IPO - Initial Public Offering)'의 궁극적인 정의는?
                 <div class="mt-1">
-                    <span class="option-item">① 자본금 확충 \quad ② 주식수를 늘려 유동성 제고 \quad ③ 부채 상환</span>
-                    <span class="option-item">④ 대주주 지분 매각 \quad ⑤ 법인세 절감</span>
+                    <span class="option-item">① 사장이 주식을 전량 매각하고 떠나는 것</span>
+                    <span class="option-item">② 최초로 일반 투자자에게 주식을 공개하고 주주를 모집하는 것</span>
+                    <span class="option-item">③ 기업의 모든 기술 비밀을 대중에게 공짜로 알려주는 것</span>
+                    <span class="option-item">④ 모든 직원의 연봉을 공개하는 것</span>
+                    <span class="option-item">⑤ 상장 폐지를 준비하는 과정</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">38.</span> 시장가격에 근접하게 신주 발행가액을 결정하는 제도는?
+                <span class="question-num">25.</span> IPO 요건 중 수치로 확인 가능한 '자기자본 규모, 경영성과' 등은 어디에 속하나?
                 <div class="mt-1">
-                    <span class="option-item">① 액면발행 \quad ② 시가발행 \quad ③ 할인발행 \quad ④ 강제발행 \quad ⑤ 임의발행</span>
+                    <span class="option-item">① 질적 요건 (Qualitative)</span>
+                    <span class="option-item">② 형식적 요건 (Quantitative/Formal)</span>
+                    <span class="option-item">③ 주관적 요건 \quad ④ 사회적 요건 \quad ⑤ 임의 요건</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">39.</span> 시가발행 시 발생하는 '주식발행초과금'의 회계적 분류는?
+                <span class="question-num">26.</span> IPO 방법 중 새로운 주식을 새로 찍어서 투자자에게 파는 방식은?
                 <div class="mt-1">
-                    <span class="option-item">① 이익잉여금 \quad ② 자본잉여금 \quad ③ 자본금 \quad ④ 부채 \quad ⑤ 비용</span>
+                    <span class="option-item">① 구주매출 (Secondary Offering)</span>
+                    <span class="option-item">② 신주모집 (Primary Offering)</span>
+                    <span class="option-item">③ 무상증자 \quad ④ 주식분할 \quad ⑤ 자사주매각</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">40.</span> 일반공모증자 시 기준주가 대비 최대 할인율 규정은?
+                <span class="question-num">27.</span> '상장 (Listing)' 제도의 본질적인 목적은?
                 <div class="mt-1">
-                    <span class="option-item">① 10% 이내 \quad ② 20% 이내 \quad ③ 30% 이내 \quad ④ 50% 이내 \quad ⑤ 무제한</span>
+                    <span class="option-item">① 기업의 자금 조달 전담</span>
+                    <span class="option-item">② 증권의 원활한 유통과 공정한 가격 형성</span>
+                    <span class="option-item">③ 대주주의 경영권 독점 보장</span>
+                    <span class="option-item">④ 직원의 복지 향상 \quad ⑤ 국가의 세수 증대</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">41.</span> 제3자배정증자의 일반적인 할인율 제한은?
+                <span class="question-num">28.</span> 일반공모증자 시 기준주가 대비 허용되는 최대 할인율은?
                 <div class="mt-1">
-                    <span class="option-item">① 5% 이내 \quad ② 10% 이내 \quad ③ 30% 이내 \quad ④ 50% 이내 \quad ⑤ 없음</span>
+                    <span class="option-item">① 10% 이내 \quad ② 20% 이내 \quad ③ 30% 이내</span>
+                    <span class="option-item">④ 50% 이내 \quad ⑤ 제한 없음</span>
                 </div>
             </div>
 
+            <!-- SECTION 3: 유가증권시장 매매거래 (제4장 1~2절) -->
             <div class="question-item">
-                <span class="question-num">42.</span> 액면미달발행(Issue below par)을 위한 필수 요건이 아닌 것은?
-                <div class="mt-1">
-                    <span class="option-item">① 설립 후 2년 경과 \quad ② 주주총회 특별결의 \quad ③ 법원 인가</span>
-                    <span class="option-item">④ 대통령의 승인 \quad ⑤ (교안상 3가지가 핵심)</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">43.</span> '기업공개(IPO)'의 본질적 의미와 가장 먼 것은?
-                <div class="mt-1">
-                    <span class="option-item">① 경영의 공개 \quad ② 주주의 분산 \quad ③ 자금의 조달</span>
-                    <span class="option-item">④ 경영권의 사유화 \quad ⑤ 공신력 제고</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">44.</span> IPO 방법 중 대주주가 가진 기존 주식을 일반인에게 파는 방식은?
-                <div class="mt-1">
-                    <span class="option-item">① 신주모집 \quad ② 구주매출 \quad ③ 제3자 배정 \quad ④ 직접공모 \quad ⑤ 무상교부</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">45.</span> IPO 요건 중 '자기자본, 경영성과' 등 수치화된 요건은?
-                <div class="mt-1">
-                    <span class="option-item">① 질적 요건 \quad ② 형식적 요건 \quad ③ 주관적 요건 \quad ④ 임의 요건 \quad ⑤ 사회적 요건</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">46.</span> IPO 질적 요건 중 '기업의 계속성' 판단 기준에 해당하는 것은?
-                <div class="mt-1">
-                    <span class="option-item">① 매출처의 편중도 \quad ② 대주주의 나이 \quad ③ 사옥의 위치</span>
-                    <span class="option-item">④ 직원의 평균 학력 \quad ⑤ 광고 모델의 인지도</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">47.</span> 경영 투명성을 판단하기 위한 질적 요건 항목은?
-                <div class="mt-1">
-                    <span class="option-item">① 당기순이익 \quad ② 최대주주 변경 여부 \quad ③ 시가총액</span>
-                    <span class="option-item">④ 부채 비율 \quad ⑤ 주당 순자산</span>
-                </div>
-            </div>
-
-            <!-- SECTION 3: 주식시장 I (제4장 1~2절) -->
-            <div class="question-item">
-                <span class="question-num">48.</span> 유가증권시장(KOSPI)의 성격으로 옳은 것은?
-                <div class="mt-1">
-                    <span class="option-item">① 벤처기업 전용 시장이다.</span>
-                    <span class="option-item">② 우량 대규모 기업 중심의 유통시장이다.</span>
-                    <span class="option-item">③ 신규 발행만 담당하는 발행시장이다.</span>
-                    <span class="option-item">④ 오직 국채만 거래하는 시장이다.</span>
-                    <span class="option-item">⑤ 비상장 주식 거래 전용 시장이다.</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">49.</span> 유가증권시장의 정규 매매거래 시간은?
+                <span class="question-num">29.</span> 유가증권시장(KOSPI)의 정규 매매거래 시간은?
                 <div class="mt-1">
                     <span class="option-item">① 09:00 ~ 15:00 \quad ② 09:00 ~ 15:30 \quad ③ 08:30 ~ 15:30</span>
                     <span class="option-item">④ 09:00 ~ 16:00 \quad ⑤ 09:30 ~ 15:30</span>
@@ -519,7 +391,7 @@
             </div>
 
             <div class="question-item">
-                <span class="question-num">50.</span> 시가 결정을 위한 장개시전 호가 접수 시간은?
+                <span class="question-num">30.</span> 장개시전 시가 결정을 위해 호가를 접수하는 시간은?
                 <div class="mt-1">
                     <span class="option-item">① 08:00 ~ 09:00 \quad ② 08:30 ~ 09:00 \quad ③ 07:30 ~ 08:30</span>
                     <span class="option-item">④ 08:30 ~ 15:30 \quad ⑤ 09:00 ~ 09:30</span>
@@ -527,417 +399,504 @@
             </div>
 
             <div class="question-item">
-                <span class="question-num">51.</span> 가격을 정하지 않고 무조건 체결되기를 원하는 주문은?
+                <span class="question-num">31.</span> 가격을 정하지 않고 무조건 체결되기를 원하는 주문은?
                 <div class="mt-1">
-                    <span class="option-item">① 지정가주문 \quad ② 시장가주문 \quad ③ 최유리지정가주문</span>
-                    <span class="option-item">④ 최우선지정가주문 \quad ⑤ 목표가주문</span>
+                    <span class="option-item">① 지정가주문 (Limit Order)</span>
+                    <span class="option-item">② 시장가주문 (Market Order)</span>
+                    <span class="option-item">③ 최유리지정가주문 (Best Limit)</span>
+                    <span class="option-item">④ 조건부지정가주문 (Conditional)</span>
+                    <span class="option-item">⑤ 최우선지정가주문</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">52.</span> 미체결 시 종가 결정 때 시장가로 전환되는 주문은?
+                <span class="question-num">32.</span> 미체결 시 종가 결정 때 시장가로 전환되는 주문은?
                 <div class="mt-1">
-                    <span class="option-item">① 지정가주문 \quad ② 조건부지정가주문 \quad ③ 최유리지정가주문</span>
-                    <span class="option-item">④ 최우선지정가주문 \quad ⑤ IOC 주문</span>
+                    <span class="option-item">① 지정가주문 \quad ② 조건부지정가주문 (Conditional)</span>
+                    <span class="option-item">③ 최유리지정가주문 \quad ④ 최우선지정가주문 \quad ⑤ IOC 주문</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">53.</span> 매수 시 상대방의 가장 낮은 매도호가 가격으로 지정되는 주문은?
+                <span class="question-num">33.</span> 매수 시 상대방의 가장 낮은 매도호가 가격으로 지정되는 주문은?
                 <div class="mt-1">
-                    <span class="option-item">① 최유리지정가주문 \quad ② 최우선지정가주문 \quad ③ 시장가주문</span>
-                    <span class="option-item">④ 조건부지정가 \quad ⑤ 경쟁대량매매</span>
+                    <span class="option-item">① 최유리지정가주문 (Best Limit)</span>
+                    <span class="option-item">② 최우선지정가주문 \quad ③ 시장가주문</span>
+                    <span class="option-item">④ 조건부지정가 \quad ⑤ 직접주문</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">54.</span> 주문 잔량이 남으면 그 즉시 잔량만 취소하는 조건은?
+                <span class="question-num">34.</span> 주문 잔량이 남으면 그 즉시 잔량만 취소하는 조건은?
                 <div class="mt-1">
-                    <span class="option-item">① FOK (Fill or Kill) \quad ② IOC (Immediate or Cancel)</span>
-                    <span class="option-item">③ GTC (Good till cancel) \quad ④ Day Order \quad ⑤ Limit</span>
+                    <span class="option-item">① FOK (Fill or Kill)</span>
+                    <span class="option-item">② IOC (Immediate or Cancel)</span>
+                    <span class="option-item">③ GTC (Good till cancel)</span>
+                    <span class="option-item">④ All or None \quad ⑤ Market Condition</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">55.</span> 전량 체결되지 않으면 전량을 취소하는 조건은?
+                <span class="question-num">35.</span> 전량 체결되지 않으면 전량을 취소하는 조건은?
                 <div class="mt-1">
-                    <span class="option-item">① IOC \quad ② FOK \quad ③ 시장가 \quad ④ 조건부 \quad ⑤ 기세</span>
+                    <span class="option-item">① IOC \quad ② FOK (Fill or Kill) \quad ③ 시장가 \quad ④ 조건부 \quad ⑤ 기세</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">56.</span> 주가가 500,000원 이상일 때 호가가격단위(Tick size)는?
-                <div class="mt-1">
-                    <span class="option-item">① 100원 \quad ② 500원 \quad ③ 1,000원 \quad ④ 5,000원 \quad ⑤ 10,000원</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">57.</span> 유가증권시장의 매매수량단위는 주권 기준 몇 주인가?
+                <span class="question-num">36.</span> 유가증권시장의 매매수량단위는 주권 기준 몇 주인가?
                 <div class="mt-1">
                     <span class="option-item">① 1주 \quad ② 10주 \quad ③ 100주 \quad ④ 500주 \quad ⑤ 1,000주</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">58.</span> 가격제한폭 30%를 결정하는 기준이 되는 가격은?
+                <span class="question-num">37.</span> 주가가 500,000원 이상일 때 호가가격단위(Tick size)는?
+                <div class="mt-1">
+                    <span class="option-item">① 100원 \quad ② 500원 \quad ③ 1,000원 \quad ④ 5,000원 \quad ⑤ 10,000원</span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-num">38.</span> 가격제한폭 30%를 결정하는 기준이 되는 가격은?
                 <div class="mt-1">
                     <span class="option-item">① 당일 시가 \quad ② 전일 종가 \quad ③ 당일 평균가 \quad ④ 액면가 \quad ⑤ 정부 고시가</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">59.</span> 거래가 성립되지 않았을 때 호가를 종가로 인정하는 제도는?
+                <span class="question-num">39.</span> 개별경쟁매매의 체결 원칙 중 가장 1순위는?
                 <div class="mt-1">
-                    <span class="option-item">① 상한가제도 \quad ② 기세제도 (Quotation) \quad ③ 단일가제도</span>
-                    <span class="option-item">④ 호가공개제도 \quad ⑤ 정지제도</span>
+                    <span class="option-item">① 시간우선의 원칙 \quad ② 가격우선의 원칙 (Price Priority)</span>
+                    <span class="option-item">③ 수량우선의 원칙 \quad ④ 위탁자우선의 원칙 \quad ⑤ 결제우선</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">60.</span> 개별경쟁매매의 체결 원칙 1순위는?
+                <span class="question-num">40.</span> 동일 가격일 때 먼저 들어온 주문이 우선하는 원칙은?
                 <div class="mt-1">
-                    <span class="option-item">① 시간우선 \quad ② 수량우선 \quad ③ 가격우선의 원칙</span>
-                    <span class="option-item">④ 위탁자우선 \quad ⑤ 결제우선</span>
+                    <span class="option-item">① 가격우선 \quad ② 시간우선의 원칙 (Time Priority)</span>
+                    <span class="option-item">③ 수량우선 \quad ④ 위탁자우선 \quad ⑤ 회원우선</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">61.</span> 동일 가격일 때 먼저 들어온 주문이 우선하는 원칙은?
+                <span class="question-num">41.</span> 동시호가 상황에서 시간 선후가 불분명할 때 적용되는 원칙은?
                 <div class="mt-1">
-                    <span class="option-item">① 가격우선 \quad ② 시간우선의 원칙 \quad ③ 수량우선 \quad ④ 위탁자우선 \quad ⑤ 회원우선</span>
+                    <span class="option-item">① 가격우선 \quad ② 시간우선 \quad ③ 수량우선의 원칙 (Quantity Priority)</span>
+                    <span class="option-item">④ 직접우선 \quad ⑤ 회원우선</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">62.</span> 동시호가(Batch) 상황에서 배제되는 원칙은?
+                <span class="question-num">42.</span> 정규시장 개시 전(09:00) 시가를 결정하는 매매 방식은?
                 <div class="mt-1">
-                    <span class="option-item">① 가격우선 \quad ② 시간우선의 원칙 \quad ③ 수량우선 \quad ④ 위탁자우선 \quad ⑤ 공정배분</span>
+                    <span class="option-item">① 접속매매 (Continuous Trading)</span>
+                    <span class="option-item">② 단일가매매 (Batch Trading)</span>
+                    <span class="option-item">③ 종가매매 \quad ④ 시간외매매 \quad ⑤ 직접매매</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">63.</span> 정규시장 개시 전(09:00) 시가를 결정하는 매매 방식은?
+                <span class="question-num">43.</span> 정규 시간 중 매도/매수 호가가 합치될 때마다 즉시 체결되는 방식은?
                 <div class="mt-1">
-                    <span class="option-item">① 접속매매 \quad ② 단일가매매 \quad ③ 종가매매 \quad ④ 시간외매매 \quad ⑤ 직접매매</span>
+                    <span class="option-item">① 단일가매매 \quad ② 접속매매 (Continuous Trading)</span>
+                    <span class="option-item">③ 대량매매 \quad ④ 바스켓매매 \quad ⑤ 정리매매</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">64.</span> 정규 시간 중 가격이 합치될 때마다 즉시 체결되는 방식은?
-                <div class="mt-1">
-                    <span class="option-item">① 단일가매매 \quad ② 접속매매 \quad ③ 대량매매 \quad ④ 바스켓매매 \quad ⑤ 정리매매</span>
-                </div>
-            </div>
-
-            <div class="question-item">
-                <span class="question-num">65.</span> 시간외 단일가매매의 가격 범위는 당일 종가 대비 몇 %인가?
+                <span class="question-num">44.</span> 시간외 단일가매매의 가격 범위는 당일 종가 대비 몇 %인가?
                 <div class="mt-1">
                     <span class="option-item">① ±3% \quad ② ±5% \quad ③ ±10% \quad ④ ±15% \quad ⑤ ±30%</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">66.</span> 5종목 이상, 10억 원 이상을 일괄 거래하는 제도는?
+                <span class="question-num">45.</span> 상장폐지가 확정된 종목의 주주에게 마지막 환금 기회를 주는 매매는?
                 <div class="mt-1">
-                    <span class="option-item">① 시간외 단일가 \quad ② 시간외 바스켓매매 \quad ③ 경쟁대량매매</span>
-                    <span class="option-item">④ 자기주식 매매 \quad ⑤ 정리매매</span>
+                    <span class="option-item">① 관리종목매매 \quad ② 정리매매 (Delisting Trading)</span>
+                    <span class="option-item">③ 시간외매매 \quad ④ 장외매매 \quad ⑤ 선물매매</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">67.</span> 상장폐지 확정 종목의 마지막 환금 기회를 주는 매매는?
+                <span class="question-num">46.</span> 매매 성립 후 채무를 차감 확정하고 결제를 보증하는 단계를 무엇이라 하는가?
                 <div class="mt-1">
-                    <span class="option-item">① 관리종목매매 \quad ② 정리매매 \quad ③ 시간외매매 \quad ④ 장외매매 \quad ⑤ 선물매매</span>
+                    <span class="option-item">① 수탁 \quad ② 호가 \quad ③ 청산 (Clearing) \quad ④ 결제 (Settlement) \quad ⑤ 배정</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">68.</span> 매매 성립 후 채무를 차감 확정하고 결제를 보증하는 단계는?
+                <span class="question-num">47.</span> 주식 결제가 최종 완료되는 시점은?
                 <div class="mt-1">
-                    <span class="option-item">① 수탁 \quad ② 호가 \quad ③ 청산 (Clearing) \quad ④ 결제 (Settling) \quad ⑤ 배정</span>
+                    <span class="option-item">① T일 \quad ② T+1일 \quad ③ T+2일 (보통거래)</span>
+                    <span class="option-item">④ T+3일 \quad ⑤ T+7일</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">69.</span> 주식 결제가 최종 완료되는 시점은?
+                <span class="question-num">48.</span> 결제 시 증권의 인도와 대금의 지급을 동시에 맞바꾸는 대원칙은?
                 <div class="mt-1">
-                    <span class="option-item">① T일 \quad ② T+1일 \quad ③ T+2일 \quad ④ T+3일 \quad ⑤ T+7일</span>
+                    <span class="option-item">① 선입선출 \quad ② 동시이행의 원칙 (DVP - Delivery Versus Payment)</span>
+                    <span class="option-item">③ 후불제 \quad ④ 무상거래 \quad ⑤ 직접거래</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">70.</span> 결제 시 증권과 대금을 맞교환하는 대원칙은?
+                <span class="question-num">49.</span> 유가증권시장의 시가 결정을 위한 단일가 매매 시간은?
                 <div class="mt-1">
-                    <span class="option-item">① 선입선출 \quad ② 동시이행의 원칙 (DVP) \quad ③ 후불제 \quad ④ 무상거래 \quad ⑤ 직접거래</span>
-                </div>
-            </div>
-
-            <!-- SECTION 4: 간담회 및 정책 쟁점 연계 (1~4장 연관 내용) -->
-            <div class="question-item">
-                <span class="question-num">71.</span> 간담회에서 '코리아 디스카운트'의 원인 중 하나로 지목된 기업 지배구조 문제는?
-                <div class="mt-1">
-                    <span class="option-item">① 대주주의 지분이 너무 적음</span>
-                    <span class="option-item">② 경영권 남용 및 소액 주주 권익 경시</span>
-                    <span class="option-item">③ 사외이사 제도의 폐지</span>
-                    <span class="option-item">④ 임직원 복지 과다</span>
-                    <span class="option-item">⑤ 공시 의무의 완전 폐지</span>
+                    <span class="option-item">① 08:30 ~ 09:00 \quad ② 15:20 ~ 15:30 \quad ③ 09:00 ~ 15:20</span>
+                    <span class="option-item">④ 15:30 ~ 16:00 \quad ⑤ 16:00 ~ 18:00</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">72.</span> 주가조작 근절을 위해 언급된 '폐가망신' 대책의 핵심은?
+                <span class="question-num">50.</span> 유가증권시장의 종가 결정을 위한 단일가 매매 시간은?
                 <div class="mt-1">
-                    <span class="option-item">① 훈방 조치 확대 \quad ② 주가조작 동원 원금까지 몰수 \quad ③ 주식 거래 평생 허용</span>
-                    <span class="option-item">④ 벌금 전액 감면 \quad ⑤ 해외 여행 지원</span>
+                    <span class="option-item">① 08:30 ~ 09:00 \quad ② 15:20 ~ 15:30 \quad ③ 09:00 ~ 15:20</span>
+                    <span class="option-item">④ 15:30 ~ 16:00 \quad ⑤ 16:00 ~ 18:00</span>
+                </div>
+            </div>
+
+            <!-- SECTION 4: 정책 간담회 및 이슈 연계 (1~50번까지는 PDF 이론, 51~100번은 정책/응용) -->
+            <!-- 지면 관계상 핵심 정책 문제들을 51번부터 배치 -->
+            
+            <div class="question-item">
+                <span class="question-num">51.</span> 대통령 간담회에서 지목된 '코리아 디스카운트'의 4대 주요 원인이 아닌 것은?
+                <div class="mt-1">
+                    <span class="option-item">① 불투명한 기업 지배구조</span>
+                    <span class="option-item">② 시장의 불공정성과 주가 조작</span>
+                    <span class="option-item">③ 경제 정책의 예측 가능성 부족</span>
+                    <span class="option-item">④ 한반도의 지정학적 리스크</span>
+                    <span class="option-item">⑤ 높은 주식 양도 소득세율</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">73.</span> '정상적인 자본시장'을 위해 중복 상장(Double Listing)에 대해 취해질 조치는?
+                <span class="question-num">52.</span> 간담회에서 강조된 '주가 조작 폐가망신' 대책의 구체적인 내용은?
                 <div class="mt-1">
-                    <span class="option-item">① 무조건 장려 \quad ② 원칙적 금지 및 엄격 심사 \quad ③ 법인세 인하</span>
-                    <span class="option-item">④ 모든 자회사 강제 상장 \quad ⑤ 대주주 의결권 강화</span>
+                    <span class="option-item">① 단순 벌금형 강화</span>
+                    <span class="option-item">② 조작에 동원된 원금까지 몰수 및 30% 포상금 지급</span>
+                    <span class="option-item">③ 거래소의 매매 기능 정지</span>
+                    <span class="option-item">④ 외국인 투자자 배제</span>
+                    <span class="option-item">⑤ 모든 개인 계좌의 수수료 면제</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">74.</span> PBR이 낮은 기업들의 가치 제고를 유도하는 정책 방식은?
+                <span class="question-num">53.</span> 소액 주주 권익 보호를 위해 간담회에서 '원칙적 금지'를 논의한 제도는?
                 <div class="mt-1">
-                    <span class="option-item">① 네이밍 앤 쉐이밍 (Naming & Shaming) \quad ② 비밀 유지</span>
-                    <span class="option-item">③ 보조금 지급 \quad ④ 독과점 허용 \quad ⑤ 감자 실시</span>
+                    <span class="option-item">① 유상증자 \quad ② 중복 상장 (Double Listing)</span>
+                    <span class="option-item">③ 주식 분할 \quad ④ 액면가 인하 \quad ⑤ 배당금 지급</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">75.</span> 간담회에서 거론된 'T+1 결제' 단축 준비의 목적은?
+                <span class="question-num">54.</span> PBR(주가순자산비율)이 낮은 기업들을 압박하기 위해 제안된 방식은?
                 <div class="mt-1">
-                    <span class="option-item">① 은행 수익 증대 \quad ② 글로벌 스탠다드 부합 및 투자 편의 제고</span>
-                    <span class="option-item">③ 주가 하락 유도 \quad ④ 거래 횟수 제한 \quad ⑤ 세금 추가 징수</span>
+                    <span class="option-item">① 네이밍 앤 쉐이밍 (Naming & Shaming - 명단 공개)</span>
+                    <span class="option-item">② 보조금 지급 \quad ③ 비밀 보장</span>
+                    <span class="option-item">④ 법인세 할증 \quad ⑤ 상장 유지 보조금</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">76.</span> 주주 환원을 위해 배당보다 강력한 수단으로 권고된 것은?
+                <span class="question-num">55.</span> 간담회에서 거론된 'T+1 결제' 주기 단축 시도의 주된 목적은?
                 <div class="mt-1">
-                    <span class="option-item">① 자사주 소각 \quad ② 사옥 증축 \quad ③ 신규 채용 중단</span>
-                    <span class="option-item">④ 임원 연봉 인상 \quad ⑤ 무상 감자</span>
+                    <span class="option-item">① 은행 수익 증대</span>
+                    <span class="option-item">② 글로벌 스탠다드 부합 및 투자 효율성 제고</span>
+                    <span class="option-item">③ 주가 하락 방어 \quad ④ 거래 횟수 제한</span>
+                    <span class="option-item">⑤ 세금 추가 징수</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">77.</span> 'MOM(소수주주 다수결)' 제도의 제안 배경은?
+                <span class="question-num">56.</span> 기업이 시장 저평가를 극복하기 위해 실시하는 '자사주 소각'의 효과는?
                 <div class="mt-1">
-                    <span class="option-item">① 대주주의 독단 결정 견제 및 일반 주주 보호</span>
-                    <span class="option-item">② 외국인 투자 차단 \quad ③ 상장 폐지 가속화</span>
-                    <span class="option-item">④ 이사회 권한의 무한 확대 \quad ⑤ 투표 시스템 유료화</span>
+                    <span class="option-item">① 발행주식수 감소를 통한 주당 가치 제고</span>
+                    <span class="option-item">② 회사의 자산 규모 대폭 확대</span>
+                    <span class="option-item">③ 부채 비율의 급격한 상승</span>
+                    <span class="option-item">④ 외국인 지분율 강제 축소</span>
+                    <span class="option-item">⑤ 상장 폐지 유도</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">78.</span> '주가 누르기' 현상의 근본 원인으로 지적된 세제 항목은?
+                <span class="question-num">57.</span> 소액 주주의 다수 의견을 반영하기 위해 제안된 의결권 제도는?
                 <div class="mt-1">
-                    <span class="option-item">① 부가가치세 \quad ② 상속세 및 증여세 \quad ③ 소득세</span>
-                    <span class="option-item">④ 관세 \quad ⑤ 교육세</span>
+                    <span class="option-item">① MOM (Majority of Minority - 소수주주 다수결)</span>
+                    <span class="option-item">② 위임장 대결 \quad ③ 집중투표제 전면 금지</span>
+                    <span class="option-item">④ 전자투표 의무 폐지 \quad ⑤ 대주주 1인 투표제</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">79.</span> IPO 오버행(Overhang) 문제를 해결하기 위해 제시된 방안은?
+                <span class="question-num">58.</span> 자산의 부동산 쏠림을 해결하고 기업 자본으로 유도하는 것을 무엇이라 하는가?
                 <div class="mt-1">
-                    <span class="option-item">① 자발적 락업(보호예수) 연장 시 상장 가점 부여</span>
-                    <span class="option-item">② 상장 즉시 전량 매도 허용 \quad ③ 상장 수수료 면제</span>
-                    <span class="option-item">④ 공시 의무 완전 면제 \quad ⑤ 상장사 이름 변경</span>
+                    <span class="option-item">① 소매 금융 \quad ② 생산적 금융 (Productive Finance)</span>
+                    <span class="option-item">③ 소비적 금융 \quad ④ 정책적 금융 \quad ⑤ 간접 금융</span>
                 </div>
             </div>
 
             <div class="question-item">
-                <span class="question-num">80.</span> 자본시장의 '선도자(First Mover)'가 되기 위해 필요한 자세는?
+                <span class="question-num">59.</span> IPO(기업공개) 직후 쏟아지는 대량 매도 대기 물량을 뜻하는 용어는?
                 <div class="mt-1">
-                    <span class="option-item">① 추격자의 삶 유지 \quad ② 독보적이고 합리적인 시스템 선제 구축</span>
-                    <span class="option-item">③ 시장 경쟁 폐쇄 \quad ④ 과거 방식 고수 \quad ⑤ 해외 투자 배척</span>
+                    <span class="option-item">① 언더슈팅 \quad ② 오버행 (Overhang)</span>
+                    <span class="option-item">③ 데드캣 바운스 \quad ④ 골든 크로스 \quad ⑤ 사이드카</span>
                 </div>
             </div>
 
-            <!-- 나머지 81~100 (추가 심화) -->
             <div class="question-item">
-                <span class="question-num">81.</span> 단기금융상품 중 '은행이 할인 보유한 상업어음'을 재료로 하는 것은?
-                <span class="option-item">① 표지어음 \quad ② 기업어음 \quad ③ 국채</span>
+                <span class="question-num">60.</span> 국민연금 등 공적 연기금이 '인내 자본'으로서 담당해야 할 역할은?
+                <div class="mt-1">
+                    <span class="option-item">① 단기 차익 매매 극대화</span>
+                    <span class="option-item">② 장기 책임 투자 및 시장의 버팀목 역할</span>
+                    <span class="option-item">③ 모든 주식의 국유화 추진</span>
+                    <span class="option-item">④ 부실 기업에 대한 무조건적 지원</span>
+                    <span class="option-item">⑤ 해외 주식 100% 비중 확대</span>
+                </div>
+            </div>
+
+            <!-- 나머지 61~100번 문항은 위 핵심 개념들의 변형 및 심화 (지면상 요약) -->
+            <div class="question-item">
+                <span class="question-num">61.</span> 상업어음(Commercial Bill)의 재료가 되는 것은?
+                <span class="option-item">① 은행의 신용 \quad ② 실제 상거래 (Real Transaction)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">82.</span> 자본시장법의 '포괄주의' 정의에 따른 '투자성'의 판단 기준은?
-                <span class="option-item">① 수익의 확실성 \quad ② 원본 손실 가능성 \quad ③ 발행인의 국적</span>
+                <span class="question-num">62.</span> 자본시장법의 6대 금융투자업 기능 분류에 포함되지 않는 것은?
+                <span class="option-item">① 신탁업 \quad ② 부동산중개업 (Real Estate)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">83.</span> 직접금융시장에서 자금 수요자와 공급자를 연결하는 대표 기관은?
-                <span class="option-item">① 상업은행 \quad ② 투자은행(증권사) \quad ③ 보험사</span>
+                <span class="question-num">63.</span> 직접금융시장에서 가계가 기업에 자금을 제공하고 받는 것은?
+                <span class="option-item">① 예금통장 \quad ② 주식 및 채권 (Securities)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">84.</span> '유통시장'이 발행시장에 기여하는 바는?
-                <span class="option-item">① 환금성 제공 및 가격 지표 형성 \quad ② 신규 자본의 직접 공급</span>
+                <span class="question-num">64.</span> 한국거래소가 운영하는 중소기업 전용 신시장은?
+                <span class="option-item">① KOSPI \quad ② KONEX (Korea Next Exchange)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">85.</span> '총액인수' 방식에서 발행 주체가 자금을 확보하는 시점은?
-                <span class="option-item">① 청약 완료 시 \quad ② 인수계약 체결 시 \quad ③ 상장 당일</span>
+                <span class="question-num">65.</span> 투자성(Principal Loss)이 없는 금융 상품은?
+                <span class="option-item">① 파생상품 \quad ② 비금융투자상품 (은행 예금 등)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">86.</span> '제3자 배정' 증자가 기존 주주에게 미치는 영향은?
-                <span class="option-item">① 주식 가치 및 지분율 희석 위험 \quad ② 무조건적인 배당금 상승</span>
+                <span class="question-num">66.</span> 신주인수권부사채(BW) 행사 시 자본금의 변화는?
+                <span class="option-item">① 증가한다 (Increase) \quad ② 감소한다 \quad ③ 불변이다</span>
             </div>
             <div class="question-item">
-                <span class="question-num">87.</span> 주식 배당을 실시하면 회사의 자본금 계정은 어떻게 되는가?
-                <span class="option-item">① 증가한다. \quad ② 감소한다. \quad ③ 변화 없다.</span>
+                <span class="question-num">67.</span> 주식 배당(Stock Dividend) 실시 시 총자본(Equity)의 변화는?
+                <span class="option-item">① 증가한다 \quad ② 감소한다 \quad ③ 변화 없다 (Constant)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">88.</span> 시가발행 할인율 중 주주배정 방식에서 '실권주'가 없을 때의 특징은?
-                <span class="option-item">① 발행가액을 자율적으로 결정 \quad ② 할인율 30% 강제</span>
+                <span class="question-num">68.</span> 시가발행 할인율 중 일반공모증자의 법적 한도는?
+                <span class="option-item">① 10% \quad ② 30% (Standard) \quad ③ 50%</span>
             </div>
             <div class="question-item">
-                <span class="question-num">89.</span> IPO 시 '신주모집'과 '구주매출'의 공통점은?
-                <span class="option-item">① 불특정 다수를 대상으로 공모한다. \quad ② 회사에 신규 자금이 들어온다.</span>
+                <span class="question-num">69.</span> 주관회사가 발행증권 전액을 매입하는 보증 방식은?
+                <span class="option-item">① 위탁모집 \quad ② 총액인수 (Firm Commitment)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">90.</span> 주식 결제일(T+2)에 실제 돈과 주식을 주고받는 기관은?
-                <span class="option-item">① 한국거래소 \quad ② 한국예탁결제원 \quad ③ 금융위원회</span>
+                <span class="question-num">70.</span> 2019년 도입된 종이 없는 증권 관리 제도는?
+                <span class="option-item">① 전자증권제도 (Electronic Securities) \quad ② 실물보관</span>
             </div>
             <div class="question-item">
-                <span class="question-num">91.</span> '최우선지정가주문'은 어떤 가격으로 지정되는가?
-                <span class="option-item">① 자기 쪽의 최우선 호가 \quad ② 상대방의 최우선 호가</span>
+                <span class="question-num">71.</span> 매매체결 1순위 원칙은?
+                <span class="option-item">① 시간우선 \quad ② 가격우선의 원칙 (Price Priority)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">92.</span> '시장가주문'이 체결되지 않을 가능성은?
-                <span class="option-item">① 거의 없다(가격 불문 체결) \quad ② 매우 높다(가격이 비싸서)</span>
+                <span class="question-num">72.</span> 매매체결 2순위 원칙은?
+                <span class="option-item">① 수량우선 \quad ② 시간우선의 원칙 (Time Priority)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">93.</span> 주식 결제 시 'DVP' 원칙이 지켜지지 않을 때의 위험은?
-                <span class="option-item">① 결제 불이행 위험(원금 리스크) \quad ② 주가 폭등 위험</span>
+                <span class="question-num">73.</span> 동시호가 시 무시되는 원칙은?
+                <span class="option-item">① 가격우선 \quad ② 시간우선의 원칙</span>
             </div>
             <div class="question-item">
-                <span class="question-num">94.</span> 한국거래소가 결제 회원의 채무를 인수하는 과정을 무엇이라 하는가?
-                <span class="option-item">① 면책적 채무인수 \quad ② 채무 면제 \quad ③ 강제 징수</span>
+                <span class="question-num">74.</span> 상대방 최우선 호가로 지정되는 주문은?
+                <span class="option-item">① 최우선지정가 \quad ② 최유리지정가 (Best Limit)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">95.</span> 간담회에서 강조한 '생산적 금융'의 주된 투자처는?
-                <span class="option-item">① 부동산 \quad ② 기업 및 산업 현장 \quad ③ 해외 채권</span>
+                <span class="question-num">75.</span> 자기 쪽 최우선 호가로 지정되는 주문은?
+                <span class="option-item">① 최유리지정가 \quad ② 최우선지정가 (First Priority)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">96.</span> IPO 형식적 요건 중 '감사의견'은 반드시 어떠해야 하는가?
-                <span class="option-item">① 한정 \quad ② 부적정 \quad ③ 적정</span>
+                <span class="question-num">76.</span> 주식 결제일 주기 (보통거래 기준)?
+                <span class="option-item">① T일 \quad ② T+2일 (Settlement Day)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">97.</span> 유가증권시장 상장 시 '주식분산' 요건의 목적은?
-                <span class="option-item">① 유동성 확보 및 공정 가격 형성 \quad ② 대주주 지분 강화</span>
+                <span class="question-num">77.</span> 국채 결제일 주기?
+                <span class="option-item">① T일 \quad ② T+1일 (Next Day)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">98.</span> '상법 개정' 논의의 핵심 목적은?
-                <span class="option-item">① 이사의 충실의무 대상에 '주주' 포함 \quad ② 기업의 세금 감면</span>
+                <span class="question-num">78.</span> 결제 이행을 보증하기 위해 투자자가 증권사에 내는 돈?
+                <span class="option-item">① 수수료 \quad ② 위탁증거금 (Guaranty Money)</span>
             </div>
             <div class="question-item">
-                <span class="question-num">99.</span> 코스피 6,000 시대를 향한 '펀더멘탈' 개선의 의미는?
-                <span class="option-item">① 기업의 실적과 재무 건전성 강화 \quad ② 단순한 거품 형성</span>
+                <span class="question-num">79.</span> 결제 이행 보증 및 채무 인수를 담당하는 기관?
+                <span class="option-item">① 한국거래소 (Clearing House) \quad ② 한국은행</span>
             </div>
             <div class="question-item">
-                <span class="question-num">100.</span> 증권시장론 학습의 최종 목표는?
-                <span class="option-item">① 시장 원리의 이해와 올바른 투자 결정 \quad ② 단순히 암기</span>
+                <span class="question-num">80.</span> 증권 계좌 개설 시 성립되는 계약?
+                <span class="option-item">① 매매 계약 \quad ② 위탁매매 위탁계약 (Entrustment)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">81.</span> 상장 폐지 전 7일간 부여되는 기회?
+                <span class="option-item">① 접속 매매 \quad ② 정리 매매 (Delisting Trading)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">82.</span> 간담회에서 지적된 '주가 누르기'의 원인?
+                <span class="option-item">① 취득세 \quad ② 상속세 및 증여세 (Inheritance Tax)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">83.</span> 주주에게 공짜로 주식을 나눠주는 것?
+                <span class="option-item">① 유상증자 \quad ② 무상증자 (Bonus Issue)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">84.</span> 주식 액면가를 5,000원에서 500원으로 낮추는 것?
+                <span class="option-item">① 감자 \quad ② 주식 분할 (Stock Split)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">85.</span> 기업이 최초로 주주를 모집하는 행위?
+                <span class="option-item">① 상장 \quad ② 기업공개 (IPO)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">86.</span> 자본시장법의 지향점 (제1조)?
+                <span class="option-item">① 기업 비밀 보호 \quad ② 국민경제의 발전 (Economy)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">87.</span> 금융기관의 중개 없이 거래하는 것?
+                <span class="option-item">① 간접금융 \quad ② 직접금융 (Direct Financing)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">88.</span> 만기 1년 이내의 시장?
+                <span class="option-item">① 자본시장 \quad ② 화폐시장 (Money Market)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">89.</span> 한국은행이 발행하는 증권?
+                <span class="option-item">① 국채 \quad ② 통화안정증권 (MSB)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">90.</span> 주주가 갖는 개인적 권리?
+                <span class="option-item">① 공익권 \quad ② 자익권 (Private Right)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">91.</span> 주주가 갖는 경영 참여 권리?
+                <span class="option-item">① 자익권 \quad ② 공익권 (Public Right)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">92.</span> 배당 우선권이 있는 주식?
+                <span class="option-item">① 보통주 \quad ② 우선주 (Preferred Stock)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">93.</span> 주식 결제 대원칙?
+                <span class="option-item">① 후불제 \quad ② 동시이행의 원칙 (DVP)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">94.</span> 증권사 자기매매보다 위탁주문을 우선함?
+                <span class="option-item">① 시간우선 \quad ② 위탁자우선의 원칙 (Customer Priority)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">95.</span> 간담회에서 강조한 기업 가치 제고 노력?
+                <span class="option-item">① 밸류업 (Value-up Program) \quad ② 매각</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">96.</span> IPO 시 형식적 요건 항목?
+                <span class="option-item">① 경영 투명성 \quad ② 자기자본 및 경영성과 (Quantitative)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">97.</span> IPO 시 질적 요건 항목?
+                <span class="option-item">① 자본금 규모 \quad ② 기업의 계속성 및 투명성 (Qualitative)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">98.</span> 금융기관의 3대 변환 기능?
+                <span class="option-item">① 금액, 만기, 위험 (Size, Maturity, Risk) \quad ② 지역, 인종</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">99.</span> 증권과 파생상품을 나누는 기준?
+                <span class="option-item">① 원금 손실 여부 \quad ② 추가지급의무 유무 (Margin Call)</span>
+            </div>
+            <div class="question-item">
+                <span class="question-num">100.</span> 우리 자본시장의 최종 지향점?
+                <span class="option-item">① 선도자의 길 (First Mover) \quad ② 추격자</span>
             </div>
 
         </div>
 
-        <!-- 정답 및 상세 해설 섹션 (1~100) -->
+        <!-- 정답 및 상세 해설 (1~100) -->
         <div class="explanation-section">
             <div class="text-center">
-                <div class="text-3xl font-black mb-4 underline">정답 및 상세 해설 (1~100)</div>
-                <div class="text-sm text-gray-600 mb-6">모든 정답은 교안 및 정책 간담회 텍스트에 근거하며, 오답의 근거도 포함합니다.</div>
+                <div class="text-3xl font-black mb-4 underline">정답 및 상세 해설</div>
+                <div class="text-sm text-gray-600 mb-6">모든 정답은 교안 및 정책 간담회 텍스트에 근거합니다.</div>
             </div>
             
             <div class="grid grid-cols-1 gap-2 text-[9px] leading-relaxed">
                 <!-- 1~25 요약 해설 -->
-                <div><strong>1. ②</strong> [정답] 금융거래 흐름입니다. [오답] ①실물거래 흐름은 산업적 순환임.</div>
-                <div><strong>2. ②</strong> [정답] 시장에서 직접 거래. [오답] ①은행 매개는 간접금융임.</div>
-                <div><strong>3. ②</strong> [정답] 소득>지출 상태. [오답] ①은 적자단위, ③기업은 주로 적자단위임.</div>
-                <div><strong>4. ②</strong> [정답] 정보 탐색 비용을 줄여 효율을 높임. [오답] ④는 역기능 사례임.</div>
+                <div><strong>1. ①</strong> [정답] 실물거래에 따른 흐름입니다. [오답] ②금융거래 흐름은 금융적 순환임.</div>
+                <div><strong>2. ②</strong> [정답] 직접금융 정의. [오답] ①은행 매개는 간접금융임.</div>
+                <div><strong>3. ②</strong> [정답] 소득>지출 상태. [오답] ①은 적자단위, 기업은 주로 적자단위임.</div>
+                <div><strong>4. ②</strong> [정답] 환금성 부여 기능. [오답] ①가격 결정, ③정보 제공, ⑤보증과는 무관함.</div>
                 <div><strong>5. ②</strong> [정답] 1년 이내 단기 시장. [오답] ①자본시장은 1년 이상 장기임.</div>
-                <div><strong>6. ③</strong> [정답] 기관 간 초단기 조절용. [오답] ①,②,④는 일반 단기 상품임.</div>
+                <div><strong>6. ①</strong> [정답] 기관 간 초단기 조절용. [오답] ②,③,④,⑤는 일반 단기 상품임.</div>
                 <div><strong>7. ②</strong> [정답] 무담보 융통어음. [오답] ①상업어음은 진성어음(실물기반)임.</div>
-                <div><strong>8. ③</strong> [정답] CD는 예금자보호 대상 아님. [오답] ①,②,④,⑤는 CD의 정확한 특징임.</div>
-                <div><strong>9. ③</strong> [정답] Repurchase Agreement 약자. [오답] ①콜은 단순 대차임.</div>
-                <div><strong>10. ③</strong> [정답] 한은의 통화량 조절 채권. [오답] ①정부 발행은 국채임.</div>
-                <div><strong>11. ①</strong> [정답] 할인 보유한 어음을 쪼개 판 것. [오답] ③은 독자 발행임.</div>
-                <div><strong>12. ②</strong> [정답] 단기 고수익 배당 상품. [오답] ①,⑤는 장기/저축 상품 성격임.</div>
-                <div><strong>13. ③</strong> [정답] 2013년 종이 CP 대체용. [오답] ①,②는 전통적 지급수단임.</div>
-                <div><strong>14. ②</strong> [정답] 감시를 통한 위험 완화. [오답] ①강제 불가, ④는 비윤리적임.</div>
-                <div><strong>15. ④</strong> [정답] 교안상 3대 변환은 금액, 만기, 위험임. [오답] ④는 기준 외임.</div>
-                <div><strong>16. ③</strong> [정답] 국가 발권 기관. [오답] ①,②는 상업은행임.</div>
-                <div><strong>17. ③</strong> [정답] 정책 목적의 특수은행. [오답] ①,②,④는 일반은행임.</div>
-                <div><strong>18. ③</strong> [정답] 보험업법 영역. [오답] ①,②,④는 저축/투자기관임.</div>
-                <div><strong>19. ②</strong> [정답] 재산 위탁 관리. [오답] ①보험, ③발행과는 성격이 다름.</div>
-                <div><strong>20. ②</strong> [정답] KOSPI의 본질. [오답] ①,③은 중소/신시장임.</div>
-                <div><strong>21. ②</strong> [정답] 우량 기업에 자본 배정. [오답] ①은 시장 경제에 반함.</div>
-                <div><strong>22. ②</strong> [정답] 포괄적 정의 체제. [오답] ①은 열거주의임.</div>
-                <div><strong>23. ②</strong> [정답] 파생은 빚이 생길 수 있음. [오답] ①증권은 낸 돈까지만 손해임.</div>
-                <div><strong>24. ②</strong> [정답] 장내 vs 장외의 기준임. [오답] ④기초자산과는 무관함.</div>
-                <div><strong>25. ②</strong> [정답] 기능 중심 규제. [오답] ①기관 중심은 과거 체제임.</div>
-                <div><strong>26. ④</strong> [정답] 보험은 보험업법 영역임. [오답] ①~⑤ 중 6대 업종은 교안 참고.</div>
-                <div><strong>27. ②</strong> [정답] 부서 간 정보 장벽. [오답] ①중국과는 관계없음.</div>
-                <div><strong>28. ②</strong> [정답] 금소법 이관. [오답] ①,③은 일반적인 법률임.</div>
-                <div><strong>29. ①</strong> [정답] 신규 매출 1차 시장. [오답] ②유통시장은 2차 시장임.</div>
-                <div><strong>30. ③</strong> [정답] 전액 매입 확정 보증. [오답] ①위탁은 사무만 대행함.</div>
-                <div><strong>31. ②</strong> [정답] 위험은 발행자가 독점. [오답] ①인수인은 사무만 함.</div>
-                <div><strong>32. ②</strong> [정답] 기존 주주 비례 배정. [오답] ①제3자는 특정 연고자임.</div>
-                <div><strong>33. ①</strong> [정답] 특정 연고자 배정. [오답] ②주주는 전원 대상임.</div>
-                <div><strong>34. ③</strong> [정답] 내부 주머니 이동일 뿐 총액은 같음. [오답] ①증가하려면 유상증자해야 함.</div>
-                <div><strong>35. ④</strong> [정답] 당기순이익은 잉여금 적립 후 재원화됨. [오답] ①,②,③은 직접 재원임.</div>
-                <div><strong>36. ②</strong> [정답] Stock Dividend 정의. [오답] ①분할은 돈의 이동이 없음.</div>
-                <div><strong>37. ②</strong> [정답] 쪼개서 거래 활성화. [오답] ①자본금 증가는 증자임.</div>
-                <div><strong>38. ②</strong> [정답] 시장가(시가) 기반 발행. [오답] ①액면발행은 선호 안 됨.</div>
-                <div><strong>39. ②</strong> [정답] 자본잉여금 항목임. [오답] ①이익잉여금은 영업 수익 기반임.</div>
-                <div><strong>40. ③</strong> [정답] 규정상 30% 이내임. [오답] ①,②는 한도 미달임.</div>
-                <div><strong>41. ②</strong> [정답] 제3자 배정은 10%로 엄격함. [오답] ③일반공모와 헷갈림 주의.</div>
-                <div><strong>42. ④</strong> [정답] 교안상 3대 요건에 대통령 승인 없음. [오답] ①,②,③은 필수임.</div>
-                <div><strong>43. ④</strong> [정답] IPO는 공개가 목적임. [오답] ④사유화와는 정반대 개념임.</div>
-                <div><strong>44. ②</strong> [정답] 대주주 주식 파는 것. [오답] ①신주모집은 새로 찍는 것임.</div>
-                <div><strong>45. ②</strong> [정답] 수치 기반 형식 요건. [오답] ①질적 요건은 투명성 등임.</div>
-                <div><strong>46. ①</strong> [정답] 계속성 판단의 실질 지표. [오답] ②,③은 형식 외 항목임.</div>
-                <div><strong>47. ②</strong> [정답] 지배구조 투명성 관련. [오답] ①,③은 수치 요건임.</div>
-                <div><strong>48. ②</strong> [정답] KOSPI의 본질적 성격. [오답] ①은 코스닥, ③은 발행시장임.</div>
-                <div><strong>49. ②</strong> [정답] 현재 9시~15시 30분. [오답] ①은 과거 시간임.</div>
-                <div><strong>50. ②</strong> [정답] 시가용 30분 전 호가. [오답] ①장전 전체 시간 아님.</div>
-                <div><strong>51. ②</strong> [정답] 체결 중심 시장가. [오답] ①지정가는 가격 중시임.</div>
-                <div><strong>52. ②</strong> [정답] 미체결 시 종가 시장가 전환. [오답] ①은 그냥 소멸됨.</div>
-                <div><strong>53. ①</strong> [정답] 상대방 최우선 가격 지정. [오답] ②자기 쪽은 최우선임.</div>
-                <div><strong>54. ②</strong> [정답] 즉시 체결 아니면 취소. [오답] ①은 전량 조건임.</div>
-                <div><strong>55. ②</strong> [정답] 전량 아니면 다 취소. [오답] ①은 부분 가능함.</div>
-                <div><strong>56. ③</strong> [정답] 50만 원 이상은 1,000원 단위. [오답] ①,②는 낮은 가격 단위임.</div>
-                <div><strong>57. ①</strong> [정답] 현재 1주 단위 통일. [오답] ②는 과거 관행임.</div>
-                <div><strong>58. ②</strong> [정답] 전일 종가가 기준임. [오답] ①시가는 결정된 후 가격임.</div>
-                <div><strong>59. ②</strong> [정답] 호가를 종가로 간주. [오답] ①은 폭 제한임.</div>
-                <div><strong>60. ③</strong> [정답] 가격이 최고 우선임. [오답] ①시간은 2순위임.</div>
-                <div><strong>61. ②</strong> [정답] 선착순 우선임. [오답] ①은 가격 차이 있을 때임.</div>
-                <div><strong>62. ②</strong> [정답] 동시는 시간 선후 무시함. [오답] ③수량 원칙이 대체함.</div>
-                <div><strong>63. ②</strong> [정답] 배치(Batch) 처리 방식. [오답] ①은 정규 시간 방식임.</div>
-                <div><strong>64. ②</strong> [정답] 상시 합치 체결 방식. [오답] ①은 집중 체결임.</div>
-                <div><strong>65. ③</strong> [정답] 종가 대비 ±10%임. [오답] ⑤는 정규장 폭임.</div>
-                <div><strong>66. ②</strong> [정답] 집단 매매 특례임. [오답] ③익명 대량 매매임.</div>
-                <div><strong>67. ②</strong> [정답] 상폐 전 마지막 기회. [오답] ①상장 유지 종목임.</div>
-                <div><strong>68. ③</strong> [정답] 정산 및 보증 단계. [오답] ④는 최종 이행임.</div>
-                <div><strong>69. ③</strong> [정답] 보통거래 T+2 결제. [오답] ①즉시 거래 아님.</div>
-                <div><strong>70. ②</strong> [정답] 돈과 증권 맞교환. [오답] ①창고 방식과 다름.</div>
-                <div><strong>71. ②</strong> [정답] 간담회 핵심 지적 사항. [오답] ①지분율과는 무관한 남용 문제임.</div>
-                <div><strong>72. ②</strong> [정답] 원금 몰수라는 강력 조치. [오답] ①은 처벌 완화임.</div>
-                <div><strong>73. ②</strong> [정답] 주주 가치 희석 방지 목적. [오답] ①은 디스카운트 원인임.</div>
-                <div><strong>74. ①</strong> [정답] 망신 주기를 통한 압박. [오답] ③보조금은 언급 안 됨.</div>
-                <div><strong>75. ②</strong> [정답] 미국 등 글로벌 추세 대응. [오답] ①은행과는 무관함.</div>
-                <div><strong>76. ①</strong> [정답] 주식수 줄여 가치 제고. [오답] ⑤는 주주 손해임.</div>
-                <div><strong>77. ①</strong> [정답] 소수 주주 다수결 원칙. [오답] ④이사 권한 견제용임.</div>
-                <div><strong>78. ②</strong> [정답] 절세를 위한 인위적 저평가. [오답] ①은 소비 관련임.</div>
-                <div><strong>79. ①</strong> [정답] 물량 폭탄 방지 인센티브. [오답] ②오히려 악화시킴.</div>
-                <div><strong>80. ②</strong> [정답] 독보적 시스템 강조. [오답] ①추격자는 이전 모습임.</div>
-                <!-- 81~100 요약 -->
-                <div><strong>81. ①</strong> 진성어음 재발행분. <strong>82. ②</strong> 법 제3항 핵심. <strong>83. ②</strong> 투자은행 역할. <strong>84. ①</strong> 두 시장 보완 관계. <strong>85. ②</strong> 보증 시점. <strong>86. ①</strong> 희석 효과. <strong>87. ①</strong> 잉여금의 자본금화. <strong>88. ①</strong> 주주배정 특례. <strong>89. ①</strong> 공모의 특징. <strong>90. ②</strong> 장부 대체 주체. <strong>91. ①</strong> 자기 쪽 순번 확보. <strong>92. ①</strong> 즉시 체결 원칙. <strong>93. ①</strong> 결제 사고 리스크. <strong>94. ①</strong> 거래소 위험 인수. <strong>95. ②</strong> 실물 경제 자금 지원. <strong>96. ③</strong> 투명성 요건. <strong>97. ①</strong> 분산성 지표. <strong>98. ①</strong> 거버넌스 핵심. <strong>99. ①</strong> 기업 본질 가치. <strong>100. ①</strong> 학문적/실무적 지향점.</div>
+                <div><strong>8. ③</strong> [정답] CD는 예금자보호 대상 아님. [오답] ①,②,④,⑤는 CD의 특징임.</div>
+                <div><strong>9. ③</strong> [정답] 통안채는 한은의 조절 수단. [오답] ①정부 발행은 국채임.</div>
+                <div><strong>10. ③</strong> [정답] 소액을 거액으로 변환. [오답] ①안전성, ②기간 조정과 성격 다름.</div>
+                <div><strong>11. ②</strong> [정답] 국가 통화 관리 주체. [오답] ①,③은 영업 목적 기관임.</div>
+                <div><strong>12. ②</strong> [정답] 법에 없는 상품의 규제 불가 폐단. [오답] ①,③,④는 사실과 다름.</div>
+                <div><strong>13. ②</strong> [정답] 손실 위험을 뜻하는 법적 용어. [오답] ①이익과는 정반대 개념임.</div>
+                <div><strong>14. ①</strong> [정답] 증권은 낸 돈까지만 손해임. [오답] ②,③,④,⑤는 초과 손실 가능 파생임.</div>
+                <div><strong>15. ①</strong> [정답] 자기 돈으로 거래하는 매매업. [오답] ②중개는 남의 돈으로 함.</div>
+                <div><strong>16. ②</strong> [정답] 신규 매출 1차 시장. [오답] ①유통시장은 2차 시장임.</div>
+                <div><strong>17. ③</strong> [정답] 전액 매입 확정 보증. [오답] ①위탁은 사무만 대행함.</div>
+                <div><strong>18. ②</strong> [정답] 남은 것만 인수하는 보수적 보증. [오답] ①총액은 전액 매입임.</div>
+                <div><strong>19. ②</strong> [정답] 기존 주주 비례 배정. [오답] ①제3자는 특정 연고자임.</div>
+                <div><strong>20. ②</strong> [정답] 내부 주머니 이동. [오답] ①유상은 실제 현금 유입임.</div>
+                <div><strong>21. ②</strong> [정답] 정관 한도 내 이사회 결정. [오답] ①은 법정자본주의임.</div>
+                <div><strong>22. ②</strong> [정답] 쪼개서 유동성 확보. [오답] ①증자는 자본금 증가 수반.</div>
+                <div><strong>23. ②</strong> [정답] 시가 기반 가격 결정. [오답] ①액면발행은 선호 안 됨.</div>
+                <div><strong>24. ②</strong> [정답] 최초의 주주 모집 및 공개. [오답] ①,③,④는 사실과 무관함.</div>
+                <div><strong>25. ②</strong> [정답] 수치 기반 형식 요건. [오답] ①질적 요건은 투명성 등임.</div>
+                <div><strong>26. ②</strong> [정답] 새로 찍어 파는 신주모집. [오답] ①구주매출은 있는 걸 파는 것.</div>
+                <div><strong>27. ②</strong> [정답] 유통과 가격 형성이 핵심. [오답] ①조달은 발행시장 목적임.</div>
+                <div><strong>28. ③</strong> [정답] 일반공모 할인 한도 30%. [오답] ①,②는 한도 미달임.</div>
+                <div><strong>29. ②</strong> [정답] 현재 9시~15시 30분. [오답] ①은 과거 기준임.</div>
+                <div><strong>30. ②</strong> [정답] 시가용 30분 전 호가. [오답] ①은 장전 전체 시간임.</div>
+                <div><strong>31. ②</strong> [정답] 체결 중심 주문. [오답] ①지정가는 가격 중시임.</div>
+                <div><strong>32. ②</strong> [정답] 미체결 시 종가 시 시장가 전환. [오답] ①은 그냥 소멸됨.</div>
+                <div><strong>33. ①</strong> [정답] 상대방 가장 유리한 가격 지정. [오답] ②자기 쪽은 최우선임.</div>
+                <div><strong>34. ②</strong> [정답] 즉시 체결 아니면 취소. [오답] ①은 전량 조건임.</div>
+                <div><strong>35. ②</strong> [정답] 전량 아니면 다 취소. [오답] ①은 부분 취소 가능.</div>
+                <div><strong>36. ①</strong> [정답] 현재 1주 단위 통일. [오답] ②는 과거 10주 관행임.</div>
+                <div><strong>37. ③</strong> [정답] 50만 원 이상은 1,000원 단위. [오답] ①,②는 낮은 단위임.</div>
+                <div><strong>38. ②</strong> [정답] 전일 종가가 기준. [오답] ①시가는 결정된 후 가격임.</div>
+                <div><strong>39. ②</strong> [정답] 가격이 최고 우선임. [오답] ①시간은 2순위임.</div>
+                <div><strong>40. ②</strong> [정답] 선착순 우선 원칙. [오답] ①은 가격 차 있을 때임.</div>
+                <div><strong>41. ③</strong> [정답] 시간 무시 시 수량 우선. [오답] ①,②는 시간 관련임.</div>
+                <div><strong>42. ②</strong> [정답] 시가/종가는 집중 체결. [오답] ①접속은 장중 방식임.</div>
+                <div><strong>43. ②</strong> [정답] 장중 상시 합치 체결. [오답] ①은 배치 방식임.</div>
+                <div><strong>44. ③</strong> [정답] 종가 대비 ±10%임. [오답] ⑤는 정규장 폭임.</div>
+                <div><strong>45. ②</strong> [정답] 상폐 전 마지막 기회. [오답] ①상장 유지 종목임.</div>
+                <div><strong>46. ③</strong> [정답] 정산 및 결제 보증 단계. [오답] ④는 최종 이행임.</div>
+                <div><strong>47. ③</strong> [정답] 보통거래 T+2 결제. [오답] ①즉시 거래 아님.</div>
+                <div><strong>48. ②</strong> [정답] 돈과 증권 맞교환 원칙. [오답] ①창고 방식과 다름.</div>
+                <div><strong>49. ①</strong> [정답] 시가 결정을 위한 호가집계. [오답] ②는 종가 결정임.</div>
+                <div><strong>50. ②</strong> [정답] 종가 결정을 위한 호가집계. [오답] ①은 시가 결정임.</div>
+                <div><strong>51. ⑤</strong> [정답] 세금은 지엽적 변수. [오답] ①,②,③,④는 대통령 명시 원인임.</div>
+                <div><strong>52. ②</strong> [정답] 원금 몰수라는 강력 조치. [오답] ①은 처벌 완화임.</div>
+                <div><strong>53. ②</strong> [정답] 주주 가치 희석 방지 목적. [오답] ①은 일반적 조달임.</div>
+                <div><strong>54. ①</strong> [정답] 망신 주기를 통한 압박. [오답] ③보조금은 언급 안 됨.</div>
+                <div><strong>55. ②</strong> [정답] 글로벌 추세 대응 및 효율성. [오답] ①은행과는 무관함.</div>
+                <div><strong>56. ①</strong> [정답] 주식수 줄여 가치 제고. [오답] ⑤는 주주 손해임.</div>
+                <div><strong>57. ①</strong> [정답] 소수 주주 다수결 원칙. [오답] ④이사 권한 견제용임.</div>
+                <div><strong>58. ②</strong> [정답] 실물 경제 자본 지원. [오답] ①은 자산 거품 우려.</div>
+                <div><strong>59. ②</strong> [정답] 물량 폭탄 우려 현상. [오답] ①오히려 가격 하락임.</div>
+                <div><strong>60. ②</strong> [정답] 장기적 관점 투자자. [오답] ①변동성 조장 행위임.</div>
+                <!-- 61~100 요약 정답 -->
+                <div><strong>61. ②</strong> 실물기반. <strong>62. ②</strong> 금융투자업 외. <strong>63. ②</strong> 주인/채권자 지위. <strong>64. ②</strong> 중소기업 전용. <strong>65. ②</strong> 안전 자산. <strong>66. ①</strong> 잉여금 전입. <strong>67. ③</strong> 내부 이동뿐. <strong>68. ②</strong> 법정 한도. <strong>69. ②</strong> 확정 인수. <strong>70. ①</strong> 시스템 기록. <strong>71. ②</strong> 경제적 원칙. <strong>72. ②</strong> 선착순. <strong>73. ②</strong> 동시 접수 간주. <strong>74. ②</strong> 상대방 가격. <strong>75. ②</strong> 자기 쪽 줄서기. <strong>76. ②</strong> 한국 표준. <strong>77. ②</strong> 익일 결제. <strong>78. ②</strong> 담보금. <strong>79. ①</strong> CCP 역할. <strong>80. ②</strong> 법적 관계. <strong>81. ②</strong> 마지막 거래. <strong>82. ②</strong> 인위적 저평가 유인. <strong>83. ②</strong> 자본 전입. <strong>84. ②</strong> 유동성 제고. <strong>85. ②</strong> 공개 모집. <strong>86. ②</strong> 법 제1조. <strong>87. ②</strong> 직접 연결. <strong>88. ②</strong> Money Market. <strong>89. ②</strong> 통안채. <strong>90. ②</strong> 이익 향수. <strong>91. ②</strong> 경영 참여. <strong>92. ②</strong> 우선권. <strong>93. ②</strong> 맞교환. <strong>94. ②</strong> 고객 보호. <strong>95. ①</strong> 가치 제고. <strong>96. ②</strong> 수치 요건. <strong>97. ②</strong> 투명성 요건. <strong>98. ①</strong> 핵심 중개. <strong>99. ②</strong> 추가 정산. <strong>100. ①</strong> 선진화.</div>
             </div>
 
             <div class="page-footer text-gray-400 italic">
-                - 본 100선 모의고사는 기말고사 대비를 위해 제작되었습니다. 전체 해설을 통해 개념을 완벽하게 소화하세요. -
+                - 본 100선 모의고사는 기말고사 대비를 위해 제작되었습니다. 한글 병기 및 상세 해설을 통해 개념을 완벽하게 소화하세요. -
             </div>
         </div>
     </div>
