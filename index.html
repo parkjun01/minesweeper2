@@ -16,41 +16,34 @@
             padding: 0;
         }
 
-        /* A4 규격 레이아웃 (인쇄 기준) */
-        .page {
+        /* A4 규격 레이아웃 */
+        .container-wrapper {
+            background-color: #f3f4f6;
+            padding: 20px 0;
+        }
+
+        .exam-sheet {
             background-color: white;
             width: 210mm;
             min-height: 297mm;
-            padding: 15mm 15mm 20mm 15mm;
-            margin: 10px auto;
+            padding: 20mm 15mm;
+            margin: 0 auto;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
             position: relative;
             box-sizing: border-box;
-            page-break-after: always;
         }
 
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            position: relative;
-        }
-
-        /* 중앙 구분선 */
-        .column-divider {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 0.5px;
-            background-color: #000;
-            transform: translateX(-50%);
+        .two-column-layout {
+            column-count: 2;
+            column-gap: 40px;
+            column-rule: 0.5px solid #000;
         }
 
         .header-box {
             border-bottom: 3px double black;
             padding-bottom: 10px;
             margin-bottom: 25px;
+            text-align: center;
         }
 
         .student-info {
@@ -61,20 +54,22 @@
         }
 
         .question-item {
-            margin-bottom: 20px;
-            font-size: 13.5px;
+            margin-bottom: 24px;
+            font-size: 13px;
             line-height: 1.6;
-            page-break-inside: avoid;
+            break-inside: avoid; /* 문항 중간에 페이지가 잘리지 않게 설정 */
         }
 
         .question-num { font-weight: bold; margin-right: 5px; }
 
         /* 선택지 세로 나열 */
-        .option-item { display: block; margin-top: 2px; padding-left: 10px; }
+        .option-item { display: block; margin-top: 3px; padding-left: 10px; }
 
-        .page-footer {
-            position: absolute; bottom: 10mm; left: 0; right: 0;
-            text-align: center; font-size: 12px; color: #333;
+        .explanation-section {
+            page-break-before: always;
+            border-top: 2px solid black;
+            padding-top: 20px;
+            margin-top: 40px;
         }
 
         /* 인쇄 컨트롤 버튼 */
@@ -90,8 +85,13 @@
 
         @media print {
             body { background: none; padding: 0; margin: 0; }
-            .page { margin: 0; box-shadow: none; width: 210mm; height: 297mm; padding: 15mm; }
+            .container-wrapper { padding: 0; }
+            .exam-sheet { margin: 0; box-shadow: none; width: 210mm; padding: 15mm; }
             .no-print { display: none !important; }
+            @page {
+                size: A4;
+                margin: 0;
+            }
         }
     </style>
 </head>
@@ -99,23 +99,24 @@
 
     <button onclick="window.print()" class="save-pdf-btn no-print">📄 PDF로 저장하기 / 인쇄</button>
 
-    <!-- 페이지 1: 1~18번 -->
-    <div class="page">
-        <div class="header-box text-center">
-            <div class="text-xs font-bold text-gray-600">2026학년도 제1학기 기말고사 대비</div>
-            <div class="text-4xl font-black my-4">증권시장론 실전 모의평가</div>
-            <div class="flex justify-between items-end">
-                <div class="text-xl font-bold border-b-2 border-black pb-1 ml-2">제2장 금융투자상품의 이해</div>
-                <div class="student-info">
-                    <span>성명: ________________</span>
-                    <span>번호: ________________</span>
+    <div class="container-wrapper">
+        <div class="exam-sheet">
+            <!-- 시험지 헤더 -->
+            <div class="header-box">
+                <div class="text-xs font-bold text-gray-600 uppercase tracking-tighter">2026 Academic Year 1st Semester Final Exam</div>
+                <div class="text-4xl font-black my-4">증권시장론 실전 모의평가</div>
+                <div class="flex justify-between items-end">
+                    <div class="text-xl font-bold border-b-2 border-black pb-1 ml-2">제2장 금융투자상품의 이해 (전범위)</div>
+                    <div class="student-info">
+                        <span>성명: ________________</span>
+                        <span>번호: ________________</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="two-column">
-            <div class="column-divider"></div>
-            <div>
+            <!-- 문제 영역 (2단) -->
+            <div class="two-column-layout">
+                <!-- 1 ~ 50번 문항 -->
                 <div class="question-item">
                     <span class="question-num">1.</span> 「자본시장법」상 '금융투자상품'의 정의에 대한 설명 중 가장 옳지 않은 것은?
                     <div class="mt-1">
@@ -126,6 +127,7 @@
                         <span class="option-item">⑤ 해지수수료는 회수금액 산정 시 포함한다.</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">2.</span> 금융투자상품을 '증권'과 '파생상품'으로 분류하는 핵심 기준은 무엇인가?
                     <div class="mt-1">
@@ -136,6 +138,7 @@
                         <span class="option-item">⑤ 수익률의 확정성 여부</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">3.</span> 다음 중 자본시장법상 정의된 6가지 '증권'에 해당하지 않는 것은?
                     <div class="mt-1">
@@ -146,6 +149,7 @@
                         <span class="option-item">⑤ 투자계약증권</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">4.</span> '파생결합증권'의 법적 정의에 대한 설명으로 옳은 것은?
                     <div class="mt-1">
@@ -156,6 +160,7 @@
                         <span class="option-item">⑤ 투자원본 전액이 보장되는 상품에 한정된다.</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">5.</span> 주식(Stock)의 본질적 의미에 대한 설명 중 틀린 것은?
                     <div class="mt-1">
@@ -166,6 +171,7 @@
                         <span class="option-item">⑤ 소유지분청구권이 표시된 증권이다.</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">6.</span> 주주의 권리 중 '의결권'이나 '장부열람권' 등 경영 참여를 위한 권리는?
                     <div class="mt-1">
@@ -176,6 +182,7 @@
                         <span class="option-item">⑤ 환매권</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">7.</span> 보통주보다 배당 순위는 앞서지만, 경영 참여권인 의결권은 제한되는 주식은?
                     <div class="mt-1">
@@ -186,6 +193,7 @@
                         <span class="option-item">⑤ 전환주</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">8.</span> 당해 연도 배당을 못 받은 경우 다음 연도에 합산하여 소급 지급받는 우선주는?
                     <div class="mt-1">
@@ -196,6 +204,7 @@
                         <span class="option-item">⑤ 열위 우선주</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">9.</span> 상장법인은 발행주식 총수의 얼마까지 무의결권 주식을 발행할 수 있는가?
                     <div class="mt-1">
@@ -206,8 +215,7 @@
                         <span class="option-item">⑤ 제한 없음</span>
                     </div>
                 </div>
-            </div>
-            <div>
+
                 <div class="question-item">
                     <span class="question-num">10.</span> 주권에 액면가가 기재되지 않고 발행주식수와 지분율만 표시되는 주식은?
                     <div class="mt-1">
@@ -218,6 +226,7 @@
                         <span class="option-item">⑤ 보통주</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">11.</span> 우리나라 상법상 주식 발행 제도로 옳은 것은?
                     <div class="mt-1">
@@ -228,6 +237,7 @@
                         <span class="option-item">⑤ 액면금액은 5,000원 단일 금액으로 해야 한다.</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">12.</span> 투명성 제고를 위해 우리나라에서 2014년에 폐지된 주식 형태는?
                     <div class="mt-1">
@@ -238,6 +248,7 @@
                         <span class="option-item">⑤ 우선주</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">13.</span> 이익으로써 일정 기간 후 주식을 상환하여 소각하기로 약정된 주식은?
                     <div class="mt-1">
@@ -248,6 +259,7 @@
                         <span class="option-item">⑤ 무상주</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">14.</span> 자본준비금 전입 등을 통해 대금 납입 없이 발행되는 주식은?
                     <div class="mt-1">
@@ -258,6 +270,7 @@
                         <span class="option-item">⑤ 구주매출</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">15.</span> 2019년부터 시행된 실물 증서 없는 전자 장부 방식의 거래 제도는?
                     <div class="mt-1">
@@ -268,6 +281,7 @@
                         <span class="option-item">⑤ 실물보관제도</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">16.</span> 채권(Bond)의 일반적 특성 중 옳지 않은 것은?
                     <div class="mt-1">
@@ -278,6 +292,7 @@
                         <span class="option-item">⑤ 채권 소유자는 발행사에 대해 채권자의 지위를 갖는다.</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">17.</span> 채권의 가격과 시장 금리의 관계에 대한 설명으로 옳은 것은?
                     <div class="mt-1">
@@ -288,6 +303,7 @@
                         <span class="option-item">⑤ 금리와 가격은 서로 무관하다.</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">18.</span> 지방자치단체가 지역 건설 등을 위해 발행하는 채권의 사례는?
                     <div class="mt-1">
@@ -298,18 +314,9 @@
                         <span class="option-item">⑤ 산업금융채권</span>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="page-footer">1 / 4</div>
-    </div>
 
-    <!-- 페이지 2: 19~35번 -->
-    <div class="page">
-        <div class="two-column">
-            <div class="column-divider"></div>
-            <div>
                 <div class="question-item">
-                    <span class="question-num">19.</span> 채권 권면에 붙어 있는 이표를 통해 정기적으로 이자를 받는 형태는?
+                    <span class="question-num">19.</span> 채권 권면에 붙은 이표(Coupon)를 통해 정기적으로 이자를 받는 형태는?
                     <div class="mt-1">
                         <span class="option-item">① 할인채</span>
                         <span class="option-item">② 복리채</span>
@@ -318,6 +325,7 @@
                         <span class="option-item">⑤ 무이자채</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">20.</span> 액면가에서 이자를 미리 선공제(할인)한 금액으로 매출하는 채권은?
                     <div class="mt-1">
@@ -328,6 +336,7 @@
                         <span class="option-item">⑤ 영구채</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">21.</span> 채권자가 원할 때 발행회사의 주식으로 전환할 수 있는 사채는?
                     <div class="mt-1">
@@ -338,6 +347,7 @@
                         <span class="option-item">⑤ BO</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">22.</span> 신주를 살 수 있는 권리(Warrant)만 부여되고 채권은 존속하는 사채는?
                     <div class="mt-1">
@@ -348,6 +358,7 @@
                         <span class="option-item">⑤ BO</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">23.</span> 발행사가 보유한 다른 상장 기업의 주식으로 교환해주는 채권은?
                     <div class="mt-1">
@@ -358,6 +369,7 @@
                         <span class="option-item">⑤ BO</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">24.</span> 투자자가 발행회사에게 원금 상환을 일찍 요구할 수 있는 권리는?
                     <div class="mt-1">
@@ -368,6 +380,7 @@
                         <span class="option-item">⑤ 교환권</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">25.</span> 미래 특정 시점에 기초자산을 인수도하기로 약정하는 파생상품은?
                     <div class="mt-1">
@@ -378,6 +391,7 @@
                         <span class="option-item">⑤ 증권</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">26.</span> 선물거래와 선도거래의 차이점으로 옳은 것은?
                     <div class="mt-1">
@@ -388,6 +402,7 @@
                         <span class="option-item">⑤ 선물은 신용위험이 선도보다 크다.</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">27.</span> 옵션 중 '미리 정한 가격으로 자산을 살 수 있는 권리'는?
                     <div class="mt-1">
@@ -398,6 +413,7 @@
                         <span class="option-item">⑤ 선도</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">28.</span> 옵션 행사 시점이 '만기일 당일'로만 제한되는 유형은?
                     <div class="mt-1">
@@ -408,8 +424,7 @@
                         <span class="option-item">⑤ 복합형 옵션</span>
                     </div>
                 </div>
-            </div>
-            <div>
+
                 <div class="question-item">
                     <span class="question-num">29.</span> 일정 기간 금리나 통화 등 현금흐름을 맞교환하는 파생상품은?
                     <div class="mt-1">
@@ -420,6 +435,7 @@
                         <span class="option-item">⑤ 캡</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">30.</span> 장내파생상품 시장의 특징이 아닌 것은?
                     <div class="mt-1">
@@ -430,6 +446,7 @@
                         <span class="option-item">⑤ 거래소라는 물리적 장소</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">31.</span> 다수의 자금을 모아 전문가가 독립 운용하고 배분하는 기구는?
                     <div class="mt-1">
@@ -440,6 +457,7 @@
                         <span class="option-item">⑤ 예탁결제원</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">32.</span> 투자신탁 형태의 펀드가 투자자에게 발행하는 증권 명칭은?
                     <div class="mt-1">
@@ -450,6 +468,7 @@
                         <span class="option-item">⑤ 약정증권</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">33.</span> 뮤추얼 펀드(투자회사)가 투자자에게 발행하는 증권은?
                     <div class="mt-1">
@@ -460,6 +479,7 @@
                         <span class="option-item">⑤ 보험증권</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">34.</span> 펀드 투자자가 결과에 따른 손익을 직접 책임지는 원칙은?
                     <div class="mt-1">
@@ -470,6 +490,7 @@
                         <span class="option-item">⑤ 책임면제 원칙</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">35.</span> 주식 발행 시 액면가를 초과하여 받은 금액을 적립하는 항목은?
                     <div class="mt-1">
@@ -480,16 +501,7 @@
                         <span class="option-item">⑤ 법정적립금</span>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="page-footer">2 / 4</div>
-    </div>
 
-    <!-- 페이지 3: 36~50번 -->
-    <div class="page">
-        <div class="two-column">
-            <div class="column-divider"></div>
-            <div>
                 <div class="question-item">
                     <span class="question-num">36.</span> 펀드 운용 기간 동안 지속적으로 자산에서 차감되는 비용은?
                     <div class="mt-1">
@@ -500,6 +512,7 @@
                         <span class="option-item">⑤ 인지세</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">37.</span> 우리나라 국고채 발행의 주체는 누구인가?
                     <div class="mt-1">
@@ -510,6 +523,7 @@
                         <span class="option-item">⑤ 시중은행</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">38.</span> 주주가 자신의 납입 자본 내에서만 책임을 지는 원칙은?
                     <div class="mt-1">
@@ -520,6 +534,7 @@
                         <span class="option-item">⑤ 직접책임</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">39.</span> 채권 수익 원천 중 '매매 차익'을 부르는 용어는?
                     <div class="mt-1">
@@ -530,6 +545,7 @@
                         <span class="option-item">⑤ 프리미엄</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">40.</span> 가격 하락에 대비하여 선물을 미리 파는 헤지 기법은?
                     <div class="mt-1">
@@ -540,6 +556,7 @@
                         <span class="option-item">⑤ 델타헤지</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">41.</span> 옵션 매수자가 권리 획득 대가로 매도자에게 지불하는 돈은?
                     <div class="mt-1">
@@ -550,6 +567,7 @@
                         <span class="option-item">⑤ 보증금</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">42.</span> 만기가 길어질수록 채권의 가격 변동성은 어떻게 되는가?
                     <div class="mt-1">
@@ -560,6 +578,7 @@
                         <span class="option-item">⑤ 상쇄된다.</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">43.</span> 우리나라의 '중기채' 분류 기준으로 적절한 것은?
                     <div class="mt-1">
@@ -570,8 +589,7 @@
                         <span class="option-item">⑤ 무기한</span>
                     </div>
                 </div>
-            </div>
-            <div>
+
                 <div class="question-item">
                     <span class="question-num">44.</span> 주주총회에 참석하나 찬반 투표권이 없는 주식은?
                     <div class="mt-1">
@@ -582,6 +600,7 @@
                         <span class="option-item">⑤ 전환주</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">45.</span> 외화 등을 기초자산으로 하는 파생상품의 분류는?
                     <div class="mt-1">
@@ -592,6 +611,7 @@
                         <span class="option-item">⑤ 변동성상품</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">46.</span> 채권의 발행 주체 중 공사나 법정 기관이 발행하는 것은?
                     <div class="mt-1">
@@ -602,6 +622,7 @@
                         <span class="option-item">⑤ 국채</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">47.</span> 주식수만 늘고 실제 자산 유입은 없는 회계상 발행은?
                     <div class="mt-1">
@@ -612,6 +633,7 @@
                         <span class="option-item">⑤ 액면분할</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">48.</span> 자본시장법상 '지분증권'에 속하지 않는 것은?
                     <div class="mt-1">
@@ -622,6 +644,7 @@
                         <span class="option-item">⑤ 조합 출자지분</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">49.</span> 펀드 가입 시점에 1회 부과되는 수수료의 명칭은?
                     <div class="mt-1">
@@ -632,6 +655,7 @@
                         <span class="option-item">⑤ 후취 수수료</span>
                     </div>
                 </div>
+
                 <div class="question-item">
                     <span class="question-num">50.</span> 채권 요건 중 '원금이 안전하게 보전될 신뢰도'는?
                     <div class="mt-1">
@@ -643,69 +667,72 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="page-footer">3 / 4</div>
-    </div>
 
-    <!-- 페이지 4: 상세 정답 및 해설 -->
-    <div class="page">
-        <div class="header-box text-center">
-            <div class="text-3xl font-black my-4 underline">정답 및 상세 해설 (50문항 완결)</div>
+            <!-- 상세 정답 및 해설 (마지막 페이지) -->
+            <div class="explanation-section">
+                <div class="text-center">
+                    <div class="text-3xl font-black mb-4 underline">정답 및 상세 해설</div>
+                    <div class="text-sm text-gray-600 mb-6">모든 문항은 제02장 교안 내용을 근거로 작성되었습니다.</div>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-2 text-[11px] leading-relaxed">
+                    <div><strong>1. ④</strong> 판매수수료는 자본시장법 제3조에 따라 투자원본 산정 시 명시적으로 제외됩니다.</div>
+                    <div><strong>2. ②</strong> 원본초과손실(추가지급의무) 가능성 유무가 증권과 파생상품을 가르는 가장 결정적인 법적 잣대입니다.</div>
+                    <div><strong>3. ④</strong> 통화스왑계약은 파생상품입니다. 증권 6종은 채무, 지분, 수익, 투자계약, 파생결합, 증권예탁증권입니다.</div>
+                    <div><strong>4. ②</strong> ELS/DLS 등 파생결합증권은 기초자산 변동에 연계된 권리가 표시된 '증권'으로 분류됩니다.</div>
+                    <div><strong>5. ②</strong> 주식회사의 주주는 자신이 납입한 자본금 내에서만 책임을 지는 '유한책임' 원칙이 적용됩니다.</div>
+                    <div><strong>6. ②</strong> 의결권은 회사 경영에 참여하여 공익을 도모하는 공익권입니다. 배당청구권 등은 자익권입니다.</div>
+                    <div><strong>7. ③</strong> 우선주는 배당이나 잔여재산 분배에 우선권을 주는 대신 경영권인 의결권이 제한됩니다.</div>
+                    <div><strong>8. ②</strong> 당해 연도 배당 부족분을 차후에 소급하여 누적 지급받는 주식을 누적적 우선주라 합니다.</div>
+                    <div><strong>9. ③</strong> 일반 법인은 1/4이나, 상장법인은 자본시장법 특례로 1/2까지 무의결권주 발행이 가능합니다.</div>
+                    <div><strong>10. ②</strong> 무액면주는 액면가 기재 없이 발행주식수와 그에 따른 지분율만 표시하는 주식입니다.</div>
+                    <div><strong>11. ②</strong> 우리 상법은 액면주와 무액면주 중 선택 발행을 허용합니다(단, 병행 발행은 금지).</div>
+                    <div><strong>12. ②</strong> 무기명주식은 주주 확정이 어려워 투명성을 저해하므로 2014년에 폐지되었습니다.</div>
+                    <div><strong>13. ①</strong> 이익으로써 일정 기간 후 주식을 상환하여 없애기로 약정된 주식을 상환주라 합니다.</div>
+                    <div><strong>14. ②</strong> 무상증자는 자본준비금의 자본전입으로 발행되므로 외부로부터의 실질적 자금 유입이 없습니다.</div>
+                    <div><strong>15. ②</strong> 2019년 9월 도입된 전자증권제도는 실물 없이 전자 등록만으로 권리를 관리하는 제도입니다.</div>
+                    <div><strong>16. ②</strong> 채권은 상환 기일이 정해진 기한부 증권입니다. 주식이 원금 상환 의무가 없는 영구자본입니다.</div>
+                    <div><strong>17. ③</strong> 시중 금리(수익률)가 오르면 기존 채권의 가격은 하락하며, 이는 역의 관계(반비례)입니다.</div>
+                    <div><strong>18. ③</strong> 도시철도채권, 상수도공채 등은 지방자치단체가 발행하는 대표적인 지방채입니다.</div>
+                    <div><strong>19. ③</strong> 이표(Coupon)가 붙어 있어 약정된 이자 지급일에 이자를 떼어 지급받는 형태가 이표채입니다.</div>
+                    <div><strong>20. ③</strong> 이자를 선공제(할인)하여 파는 채권을 할인채(Zero Coupon Bond)라고 합니다.</div>
+                    <div><strong>21. ③</strong> 사채권자가 원할 때 발행회사의 주식으로 '형태를 바꿀' 수 있는 권리가 부여된 사채는 CB입니다.</div>
+                    <div><strong>22. ②</strong> 신주인수권부사채(BW)는 권리 행사 후에도 사채권자 지위(이자 수급권)가 만기까지 유지됩니다.</div>
+                    <div><strong>23. ③</strong> 교환사채(EB)는 발행사가 보유한 '타 상장회사'의 주식으로 교환해주는 것입니다.</div>
+                    <div><strong>24. ②</strong> 투자자가 발행인에게 원금 조기 상환을 요구할 수 있는 권리는 풋옵션(Put Option)입니다.</div>
+                    <div><strong>25. ①</strong> 미래 특정 시점에 기초자산을 사고팔기로 약정하는 표준화된 거래소 거래는 선물입니다.</div>
+                    <div><strong>26. ③</strong> 선물은 거래소 시스템을 통해 매일 손익을 정산하는 '일일정산' 제도가 있는 것이 큰 특징입니다.</div>
+                    <div><strong>27. ②</strong> 특정 가격으로 자산을 '살 수 있는 권리'는 콜옵션입니다. (풋은 '팔 수 있는 권리'임)</div>
+                    <div><strong>28. ②</strong> 만기일에만 권리 행사가 가능한 것은 유럽형, 기간 내내 가능한 것은 미국형입니다.</div>
+                    <div><strong>29. ③</strong> 일정 기간 금리나 통화 등 현금흐름을 맞바꾸는(Swap) 계약은 스왑입니다.</div>
+                    <div><strong>30. ④</strong> 장내 시장은 거래소가 이행을 보증하므로 신용위험이 극히 낮습니다. 장외가 직접 노출됩니다.</div>
+                    <div><strong>31. ①</strong> 2인 이상 모집, 운용 독립성(비지시성), 전문가 운용, 결과 귀속 요건은 집합투자기구(펀드)입니다.</div>
+                    <div><strong>32. ②</strong> 투자신탁은 신탁 계약에 기반하며 수익권을 분할한 '수익증권'을 발행합니다.</div>
+                    <div><strong>33. ②</strong> 뮤추얼 펀드(투자회사)는 회사 형태이므로 투자자에게 주식(지분증권)을 발행합니다.</div>
+                    <div><strong>34. ②</strong> 펀드는 운용 실적에 따라 수익/손실이 투자자에게 그대로 배분되는 실적배당 원칙을 따릅니다.</div>
+                    <div><strong>35. ③</strong> 액면가액을 초과하여 주식을 발행한 금액은 주식발행초과금(자본준비금)으로 적립됩니다.</div>
+                    <div><strong>36. ②</strong> 운용 기간 동안 자산 관리 대가로 지속 차감되는 비용은 보수(Fee), 일회성은 수수료입니다.</div>
+                    <div><strong>37. ②</strong> 국고채는 대한민국 정부(기획재정부)가 발행하며 국가의 공신력으로 원리금을 보증합니다.</div>
+                    <div><strong>38. ②</strong> 주주는 자신이 납입한 자본 내에서만 책임지는 유한책임 원칙을 따릅니다.</div>
+                    <div><strong>39. ②</strong> 매매 시 발생하는 시세 차익(Capital Gain) 이득을 자본이득이라고 부릅니다.</div>
+                    <div><strong>40. ②</strong> 가격 하락 위험 방어를 위해 미래에 팔 가격을 고정하는 것이 매도헤지입니다.</div>
+                    <div><strong>41. ②</strong> 옵션 매수자가 권리를 획득하는 대가로 매도자에게 지불하는 옵션의 가격은 프리미엄입니다.</div>
+                    <div><strong>42. ②</strong> 만기가 길수록 금리 변화에 대한 민감도(듀레이션)가 커져 가격 변동성도 커집니다.</div>
+                    <div><strong>43. ②</strong> 국내 관행상 1년 이상 ~ 5년 미만은 중기채, 5년 이상은 장기채로 분류합니다.</div>
+                    <div><strong>44. ②</strong> 무의결권 주식은 배당에 우선권을 주되 주총 투표권(의결권)은 제한된 주식입니다.</div>
+                    <div><strong>45. ③</strong> 달러, 엔 등 외화를 기초자산으로 하는 파생상품은 통화상품 카테고리에 속합니다.</div>
+                    <div><strong>46. ②</strong> 토지개발채권, 전력채 등 특별법상 공공기관/공사가 발행하는 채권은 특수채입니다.</div>
+                    <div><strong>47. ②</strong> 무상증자는 자본 구조 내에서의 이동일 뿐, 외부에서의 실질적 자산 유입은 없습니다.</div>
+                    <div><strong>48. ④</strong> 국채는 채무증권입니다. 주권, 신주인수권증서, 출자증권 등은 지분증권입니다.</div>
+                    <div><strong>49. ③</strong> 가입 시점에 1회 지불하는 일회성 판매 대가는 선취 판매수수료입니다.</div>
+                    <div><strong>50. ③</strong> 안정성은 채무불이행 위험이 적어 원금이 안전하게 보전될 것이라는 신뢰도를 의미합니다.</div>
+                </div>
+            </div>
+
+            <div class="page-footer text-gray-400 italic">
+                - 본 시험지는 학습 목적으로 제작되었습니다. -
+            </div>
         </div>
-        
-        <div class="space-y-2 text-[10.5px] leading-relaxed">
-            <div><strong>1. ④</strong> 판매수수료는 투자원본 산정 시 제외합니다.</div>
-            <div><strong>2. ②</strong> 원본초과손실(추가지급의무) 가능성 유무가 증권과 파생의 법적 구분 기준입니다.</div>
-            <div><strong>3. ④</strong> 스왑계약은 파생상품이며, 증권 6종은 채무, 지분, 수익, 투자계약, 파생결합, 증권예탁입니다.</div>
-            <div><strong>4. ②</strong> 파생결합증권은 기초자산 변동에 연계된 증권이며 원본 내로 손실이 제한됩니다.</div>
-            <div><strong>5. ②</strong> 주주는 납입 자본 내에서만 책임을 지는 '유한책임' 원칙이 적용됩니다.</div>
-            <div><strong>6. ②</strong> 의결권 등 경영 참여권은 공익권입니다. 배당청구권은 자익권입니다.</div>
-            <div><strong>7. ③</strong> 우선주는 배당 우선권을 갖는 대신 의결권이 제한되는 형태입니다.</div>
-            <div><strong>8. ②</strong> 못 받은 배당을 소급하여 받는 것은 누적적 우선주입니다.</div>
-            <div><strong>9. ③</strong> 상장법인은 특례에 따라 1/2까지 무의결권주 발행이 가능합니다.</div>
-            <div><strong>10. ②</strong> 무액면주는 액면가 기재 없이 발행주식수와 지분율만 표시합니다.</div>
-            <div><strong>11. ②</strong> 현행 상법은 액면주와 무액면주 중 선택 발행을 허용합니다(병행 불가).</div>
-            <div><strong>12. ②</strong> 무기명주식은 주주 확정이 어려워 2014년에 폐지되었습니다.</div>
-            <div><strong>13. ①</strong> 이익으로 상환 소각하기로 약정된 주식은 상환주입니다.</div>
-            <div><strong>14. ②</strong> 무상증자는 자본준비금 전입 등으로 발행되어 실질적 자금 유입이 없습니다.</div>
-            <div><strong>15. ②</strong> 2019년 도입된 전자증권제도는 실물 없이 전자 장부로만 권리를 관리합니다.</div>
-            <div><strong>16. ②</strong> 채권은 만기가 정해진 기한부 증권입니다. 주식이 영구자본입니다.</div>
-            <div><strong>17. ③</strong> 시장 금리가 오르면 기존 채권의 가격은 하락(반비례)합니다.</div>
-            <div><strong>18. ③</strong> 도시철도채권은 대표적인 지방채 사례입니다.</div>
-            <div><strong>19. ③</strong> 이표(Coupon)를 통해 주기적으로 이자를 받는 것은 이표채입니다.</div>
-            <div><strong>20. ③</strong> 선이자를 할인하여 발행하는 채권을 할인채라고 합니다.</div>
-            <div><strong>21. ③</strong> 채권이 주식으로 변하는 사채는 전환사채(CB)입니다.</div>
-            <div><strong>22. ②</strong> 신주인수권부사채(BW)는 권리 행사 후에도 사채권자 지위가 유지됩니다.</div>
-            <div><strong>23. ③</strong> 교환사채(EB)는 발행사가 보유한 '타사' 주식으로 교환해줍니다.</div>
-            <div><strong>24. ②</strong> 투자자가 일찍 갚으라고 요구하는 권리는 풋옵션(Put)입니다.</div>
-            <div><strong>25. ①</strong> 미래 특정 시점 인수도 약정은 선물의 정의입니다.</div>
-            <div><strong>26. ③</strong> 선물은 거래소 시스템을 통해 매일 손익을 정산하는 일일정산 제도가 있습니다.</div>
-            <div><strong>27. ②</strong> 매입 권리는 콜옵션, 매도 권리는 풋옵션입니다.</div>
-            <div><strong>28. ②</strong> 유럽형 옵션은 오직 만기 당일에만 권리 행사가 가능합니다.</div>
-            <div><strong>29. ③</strong> 금리/통화 등 현금흐름을 맞바꾸는 것은 스왑의 특징입니다.</div>
-            <div><strong>30. ④</strong> 장내 시장은 거래소가 보증하므로 신용위험이 극히 낮습니다.</div>
-            <div><strong>31. ①</strong> 2인 이상 모집, 운용 독립성, 결과 귀속 요건은 집합투자기구(펀드)입니다.</div>
-            <div><strong>32. ②</strong> 투자신탁은 신탁 수익권을 나타내는 수익증권을 발행합니다.</div>
-            <div><strong>33. ②</strong> 뮤추얼 펀드(투자회사)는 법인으로서 주식을 발행합니다.</div>
-            <div><strong>34. ②</strong> 펀드는 실적에 따라 배당/손실을 직접 책임지는 실적배당 원칙입니다.</div>
-            <div><strong>35. ③</strong> 액면 초과 발행금은 주식발행초과금(자본준비금)으로 적립합니다.</div>
-            <div><strong>36. ②</strong> 운용 기간 동안 지속적 관리에 대한 대가는 보수(Fee)입니다.</div>
-            <div><strong>37. ②</strong> 국고채는 대한민국 정부(기획재정부)가 발행하며 국가가 보증합니다.</div>
-            <div><strong>38. ②</strong> 주주는 자신이 납입한 자본 내에서만 책임지는 유한책임 원칙입니다.</div>
-            <div><strong>39. ②</strong> 매매 차익으로 얻는 소득은 자본이득(Capital Gain)입니다.</div>
-            <div><strong>40. ②</strong> 가격 하락 위험 방어를 위해 미리 선물을 파는 것은 매도헤지입니다.</div>
-            <div><strong>41. ②</strong> 옵션 매수자가 권리의 대가로 지불하는 비용은 프리미엄입니다.</div>
-            <div><strong>42. ②</strong> 만기가 길수록 금리 변화에 대한 민감도(듀레이션)가 커집니다.</div>
-            <div><strong>43. ②</strong> 국내 관행상 1년 이상 ~ 5년 미만은 중기채로 분류합니다.</div>
-            <div><strong>44. ②</strong> 무의결권 주식은 배당 우선권을 주되 주총 투표권은 제한됩니다.</div>
-            <div><strong>45. ③</strong> 달러/엔 등 외화 기초 자산 파생상품은 통화상품입니다.</div>
-            <div><strong>46. ②</strong> 공공기관/공사가 특별법에 의해 발행하는 것은 특수채입니다.</div>
-            <div><strong>47. ②</strong> 무상증자는 자본 구조 내 이동일 뿐 외부 자금 유입은 없습니다.</div>
-            <div><strong>48. ④</strong> 국채는 채무증권이지 지분증권이 아닙니다.</div>
-            <div><strong>49. ③</strong> 가입 시 1회 지불하는 일회성 판매 대가는 수수료입니다.</div>
-            <div><strong>50. ③</strong> 원금 손실 위험이 적어 안전하게 보전될 성질은 안정성입니다.</div>
-        </div>
-        <div class="page-footer">4 / 4</div>
     </div>
 
 </body>
