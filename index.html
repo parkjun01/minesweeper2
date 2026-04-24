@@ -1,26 +1,28 @@
-```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>실전 대비 AI 모의고사 생성기 (Pro)</title>
+    <title>증권시장론 제2장 실전 모의고사</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
         
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f1f5f9; margin: 0; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
 
         /* A4 규격 레이아웃 */
-        .exam-page {
+        .page {
             background-color: white;
             width: 210mm;
             min-height: 297mm;
-            padding: 15mm;
-            margin: 20px auto;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 15mm 15mm 20mm 15mm;
+            margin: 10px auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
             position: relative;
             box-sizing: border-box;
             page-break-after: always;
@@ -33,24 +35,50 @@
             position: relative;
         }
 
+        /* 중앙 구분선 */
         .column-divider {
             position: absolute;
-            top: 10px;
-            bottom: 10px;
+            top: 0;
+            bottom: 0;
             left: 50%;
-            width: 1px;
-            background-color: #cbd5e1;
+            width: 0.5px;
+            background-color: #000;
             transform: translateX(-50%);
         }
 
-        .header-box { border-bottom: 3px solid black; padding-bottom: 12px; margin-bottom: 20px; }
-        .student-info { border: 2px solid black; padding: 5px 15px; display: inline-flex; gap: 20px; font-size: 13px; font-weight: bold; }
+        .header-box {
+            border-bottom: 3px double black;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
 
-        .question-item { margin-bottom: 22px; font-size: 13.5px; line-height: 1.6; page-break-inside: avoid; }
-        .question-num { font-weight: bold; margin-right: 5px; }
-        
+        .student-info {
+            border: 1.5px solid black;
+            padding: 5px 15px;
+            display: inline-flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .question-item {
+            margin-bottom: 22px;
+            font-size: 14px;
+            line-height: 1.6;
+            page-break-inside: avoid;
+        }
+
+        .question-num {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
         /* 선택지 무조건 줄바꿈 (세로 나열) */
-        .option-item { display: block; margin-top: 3px; padding-left: 5px; }
+        .option-item {
+            display: block;
+            margin-top: 2px;
+            padding-left: 10px;
+        }
 
         .page-footer {
             position: absolute;
@@ -58,315 +86,563 @@
             left: 0;
             right: 0;
             text-align: center;
-            font-size: 11px;
-            color: #64748b;
+            font-size: 12px;
+            color: #333;
         }
 
-        /* 로딩 애니메이션 및 상태바 */
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #2563eb;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
+        /* 인쇄 전용 설정 */
         @media print {
-            body { background: none; }
-            .exam-page { margin: 0; box-shadow: none; width: 210mm; height: 297mm; }
-            .no-print { display: none !important; }
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                width: 210mm;
+                height: 297mm;
+                padding: 15mm;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 컨트롤 패널 -->
-    <div class="no-print bg-slate-900 text-white p-6 sticky top-0 z-50 shadow-xl">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-6">
-            <div class="flex-1 w-full">
-                <div class="flex justify-between items-center mb-2">
-                    <label class="text-sm font-bold text-slate-300">1. 출제 근거 자료 (PDF 첨부 또는 텍스트 직접 입력)</label>
-                    <div class="flex gap-2">
-                        <label class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1.5 px-3 rounded transition flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                            </svg>
-                            PDF 파일 선택
-                            <input type="file" id="pdfInput" accept=".pdf" class="hidden" onchange="handlePdfUpload(event)">
-                        </label>
-                        <button onclick="clearText()" class="text-xs text-slate-400 hover:text-white">초기화</button>
-                    </div>
-                </div>
-                <textarea id="sourceText" placeholder="PDF를 선택하거나 내용을 직접 입력하세요. 대용량 자료의 경우 텍스트가 모두 추출된 후 '시험지 생성'을 눌러주세요." class="w-full h-32 p-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-200 outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                <div id="statusMsg" class="text-xs text-blue-400 mt-1 font-bold hidden">상태 메시지 표시 영역</div>
-            </div>
-            
-            <div class="w-full md:w-80 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <label class="text-sm font-bold text-slate-300">2. 문항 수 (최대 70)</label>
-                        <input type="number" id="qCount" value="30" min="1" max="70" class="w-20 p-2 bg-slate-800 border border-slate-700 rounded text-center font-bold">
-                    </div>
-                    <button onclick="startGeneration()" id="genBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 py-3 rounded-lg font-bold transition flex items-center justify-center gap-2">
-                        <span id="btnText">모의고사 시험지 생성</span>
-                        <div id="loader" class="loader hidden"></div>
-                    </button>
-                    <!-- 진행률 표시 -->
-                    <div id="progressBarContainer" class="mt-2 w-full bg-slate-700 h-1.5 rounded-full hidden">
-                        <div id="progressBar" class="bg-blue-500 h-1.5 rounded-full" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div class="flex gap-2 mt-4">
-                    <button onclick="downloadPDF()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-2.5 rounded-lg text-sm font-bold transition">PDF 다운로드</button>
-                    <button onclick="window.print()" class="flex-1 bg-slate-700 hover:bg-slate-600 py-2.5 rounded-lg text-sm font-bold transition">인쇄하기</button>
+    <!-- 페이지 1: 1~18번 -->
+    <div class="page">
+        <div class="header-box text-center">
+            <div class="text-xs font-bold text-gray-600">2026학년도 제1학기 기말고사 대비</div>
+            <div class="text-4xl font-black my-4">증권시장론 실전 모의평가</div>
+            <div class="flex justify-between items-end">
+                <div class="text-xl font-bold border-b-2 border-black pb-1 ml-2">제2장 금융투자상품의 이해</div>
+                <div class="student-info">
+                    <span>성명: ________________</span>
+                    <span>번호: ________________</span>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- 시험지 출력 영역 -->
-    <div id="exam-render-area">
-        <div class="exam-page no-print flex flex-col items-center justify-center text-slate-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mb-4 opacity-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-            <p class="text-xl font-bold">PDF 파일을 첨부하거나 자료를 입력해 주세요.</p>
-            <p class="text-sm mt-2 text-center">오류 방지를 위해 10문항씩 나누어 안전하게 생성합니다.<br>최대 70문항까지 가능하며, 정답지는 마지막 장에 별도 생성됩니다.</p>
+        <div class="two-column">
+            <div class="column-divider"></div>
+            <!-- 왼쪽 -->
+            <div>
+                <div class="question-item">
+                    <span class="question-num">1.</span> 「자본시장법」 제3조에서 정의하는 '금융투자상품'의 요건에 대한 설명 중 가장 옳지 않은 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 이익을 얻거나 손실을 회피할 목적으로 취득하는 권리이다.</span>
+                        <span class="option-item">② 현재 또는 장래의 특정 시점에 금전 등을 지급하기로 약정한다.</span>
+                        <span class="option-item">③ 회수금액이 투자원본을 초과하게 될 위험(투자성)이 있어야 한다.</span>
+                        <span class="option-item">④ 판매수수료 등 대통령령으로 정하는 금액은 투자원본에서 제외한다.</span>
+                        <span class="option-item">⑤ 해지수수료 등 대통령령으로 정하는 금액은 회수금액에 포함한다.</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">2.</span> 다음 중 자본시장법상 '비금융투자상품'으로 분류되어 법 적용에서 제외되는 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 국채 및 지방채</span>
+                        <span class="option-item">② 수익증권</span>
+                        <span class="option-item">③ 은행 정기예금</span>
+                        <span class="option-item">④ 파생결합증권</span>
+                        <span class="option-item">⑤ 지분증권</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">3.</span> 금융투자상품을 '증권'과 '파생상품'으로 분류하는 가장 핵심적인 기준은 무엇인가?
+                    <div class="mt-2">
+                        <span class="option-item">① 발행 주체의 신용도</span>
+                        <span class="option-item">② 기초자산의 존재 여부</span>
+                        <span class="option-item">③ 투자자의 추가지급의무(원본초과손실 가능성) 유무</span>
+                        <span class="option-item">④ 거래소 상장 여부</span>
+                        <span class="option-item">⑤ 이자 지급 방식의 차이</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">4.</span> 자본시장법상 정의된 6가지 증권에 해당하지 않는 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 채무증권</span>
+                        <span class="option-item">② 지분증권</span>
+                        <span class="option-item">③ 금리스왑</span>
+                        <span class="option-item">④ 투자계약증권</span>
+                        <span class="option-item">⑤ 증권예탁증권</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">5.</span> 다음 중 '파생결합증권'에 대한 설명으로 옳은 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 투자원본을 초과하여 손실이 발생할 수 있다.</span>
+                        <span class="option-item">② 기초자산의 변동과 연계하여 지급금액이 결정되는 증권이다.</span>
+                        <span class="option-item">③ 발행인의 신용위험과는 전혀 무관한 상품이다.</span>
+                        <span class="option-item">④ 법적으로 '지분증권'의 범주에 포함된다.</span>
+                        <span class="option-item">⑤ 주로 장외에서만 거래되며 표준화가 불가능하다.</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">6.</span> 주식(Stock)의 본질적 의미에 대한 설명 중 틀린 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 주식회사의 자본을 구성하는 최소 단위이다.</span>
+                        <span class="option-item">② 기업 해산 시까지 상환 의무가 없는 영구자본이다.</span>
+                        <span class="option-item">③ 주주는 회사의 부채에 대해 무한 책임을 진다.</span>
+                        <span class="option-item">④ 주주로서의 지위를 나타내는 유가증권이다.</span>
+                        <span class="option-item">⑤ 소유권을 나타내는 출자증권의 성격을 가진다.</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 오른쪽 -->
+            <div>
+                <div class="question-item">
+                    <span class="question-num">7.</span> 주주의 권리 중 '공익권'에 해당하는 대표적인 권리는?
+                    <div class="mt-2">
+                        <span class="option-item">① 이익배당청구권</span>
+                        <span class="option-item">② 잔여재산분배청구권</span>
+                        <span class="option-item">③ 의결권</span>
+                        <span class="option-item">④ 신주인수권</span>
+                        <span class="option-item">⑤ 주식양도권</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">8.</span> 보통주보다 배당 순위는 앞서지만, 일반적으로 의결권이 제한되는 주식은?
+                    <div class="mt-2">
+                        <span class="option-item">① 후배주</span>
+                        <span class="option-item">② 보통주</span>
+                        <span class="option-item">③ 우선주</span>
+                        <span class="option-item">④ 혼합주</span>
+                        <span class="option-item">⑤ 보증주</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">9.</span> 특정 연도에 배당을 받지 못한 경우, 다음 연도에 부족분을 합산하여 받을 수 있는 우선주는?
+                    <div class="mt-2">
+                        <span class="option-item">① 누적적 우선주</span>
+                        <span class="option-item">② 비누적적 우선주</span>
+                        <span class="option-item">③ 참가적 우선주</span>
+                        <span class="option-item">④ 비참가적 우선주</span>
+                        <span class="option-item">⑤ 상환 우선주</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">10.</span> 상장법인은 발행주식 총수의 얼마까지 무의결권 주식을 발행할 수 있는가?
+                    <div class="mt-2">
+                        <span class="option-item">① 1/4</span>
+                        <span class="option-item">② 1/3</span>
+                        <span class="option-item">③ 1/2</span>
+                        <span class="option-item">④ 2/3</span>
+                        <span class="option-item">⑤ 제한 없음</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">11.</span> 주권에 액면가가 기재되지 않고 지분율만 표시되는 주식의 형태는?
+                    <div class="mt-2">
+                        <span class="option-item">① 액면주</span>
+                        <span class="option-item">② 무액면주</span>
+                        <span class="option-item">③ 기명주</span>
+                        <span class="option-item">④ 무기명주</span>
+                        <span class="option-item">⑤ 유상주</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">12.</span> 우리나라에서 투명성 확보를 위해 2014년에 폐지된 주식 형태는?
+                    <div class="mt-2">
+                        <span class="option-item">① 기명주</span>
+                        <span class="option-item">② 무기명주</span>
+                        <span class="option-item">③ 보통주</span>
+                        <span class="option-item">④ 전환주</span>
+                        <span class="option-item">⑤ 상환주</span>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="page-footer">1 / 4</div>
     </div>
 
-    <script>
-        const apiKey = ""; // API Key는 환경에서 자동 제공
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-
-        const statusMsg = document.getElementById('statusMsg');
-        const textarea = document.getElementById('sourceText');
-        const progressBarContainer = document.getElementById('progressBarContainer');
-        const progressBar = document.getElementById('progressBar');
-
-        function clearText() {
-            textarea.value = "";
-            document.getElementById('exam-render-area').innerHTML = '<div class="exam-page no-print flex flex-col items-center justify-center text-slate-400"><p class="text-xl font-bold">자료를 입력해 주세요.</p></div>';
-        }
-
-        async function handlePdfUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            statusMsg.innerText = "PDF 파일을 읽는 중...";
-            statusMsg.classList.remove('hidden', 'text-red-400');
-            statusMsg.classList.add('text-blue-400');
-            textarea.disabled = true;
-
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                let fullText = "";
-                for (let i = 1; i <= pdf.numPages; i++) {
-                    const page = await pdf.getPage(i);
-                    const content = await page.getTextContent();
-                    const pageText = content.items.map(item => item.str).join(' ');
-                    fullText += pageText + "\n\n";
-                    statusMsg.innerText = `분석 중... (${i} / ${pdf.numPages} 페이지)`;
-                }
-                textarea.value = fullText;
-                statusMsg.innerText = "PDF 분석 완료! 내용을 확인하고 생성 버튼을 누르세요.";
-            } catch (err) {
-                statusMsg.innerText = "PDF 읽기 실패. 텍스트를 직접 복사해 넣어주세요.";
-                statusMsg.classList.replace('text-blue-400', 'text-red-400');
-            } finally {
-                textarea.disabled = false;
-            }
-        }
-
-        async function callGemini(prompt, source) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: `[자료]\n${source}\n\n[지시사항]\n${prompt}` }] }],
-                generationConfig: { responseMimeType: "application/json" }
-            };
-
-            const retryFetch = async (retries = 5, delay = 1000) => {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) throw new Error(response.statusText);
-                    return await response.json();
-                } catch (error) {
-                    if (retries > 0) {
-                        await new Promise(r => setTimeout(r, delay));
-                        return retryFetch(retries - 1, delay * 2);
-                    }
-                    throw error;
-                }
-            };
-
-            return await retryFetch();
-        }
-
-        async function startGeneration() {
-            const source = textarea.value.trim();
-            const totalRequested = parseInt(document.getElementById('qCount').value);
-            const genBtn = document.getElementById('genBtn');
-            const btnText = document.getElementById('btnText');
-            const loader = document.getElementById('loader');
-
-            if (!source) { alert("출제 근거 자료를 먼저 입력하거나 PDF를 올려주세요."); return; }
-            if (totalRequested > 70) { alert("최대 70문항까지 가능합니다."); return; }
-
-            genBtn.disabled = true;
-            loader.classList.remove('hidden');
-            progressBarContainer.classList.remove('hidden');
-            progressBar.style.width = "0%";
-
-            let allQuestions = [];
-            const batchSize = 10;
-            const totalBatches = Math.ceil(totalRequested / batchSize);
-
-            try {
-                for (let i = 0; i < totalBatches; i++) {
-                    const currentBatchCount = Math.min(batchSize, totalRequested - (i * batchSize));
-                    btnText.innerText = `문제 생성 중... (${i * batchSize + currentBatchCount}/${totalRequested})`;
-                    
-                    const batchPrompt = `당신은 대학 전공 교수입니다. 제공된 자료를 바탕으로 "새로운" 고품질 객관식(5지선다) 문제를 무작위 생성하세요. 
-                    - 이전에 생성한 문제와 중복되지 않도록 하세요.
-                    - 문항 수: ${currentBatchCount}개
-                    - 형식: JSON (반드시 아래 구조 준수)
-                    {
-                        "questions": [
-                            {
-                                "question": "질문",
-                                "options": ["① 보기1", "② 보기2", "③ 보기3", "④ 보기4", "⑤ 보기5"],
-                                "answerIndex": 0,
-                                "rationale": "상세한 해설"
-                            }
-                        ]
-                    }`;
-
-                    const data = await callGemini(batchPrompt, source);
-                    const result = JSON.parse(data.candidates[0].content.parts[0].text);
-                    allQuestions = allQuestions.concat(result.questions);
-                    
-                    progressBar.style.width = `${((i + 1) / totalBatches) * 100}%`;
-                }
-
-                renderFinalExam(allQuestions);
-                btnText.innerText = "생성 완료";
-            } catch (error) {
-                console.error(error);
-                alert("문제 생성 중 오류가 발생했습니다. 자료 양이 너무 많으면 일부를 나누어 시도해 보세요.");
-                btnText.innerText = "다시 시도";
-            } finally {
-                genBtn.disabled = false;
-                loader.classList.add('hidden');
-                setTimeout(() => {
-                    progressBarContainer.classList.add('hidden');
-                    btnText.innerText = "모의고사 시험지 생성";
-                }, 3000);
-            }
-        }
-
-        function renderFinalExam(questions) {
-            const container = document.getElementById('exam-render-area');
-            container.innerHTML = "";
-            const qPerPage = 20; // 20문항마다 페이지 분할
-            const totalPages = Math.ceil(questions.length / qPerPage);
-
-            for (let i = 0; i < totalPages; i++) {
-                const page = document.createElement('div');
-                page.className = "exam-page";
-                
-                const headerHtml = (i === 0) ? `
-                    <div class="header-box text-center">
-                        <div class="text-xs font-bold text-gray-500 tracking-widest">2026학년도 제1학기 기말고사 대비</div>
-                        <div class="text-4xl font-black my-4">실전 모의평가</div>
-                        <div class="flex justify-between items-end mt-6">
-                            <div class="text-xl font-bold border-b-2 border-black pb-1 px-1">맞춤형 문제 은행</div>
-                            <div class="student-info"><span>성명: ________</span><span>번호: ________</span></div>
-                        </div>
-                    </div>` : `<div class="border-b-2 border-black pb-2 mb-6 font-bold text-gray-800 flex justify-between"><span>모의평가 (계속)</span><span>PAGE ${i+1}</span></div>`;
-
-                page.innerHTML = headerHtml;
-
-                const grid = document.createElement('div');
-                grid.className = "two-column";
-                grid.innerHTML = '<div class="column-divider"></div>';
-
-                const left = document.createElement('div');
-                const right = document.createElement('div');
-                const currentQs = questions.slice(i * qPerPage, (i + 1) * qPerPage);
-                const half = Math.ceil(currentQs.length / 2);
-
-                currentQs.forEach((q, idx) => {
-                    const qNum = (i * qPerPage) + idx + 1;
-                    const qHtml = `
-                        <div class="question-item">
-                            <span class="question-num">${qNum}.</span> ${q.question}
-                            <div class="mt-2 space-y-1">
-                                ${q.options.map(opt => `<span class="option-item">${opt}</span>`).join('')}
-                            </div>
-                        </div>`;
-                    if (idx < half) left.innerHTML += qHtml; else right.innerHTML += qHtml;
-                });
-
-                grid.appendChild(left); grid.appendChild(right);
-                page.appendChild(grid);
-                page.innerHTML += `<div class="page-footer">${i + 1} / ${totalPages + 1}</div>`;
-                container.appendChild(page);
-            }
-
-            // 마지막 장: 정답 및 해설
-            const ansPage = document.createElement('div');
-            ansPage.className = "exam-page";
-            ansPage.innerHTML = `
-                <div class="header-box text-center">
-                    <div class="text-3xl font-black my-6">정답 및 상세 해설</div>
-                    <div class="text-sm text-slate-500 font-bold underline mb-4">해설을 통해 부족한 개념을 완벽하게 보완하세요.</div>
+    <!-- 페이지 2: 13~30번 -->
+    <div class="page">
+        <div class="two-column">
+            <div class="column-divider"></div>
+            <!-- 왼쪽 -->
+            <div>
+                <div class="question-item">
+                    <span class="question-num">13.</span> 회사가 이익을 사용하여 일정 기간 후 주식을 상환하여 소각하기로 예정된 주식은?
+                    <div class="mt-2">
+                        <span class="option-item">① 상환주</span>
+                        <span class="option-item">② 전환주</span>
+                        <span class="option-item">③ 유상주</span>
+                        <span class="option-item">④ 무상주</span>
+                        <span class="option-item">⑤ 액면주</span>
+                    </div>
                 </div>
-                <div class="mt-8 space-y-5 text-[11px] leading-relaxed">
-                    ${questions.map((q, idx) => `
-                        <div class="border-b border-slate-100 pb-3">
-                            <div class="flex items-center gap-4 mb-1">
-                                <span class="bg-indigo-600 text-white px-2.5 py-0.5 rounded-full font-bold">문항 ${idx + 1}</span>
-                                <span class="font-black text-indigo-900 text-sm">정답: ${q.options[q.answerIndex].split(' ')[0]}</span>
-                            </div>
-                            <div class="text-slate-700 pl-1"><span class="font-bold text-black">[해설]</span> ${q.rationale}</div>
-                        </div>
-                    `).join('')}
+                <div class="question-item">
+                    <span class="question-num">14.</span> 기업의 자본 전입 등을 통해 대금 납입 없이 발행되어 실질적 자금 유입이 없는 주식은?
+                    <div class="mt-2">
+                        <span class="option-item">① 유상주</span>
+                        <span class="option-item">② 무상주</span>
+                        <span class="option-item">③ 보통주</span>
+                        <span class="option-item">④ 우선주</span>
+                        <span class="option-item">⑤ 상환주</span>
+                    </div>
                 </div>
-                <div class="page-footer">${totalPages + 1} / ${totalPages + 1}</div>
-            `;
-            container.appendChild(ansPage);
-        }
+                <div class="question-item">
+                    <span class="question-num">15.</span> 2019년부터 시행된 종이 증권 없이 장부 등록만으로 증권 사무를 처리하는 제도는?
+                    <div class="mt-2">
+                        <span class="option-item">① 증권예탁제도</span>
+                        <span class="option-item">② 전자증권제도</span>
+                        <span class="option-item">③ 실물보관제도</span>
+                        <span class="option-item">④ 명의개서제도</span>
+                        <span class="option-item">⑤ 보호예수제도</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">16.</span> 채권(Bond)에 대한 설명으로 가장 적절하지 않은 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 정부, 금융기관 등이 자금을 조달하기 위해 발행한다.</span>
+                        <span class="option-item">② 주식과 마찬가지로 만기가 없는 영구자본의 성격이다.</span>
+                        <span class="option-item">③ 유통시장에서 매매가 가능하여 중도 현금화가 가능하다.</span>
+                        <span class="option-item">④ 확정이자부 증권으로 이자 지급이 약정되어 있다.</span>
+                        <span class="option-item">⑤ 채권 소유자는 발행 기관에 대해 채권자의 지위를 갖는다.</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">17.</span> 채권의 특성 중 시장 금리 변동으로 인해 채권 가격이 하락할 위험은?
+                    <div class="mt-2">
+                        <span class="option-item">① 채무불이행 위험</span>
+                        <span class="option-item">② 유동성 위험</span>
+                        <span class="option-item">③ 시장 위험</span>
+                        <span class="option-item">④ 인플레이션 위험</span>
+                        <span class="option-item">⑤ 신용 위험</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">18.</span> 지방자치단체가 지역 건설 등을 위해 발행하는 채권의 대표적인 예는?
+                    <div class="mt-2">
+                        <span class="option-item">① 국채</span>
+                        <span class="option-item">② 지방채</span>
+                        <span class="option-item">③ 특수채</span>
+                        <span class="option-item">④ 금융채</span>
+                        <span class="option-item">⑤ 회사채</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">19.</span> 채권 권면에 붙어 있는 이표(Coupon)를 통해 주기적으로 이자를 받는 형태는?
+                    <div class="mt-2">
+                        <span class="option-item">① 할인채</span>
+                        <span class="option-item">② 복리채</span>
+                        <span class="option-item">③ 이표채</span>
+                        <span class="option-item">④ 단리채</span>
+                        <span class="option-item">⑤ 제로쿠폰채</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">20.</span> 액면가에서 이자를 미리 공제(할인)한 금액으로 매출하는 채권은?
+                    <div class="mt-2">
+                        <span class="option-item">① 할인채</span>
+                        <span class="option-item">② 복리채</span>
+                        <span class="option-item">③ 이표채</span>
+                        <span class="option-item">④ 변동채</span>
+                        <span class="option-item">⑤ 영구채</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 오른쪽 -->
+            <div>
+                <div class="question-item">
+                    <span class="question-num">21.</span> 채권자가 발행회사의 주식으로 전환할 수 있는 권리가 부여된 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 신주인수권부사채(BW)</span>
+                        <span class="option-item">② 전환사채(CB)</span>
+                        <span class="option-item">③ 교환사채(EB)</span>
+                        <span class="option-item">④ 이익참가부사채(PB)</span>
+                        <span class="option-item">⑤ 옵션부사채(BO)</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">22.</span> 신주를 살 수 있는 권리(Warrant)만 부여되고 채권은 만기까지 남는 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 전환사채(CB)</span>
+                        <span class="option-item">② 신주인수권부사채(BW)</span>
+                        <span class="option-item">③ 교환사채(EB)</span>
+                        <span class="option-item">④ 무보증사채</span>
+                        <span class="option-item">⑤ 후순위채</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">23.</span> 발행회사가 보유한 다른 상장 기업의 주식으로 교환해주는 채권은?
+                    <div class="mt-2">
+                        <span class="option-item">① CB</span>
+                        <span class="option-item">② BW</span>
+                        <span class="option-item">③ EB</span>
+                        <span class="option-item">④ PB</span>
+                        <span class="option-item">⑤ BO</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">24.</span> 투자자가 발행회사에게 원금 상환을 일찍 요구할 수 있는 권리는?
+                    <div class="mt-2">
+                        <span class="option-item">① 콜옵션(Call)</span>
+                        <span class="option-item">② 풋옵션(Put)</span>
+                        <span class="option-item">③ 전환권</span>
+                        <span class="option-item">④ 인수권</span>
+                        <span class="option-item">⑤ 교환권</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">25.</span> 파생상품 중 '미래 특정 시점에 기초자산을 인수도하기로 약정'하는 계약은?
+                    <div class="mt-2">
+                        <span class="option-item">① 선물(Futures)</span>
+                        <span class="option-item">② 옵션(Options)</span>
+                        <span class="option-item">③ 스왑(Swaps)</span>
+                        <span class="option-item">④ 현물</span>
+                        <span class="option-item">⑤ 지분</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">26.</span> 선물거래와 선도거래의 차이점으로 옳은 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 선도는 표준화된 시장에서 거래된다.</span>
+                        <span class="option-item">② 선물은 장외에서 직접 거래된다.</span>
+                        <span class="option-item">③ 선물은 매일 일일정산을 수행한다.</span>
+                        <span class="option-item">④ 선도는 거래소가 결제를 보증한다.</span>
+                        <span class="option-item">⑤ 선물은 신용위험이 매우 크다.</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">27.</span> 옵션 중 '미리 정한 가격으로 자산을 살 수 있는 권리'는?
+                    <div class="mt-2">
+                        <span class="option-item">① 풋옵션</span>
+                        <span class="option-item">② 콜옵션</span>
+                        <span class="option-item">③ 선물</span>
+                        <span class="option-item">④ 스왑</span>
+                        <span class="option-item">⑤ 선도</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">2 / 4</div>
+    </div>
 
-        function downloadPDF() {
-            const element = document.getElementById('exam-render-area');
-            if (element.innerText.includes("첨부하거나 자료를")) { alert("시험지를 먼저 생성해 주세요."); return; }
-            const btn = event.currentTarget;
-            btn.innerText = "PDF 변환 중...";
-            btn.disabled = true;
+    <!-- 페이지 3: 28~50번 -->
+    <div class="page">
+        <div class="two-column">
+            <div class="column-divider"></div>
+            <!-- 왼쪽 -->
+            <div>
+                <div class="question-item">
+                    <span class="question-num">28.</span> 옵션 행사 시점이 '만기일 당일'로만 제한되는 유형은?
+                    <div class="mt-2">
+                        <span class="option-item">① 미국형 옵션</span>
+                        <span class="option-item">② 유럽형 옵션</span>
+                        <span class="option-item">③ 아시아형 옵션</span>
+                        <span class="option-item">④ 한국형 옵션</span>
+                        <span class="option-item">⑤ 하이브리드 옵션</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">29.</span> 일정 기간 금리나 통화 등 현금흐름을 맞바꾸는 거래는?
+                    <div class="mt-2">
+                        <span class="option-item">① 선물</span>
+                        <span class="option-item">② 옵션</span>
+                        <span class="option-item">③ 스왑(Swap)</span>
+                        <span class="option-item">④ 선도</span>
+                        <span class="option-item">⑤ 캡</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">30.</span> 장내파생상품 시장의 특징이 아닌 것은?
+                    <div class="mt-2">
+                        <span class="option-item">① 표준화된 상품 거래</span>
+                        <span class="option-item">② 청산소를 통한 결제 보증</span>
+                        <span class="option-item">③ 일일정산 제도 운영</span>
+                        <span class="option-item">④ 신용위험의 거래 상대방 직접 노출</span>
+                        <span class="option-item">⑤ 거래소라는 조직적 장소</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">31.</span> 2인 이상에게 투자 권유를 하여 모은 자금을 독립 운용하는 기구는?
+                    <div class="mt-2">
+                        <span class="option-item">① 집합투자기구(펀드)</span>
+                        <span class="option-item">② 직접투자기구</span>
+                        <span class="option-item">③ 일임계좌</span>
+                        <span class="option-item">④ 신탁관리소</span>
+                        <span class="option-item">⑤ 저축계정</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">32.</span> 투자신탁 형태의 펀드에서 발행하는 증서의 명칭은?
+                    <div class="mt-2">
+                        <span class="option-item">① 지분증권</span>
+                        <span class="option-item">② 수익증권</span>
+                        <span class="option-item">③ 채무증권</span>
+                        <span class="option-item">④ 사채</span>
+                        <span class="option-item">⑤ 금전신탁</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">33.</span> 뮤추얼 펀드(투자회사)가 투자자에게 발행하는 증권은?
+                    <div class="mt-2">
+                        <span class="option-item">① 수익증권</span>
+                        <span class="option-item">② 주식(지분증권)</span>
+                        <span class="option-item">③ 사채</span>
+                        <span class="option-item">④ 통안채</span>
+                        <span class="option-item">⑤ CP</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">34.</span> 펀드 투자자가 결과에 따른 손익을 직접 책임지는 원칙은?
+                    <div class="mt-2">
+                        <span class="option-item">① 원금보장 원칙</span>
+                        <span class="option-item">② 정액보상 원칙</span>
+                        <span class="option-item">③ 실적배당 원칙</span>
+                        <span class="option-item">④ 무위험 원칙</span>
+                        <span class="option-item">⑤ 확정수익 원칙</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">35.</span> 주식 발행 시 액면가를 초과하여 받은 자본 준비금 항목은?
+                    <div class="mt-2">
+                        <span class="option-item">① 자본금</span>
+                        <span class="option-item">② 이익잉여금</span>
+                        <span class="option-item">③ 주식발행초과금</span>
+                        <span class="option-item">④ 당기순이익</span>
+                        <span class="option-item">⑤ 법정적립금</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 오른쪽 -->
+            <div>
+                <div class="question-item">
+                    <span class="question-num">36.</span> 펀드 운용 기간 동안 지속적으로 자산에서 차감되는 대가는?
+                    <div class="mt-2">
+                        <span class="option-item">① 판매수수료</span>
+                        <span class="option-item">② 판매보수</span>
+                        <span class="option-item">③ 거래세</span>
+                        <span class="option-item">④ 인지세</span>
+                        <span class="option-item">⑤ 가입비</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">37.</span> 우리나라 국고채 발행의 주체는 누구인가?
+                    <div class="mt-2">
+                        <span class="option-item">① 한국은행</span>
+                        <span class="option-item">② 정부(기획재정부)</span>
+                        <span class="option-item">③ 산업은행</span>
+                        <span class="option-item">④ 증권거래소</span>
+                        <span class="option-item">⑤ 시중은행</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">38.</span> 주주가 자신의 납입 자본 내에서만 책임지는 원칙은?
+                    <div class="mt-2">
+                        <span class="option-item">① 무한책임</span>
+                        <span class="option-item">② 연대책임</span>
+                        <span class="option-item">③ 유한책임</span>
+                        <span class="option-item">④ 배상책임</span>
+                        <span class="option-item">⑤ 대리책임</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">39.</span> 채권의 수익 원천 중 '매매 차익'을 부르는 용어는?
+                    <div class="mt-2">
+                        <span class="option-item">① 이자소득</span>
+                        <span class="option-item">② 배당소득</span>
+                        <span class="option-item">③ 자본이득(Capital Gain)</span>
+                        <span class="option-item">④ 표면수수료</span>
+                        <span class="option-item">⑤ 가점</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">40.</span> 가격 하락에 대비하여 선물을 미리 파는 위험 회피 기법은?
+                    <div class="mt-2">
+                        <span class="option-item">① 매입헤지</span>
+                        <span class="option-item">② 매도헤지</span>
+                        <span class="option-item">③ 차익거래</span>
+                        <span class="option-item">④ 투기</span>
+                        <span class="option-item">⑤ 스프레드</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">41.</span> 옵션 매수자가 권리 대가로 매도자에게 주는 비용은?
+                    <div class="mt-2">
+                        <span class="option-item">① 증거금</span>
+                        <span class="option-item">② 배당금</span>
+                        <span class="option-item">③ 옵션 프리미엄</span>
+                        <span class="option-item">④ 수수료</span>
+                        <span class="option-item">⑤ 보증금</span>
+                    </div>
+                </div>
+                <div class="question-item">
+                    <span class="question-num">42.</span> 만기가 길어질수록 채권의 가격 변동성은 어떻게 되는가?
+                    <div class="mt-2">
+                        <span class="option-item">① 작아진다.</span>
+                        <span class="option-item">② 커진다.</span>
+                        <span class="option-item">③ 변동 없다.</span>
+                        <span class="option-item">④ 금리와 무관해진다.</span>
+                        <span class="option-item">⑤ 상쇄된다.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">3 / 4</div>
+    </div>
 
-            const opt = {
-                margin: 0,
-                filename: 'AI_Exam_MockTest.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: 'css' }
-            };
+    <!-- 페이지 4: 상세 정답 및 해설 -->
+    <div class="page">
+        <div class="header-box text-center">
+            <div class="text-3xl font-black my-4 underline">정답 및 상세 해설</div>
+        </div>
+        
+        <div class="space-y-3 text-[11px] leading-relaxed">
+            <div><strong>1. ③</strong> 투자성은 회수금액이 투자원본보다 '적게' 될 위험을 뜻함. 수익 창출 또는 손실 회피 목적(①), 약정성(②)이 본질.</div>
+            <div><strong>2. ③</strong> 은행 예금은 투자성이 없어 자본시장법상 금융투자상품이 아님.</div>
+            <div><strong>3. ②</strong> 원본초과손실(추가지급의무) 가능성 유무가 증권과 파생상품을 가르는 법적 잣대임.</div>
+            <div><strong>4. ③</strong> 금리스왑은 파생상품임. 증권 6종은 채무, 지분, 수익, 투자계약, 파생결합, 증권예탁증권임.</div>
+            <div><strong>5. ②</strong> ELS/DLS 등 파생결합증권은 기초자산 변동에 연계된 권리가 표시된 '증권'임.</div>
+            <div><strong>6. ③</strong> 주주는 자신이 납입한 자본금 내에서만 책임을 지는 '유한책임' 원칙이 적용됨.</div>
+            <div><strong>7. ③</strong> 의결권은 회사 경영에 참여하여 공익을 도모하는 공익권임. 배당청구권 등은 자익권.</div>
+            <div><strong>8. ③</strong> 우선주는 배당/잔여재산 분배에 우선권을 주는 대신 의결권이 제한됨.</div>
+            <div><strong>9. ①</strong> 못 받은 배당이 소급되는 것은 누적적 우선주임.</div>
+            <div><strong>10. ③</strong> 일반 법인은 1/4이나, 상장법인은 자본시장법 특례로 1/2까지 무의결권주 발행 가능.</div>
+            <div><strong>11. ②</strong> 무액면주는 액면가 기재 없이 발행주식수와 지분율만 표시함.</div>
+            <div><strong>12. ②</strong> 우리 상법은 액면주와 무액면주 중 선택 발행을 허용함.</div>
+            <div><strong>13. ②</strong> 이익으로 상환하여 소각하기로 예정된 주식은 상환주임.</div>
+            <div><strong>14. ②</strong> 무상증자는 자본준비금의 자본전입으로 발행되므로 실질적 현금 유입이 없음.</div>
+            <div><strong>15. ②</strong> 2019년 도입된 전자증권제도는 실물 없이 전자 등록으로만 관리함.</div>
+            <div><strong>16. ②</strong> 채권은 만기가 정해진 기한부 증권임. 주식이 영구자본임.</div>
+            <div><strong>17. ③</strong> 시중 금리(수익률)가 오르면 기존 채권의 가격은 하락함(역의 관계).</div>
+            <div><strong>18. ②</strong> 서울시, 경기도 등 지자체가 발행하는 채권은 지방채임.</div>
+            <div><strong>19. ③</strong> 이표(Coupon)가 붙어 있어 이자 지급일에 이를 떼어 지급받는 형태임.</div>
+            <div><strong>20. ③</strong> 이자를 선공제(할인)하여 파는 채권은 할인채(Zero Coupon Bond)임.</div>
+            <div><strong>21. ②</strong> 사채권자가 원할 때 발행회사의 주식으로 '전환'할 수 있는 사채는 CB임.</div>
+            <div><strong>22. ②</strong> 신주인수권부사채(BW)는 권리 행사 후에도 사채권자 지위가 만기까지 유지됨.</div>
+            <div><strong>23. ③</strong> 교환사채(EB)는 발행사가 보유한 '타 상장회사'의 주식으로 교환해주는 것임.</div>
+            <div><strong>24. ②</strong> 채권자가 발행인에게 조기 상환을 요구하는 것은 풋옵션(Put Option)임.</div>
+            <div><strong>25. ①</strong> 미래 특정 시점에 기초자산을 사고팔기로 약속하는 표준화된 거래는 선물임.</div>
+            <div><strong>26. ③</strong> 선물은 거래소 시스템을 통해 매일 손익을 정산(일일정산)하는 강력한 제도가 있음.</div>
+            <div><strong>27. ②</strong> 특정 가격으로 자산을 '살 수 있는 권리'는 콜옵션임.</div>
+            <div><strong>28. ②</strong> 만기일에만 권리 행사가 가능한 것은 유럽형, 기간 내내 가능한 것은 미국형임.</div>
+            <div><strong>29. ③</strong> 일정 기간 금리나 통화 등 현금흐름을 '맞바꾸는(Swap)' 계약은 스왑임.</div>
+            <div><strong>30. ④</strong> 장내 시장은 거래소가 이행을 보증하므로 신용위험이 거의 없음.</div>
+            <div><strong>31. ②</strong> 2인 이상, 운용 지시 없음, 전문가 운용, 결과 귀속 요건은 집합투자기구(펀드)임.</div>
+            <div><strong>32. ②</strong> 투자신탁은 신탁 계약에 기반하며 수익권을 분할한 '수익증권'을 발행함.</div>
+            <div><strong>33. ②</strong> 뮤추얼 펀드(투자회사)는 회사 형태이므로 투자자에게 주식(지분증권)을 발행함.</div>
+            <div><strong>34. ③</strong> 펀드는 운용 실적에 따라 수익/손실이 투자자에게 그대로 배분되는 실적배당 원칙임.</div>
+            <div><strong>35. ③</strong> 액면가액을 초과하여 주식을 발행한 금액은 주식발행초과금(자본준비금)으로 적립함.</div>
+            <div><strong>36. ②</strong> 운용 기간 동안 지속적 관리에 대한 대가는 보수(Fee), 일회성은 수수료임.</div>
+            <div><strong>37. ②</strong> 국고채는 기획재정부 장관이 발행하며 정부가 원리금 지급을 책임짐.</div>
+            <div><strong>38. ③</strong> 주주는 자신이 납입한 자본 범위 내에서만 책임지는 유한책임 원칙을 따름.</div>
+            <div><strong>39. ③</strong> 매매 시 발생하는 시세 차익 이득은 자본이득(Capital Gain)임.</div>
+            <div><strong>40. ②</strong> 가격 하락 위험 방어를 위해 미리 선물을 파는 전략은 매도헤지임.</div>
+            <div><strong>41. ③</strong> 옵션 매수자가 권리를 획득하는 대가로 매도자에게 주는 비용은 프리미엄임.</div>
+            <div><strong>42. ②</strong> 만기가 길수록 금리 변화에 대한 민감도(변동성)가 커짐(듀레이션 효과).</div>
+            <div><strong>43. ②</strong> 국내 관행상 1~5년 미만은 중기채, 5년 이상은 장기채로 분류함.</div>
+            <div><strong>44. ②</strong> 무의결권 주식은 배당에 우선권을 주되 주총 투표권은 제한된 주식임.</div>
+            <div><strong>45. ③</strong> 달러, 엔 등 외화를 기초자산으로 하는 파생상품은 통화상품임.</div>
+            <div><strong>46. ②</strong> 특별법상 공사가 발행하는 것은 특수채임.</div>
+            <div><strong>47. ②</strong> 무상증자는 자산의 유입 없이 장부상 자본 이동만 일어남.</div>
+            <div><strong>48. ④</strong> 국채는 채무증권임.</div>
+            <div><strong>49. ③</strong> 가입 시점에 1회 부과되는 수수료를 선취 판매수수료라 함.</div>
+            <div><strong>50. ③</strong> 안정성은 채무불이행 위험이 적어 원금이 잘 보전될 것이라는 신뢰도임.</div>
+        </div>
+        <div class="page-footer">4 / 4</div>
+    </div>
 
-            html2pdf().set(opt).from(element).save().then(() => {
-                btn.innerText = "PDF 다운로드";
-                btn.disabled = false;
-            });
-        }
-    </script>
 </body>
 </html>
-
-```
